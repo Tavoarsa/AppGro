@@ -2,8 +2,9 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\AnimalForm;
 use Illuminate\Http\Request;
+use Auth;
 
 class AnimalController extends Controller {
 
@@ -18,7 +19,7 @@ class AnimalController extends Controller {
 	}
 	public function index()
 	{
-		return view('animal');
+		return view('animal.index');
 	}
 
 	/**
@@ -28,7 +29,7 @@ class AnimalController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return view("animal.create");
 	}
 
 	/**
@@ -37,8 +38,23 @@ class AnimalController extends Controller {
 	 * @return Response
 	 */
 	public function store()
-	{
-		//
+	{		
+
+		$animal = new \App\Animal;
+		$id_users= Auth::id();
+ 
+		$animal->idUser = $id_users;
+ 
+		$animal->numero = \Request::input('numero');
+
+		$animal->nombre = \Request::input('nombre');
+
+		$animal->especie = \Request::input('especie');
+ 
+		$animal->save();
+ 
+		return redirect('animal/create')->with('message', 'Registro Guardado');
+		
 	}
 
 	/**
