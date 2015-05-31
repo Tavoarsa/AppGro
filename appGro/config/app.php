@@ -146,6 +146,8 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+		'Torann\GeoIP\GeoIPServiceProvider',
+		
 
 
 
@@ -198,6 +200,7 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Html'      => 'Illuminate\Html\HtmlFacade',
 		'Form'      => 'Illuminate\Html\FormFacade',
+		'GeoIP'		=> 'Torann\GeoIP\GeoIPFacade',
 
 	],
 
