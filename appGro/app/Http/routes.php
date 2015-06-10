@@ -17,6 +17,7 @@ Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
 Route::get('animal', 'AnimalController@index');
 Route::resource('animal','AnimalController' );
+Route::resource('finca','FincaController' );
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

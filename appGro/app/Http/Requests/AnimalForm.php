@@ -22,6 +22,7 @@ class AnimalForm extends Request {
 	public function rules()
 	{
 		return [
+			"id"	  => "required",	
 			"numero"  => "required",
 			"nombre"  => "required|min:4",
 			"especie" => "especie"
