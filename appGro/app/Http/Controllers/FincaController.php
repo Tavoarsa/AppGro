@@ -54,7 +54,8 @@ class FincaController extends Controller {
 			'nombre'	 		 	=> 'required',	
 			'representante'  		=> 'required',
 			'certficadoOperacion'   => 'required',			
-			'direcion'       		=> 'required'
+			'direcion'       		=> 'required',
+			//'marca'					=> 'required|mimes:jpeg'
 			
 			
 
@@ -70,6 +71,7 @@ class FincaController extends Controller {
 		$finca->idUser = $id_users; 
 		$finca->latitud = "120";
 		$finca->longitud = "120";
+		
 		$file = array('image' => Input::file('image'));
 		$destinationPath = 'img/fierro'; 
 		$extension = Input::file('image')->getClientOriginalExtension();

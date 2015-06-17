@@ -98,8 +98,8 @@
 
 							<div class="form-group">
 
-								{!!Form::label('direccion', 'Dirección')!!}
-								{!! Form::text('direccion', null, ["class" => "form-control"]) !!}
+								{!!Form::label('direcion', 'Dirección')!!}
+								{!! Form::text('direcion', null, ["class" => "form-control"]) !!}
 							</div>
 
 							<div class="form-group">

@@ -45,7 +45,7 @@
                         -->
                         </div>
                      <img src="../img/header-app/noticias-1.jpg" style="position: absolute; top: 23px; left: 480px; width: 500px; height: 300px;" />
-                        <img u="thumb" src="../img/header-app/noticias-1.jpg" />
+                        <img u="thumb" src="../img/header-app/noticias-1.jpg" class="img-circle" />
                     </div>
 
                     <div>
@@ -68,7 +68,7 @@
                         -->
                         </div>
                         <img src="../img/header-app/Senasa.png" style="position: absolute; top: 23px; left: 480px; width: 500px; height: 300px;" />
-                        <img u="thumb" src="../img/header-app/noticias-1.jpg" />
+                        <img u="thumb" src="../img/header-app/noticias-1.jpg"  class="img-circle" />
                     </div>
                     <div>
                         <div style="position: absolute; width: 480px; height: 300px; top: 10px; left: 10px;

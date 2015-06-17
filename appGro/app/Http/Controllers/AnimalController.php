@@ -4,7 +4,14 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnimalForm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Auth;
+use Input;
+use Session;
+use Redirect;
+
+
+
 
 class AnimalController extends Controller {
 
@@ -37,21 +44,44 @@ class AnimalController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
-	{		
 
-		$animal = new \App\Animal;
-		$id_users= Auth::id();
- 
-		$animal->idUser = $id_users;
- 
-		$animal->numero = \Request::input('numero');
+	public function cargarPadre()
+	{
+		$padre = Animal::getPadre();
+		return Response::json($padre);
+	}
 
-		$animal->nombre = \Request::input('nombre');
+	public function store(Request $request)
+	{	
+			$rules =array(
 
-		$animal->especie = \Request::input('especie');
- 
-		$animal->save();
+
+			'numeroAnimal'	 		 	=> 'required',	
+			'nombre'  					=> 'required',
+			'idPadre'   				=> 'required',			
+			'idMadre'       			=> 'required',
+			'raza'						=> 'required',
+			'genero'					=> 'required',
+			'fechaNacimiento'			=> 'required',
+			'pesoNacimiento'			=> 'required',
+			'fechaMuerte'				=> 'required',
+			'observaciones'				=> 'required',
+			//'foto'					 	=> 'required|mimes:jpeg'			
+
+			);
+
+		$this->validate($request,$rules);
+
+		$animal = new \App\Animal($request->all());
+		$id_users= Auth::id(); 
+		$animal->idUser = $id_users;         						  							
+		$file = array('foto' => Input::file('foto'));
+		$destinationPath = 'img/fierro'; 
+		$extension = Input::file('foto')->getClientOriginalExtension();
+		$fileName = rand(11111,99999).'.'.$extension;
+		Input::file('foto')->move($destinationPath, $fileName); 
+		$animal->image = $fileName;
+      	$animal->save(); 
  
 		return redirect('animal/create')->with('message', 'Registro Guardado');
 		

@@ -15,6 +15,7 @@ class CreateFincasTable extends Migration {
 		Schema::create('fincas', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('idUser');
 		    $table->foreign('idUser')->references('id')->on('users');
 			$table->string('nombre');
 			$table->string('direcion');

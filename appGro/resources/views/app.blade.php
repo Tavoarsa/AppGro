@@ -14,7 +14,8 @@
     <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="../js/jssor.js"></script>
     <script type="text/javascript" src="../js/jssor.slider.js"></script>
-    <script type="text/javascript" src="../js/trasition.js"></script>     
+    <script type="text/javascript" src="../js/trasition.js"></script> 
+
 
 
 	<!-- Fonts -->
@@ -64,5 +65,9 @@
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    
+
+    
 </body>
 </html>

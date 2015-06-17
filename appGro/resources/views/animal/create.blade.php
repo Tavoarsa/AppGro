@@ -1,6 +1,7 @@
 @extends('app')
  
 @section('content')
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
@@ -21,28 +22,71 @@
  
 				<div class="panel-body">
 					{!! Form::open(['route' => 'animal.store']) !!}
- 
-							<div class="form-group">
-								{!! Form::text('numero', null, ["class" => "form-control"]) !!}
+ 							<div class="form-group">
+								{!!Form::label('numeroAnimal', 'Numero Animal')!!}
+								{!! Form::text('numeroAnimal', null, ["class" => "form-control"]) !!}
 							</div>
 
-
 							<div class="form-group">
+								{!!Form::label('nombre', 'Nombre Animal')!!}
 								{!! Form::text('nombre', null, ["class" => "form-control"]) !!}
 							</div>
 
-							
-							<div class="form-group">
-								{!! Form::text('especie', null, ["class" => "form-control"]) !!}
+							<div  id="padre" class="form-group">
+								{!!Form::label('idPadre', 'Padre')!!}
+								{!! Form::text('idPadre', null, ["class" => "form-control"]) !!}
 							</div>
+
+							<div class="form-group">
+								{!!Form::label('idMadre', 'Madre')!!}
+								{!! Form::text('idMadre', null, ["class" => "form-control"]) !!}
+							</div>
+
+							<div class="form-group">
+								{!!Form::label('raza', 'Raza')!!}
+								{!! Form::select('raza', array('holsten' => 'Holsten', 'yersey' => 'Yersey','guir' => 'Guir'), 'Holtein')!!}
+							</div>
+
+							<div class="form-group">
+								{!!Form::label('genero', 'Genero')!!}
+								{!! Form::select('genero', array('hembra' => 'Hembra', 'macho' => 'Macho'), 'Hembra')!!}
+							</div>
+								{!!Form::label('fechaNacimiento', 'Fecha de Nacimiento')!!}
+								{!! Form::input('date', 'fechaNacimiento') !!}
+
+								
+								
+							</div>
+
+							<div class="form-group">
+								{!!Form::label('pesoNacimiento', 'Peso Nacimiento')!!}
+								{!! Form::text('pesoNacimiento', null,["class" => "form-control"]) !!}
+							</div>
+
+							<div class="form-group">
+								{!!Form::label('fechaMuerte', 'Fecha Muerte')!!}
+								{!! Form::input('date', 'fechaMuerte') !!}
+							</div>
+
+							<div class="form-group">
+								{!!Form::label('observaciones', 'Observaciones')!!}
+								{!! Form::text('observaciones', null, ["class" => "form-control"]) !!}
+							</div>
+
+								<div class="controls">
+								{!!Form::label('image', 'Fierro')!!}
+         						 {!! Form::file('foto') !!}	  							
+       						 </div>
  
 							
 							<div class="form-group">
-								{!! Form::submit('Send', ["class" => "btn btn-success btn-block"]) !!}
+								{!! Form::submit('Guardar', ["class" => "btn btn-success btn-block"]) !!}
 							</div>
  
 					{!! Form::close() !!}
 				</div>
+
+	
 			</div>
 		</div>
 	</div>
