@@ -58,15 +58,15 @@ class AnimalController extends Controller {
 
 			'numeroAnimal'	 		 	=> 'required',	
 			'nombre'  					=> 'required',
-			'idPadre'   				=> 'required',			
-			'idMadre'       			=> 'required',
+			'idPadre'   				=> 'required|integer',			
+			'idMadre'       			=> 'required|integer',
 			'raza'						=> 'required',
 			'genero'					=> 'required',
 			'fechaNacimiento'			=> 'required',
-			'pesoNacimiento'			=> 'required',
+			'pesoNacimiento'			=> 'required|integer',
 			'fechaMuerte'				=> 'required',
 			'observaciones'				=> 'required',
-			//'foto'					 	=> 'required|mimes:jpeg'			
+			'foto'					 	=> 'required|mimes:jpeg,bmp,png',		
 
 			);
 
@@ -74,12 +74,13 @@ class AnimalController extends Controller {
 
 		$animal = new \App\Animal($request->all());
 		$id_users= Auth::id(); 
-		$animal->idUser = $id_users;         						  							
-		$file = array('foto' => Input::file('foto'));
+		$animal->idUser = $id_users;
+		         						  							
+		$file = array('image' => Input::file('image'));
 		$destinationPath = 'img/fierro'; 
-		$extension = Input::file('foto')->getClientOriginalExtension();
+		$extension = Input::file('image')->getClientOriginalExtension();
 		$fileName = rand(11111,99999).'.'.$extension;
-		Input::file('foto')->move($destinationPath, $fileName); 
+		Input::file('image')->move($destinationPath, $fileName); 
 		$animal->image = $fileName;
       	$animal->save(); 
  

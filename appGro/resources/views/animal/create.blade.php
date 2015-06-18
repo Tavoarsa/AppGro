@@ -21,7 +21,7 @@
 				@endif
  
 				<div class="panel-body">
-					{!! Form::open(['route' => 'animal.store']) !!}
+					{!! Form::open(['route' => 'animal.store','class' =>'form','novalidate' =>'novalidate','files' => true]) !!}
  							<div class="form-group">
 								{!!Form::label('numeroAnimal', 'Numero Animal')!!}
 								{!! Form::text('numeroAnimal', null, ["class" => "form-control"]) !!}
@@ -73,9 +73,9 @@
 								{!! Form::text('observaciones', null, ["class" => "form-control"]) !!}
 							</div>
 
-								<div class="controls">
-								{!!Form::label('image', 'Fierro')!!}
-         						 {!! Form::file('foto') !!}	  							
+							<div class="controls">
+								{!!Form::label('foto', 'Foto')!!}
+         						 {!! Form::file('image') !!}	  							
        						 </div>
  
 							

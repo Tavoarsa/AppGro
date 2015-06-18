@@ -6,7 +6,7 @@ class Animal extends Model {
 
 	protected $table ='animals';
 	protected $fillable=['idUser','numeroAnimal','nombre','idPadre','idMadre','raza','genero',
-						'fechaNacimiento','pesoNacimiento','fechaMuerte','observaciones','image'];
+						'fechaNacimiento','pesoNacimiento','fechaMuerte','observaciones'];
 	protected $guarded = ['id'];
 
 
