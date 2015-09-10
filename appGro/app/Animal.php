@@ -23,6 +23,17 @@ class Animal extends Model {
 				return DB::select($sql);
 	}
 */
+	public static function uploadImages(){
+
+		$sql= 'select a.id,a.image,a.nombre
+				from
+				animals a';
+
+		return DB::select($sql);
+
+
+
+	}
 }
 
 

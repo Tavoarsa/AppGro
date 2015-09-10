@@ -115,7 +115,7 @@
 							</div>
 							<div class="controls">
 								{!!Form::label('marca', 'Fierro')!!}
-         						 {!! Form::file('image') !!}	  							
+         						 <input type="file" name="marca" required>   							
        						 </div>
  
 							

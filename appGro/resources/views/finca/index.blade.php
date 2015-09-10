@@ -2,7 +2,7 @@
  
 @section('content')
 
-
+<p>Hola</a>
 
 
 

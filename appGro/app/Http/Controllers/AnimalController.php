@@ -9,9 +9,7 @@ use Auth;
 use Input;
 use Session;
 use Redirect;
-
-
-
+use App\Animal;
 
 class AnimalController extends Controller {
 
@@ -24,34 +22,14 @@ class AnimalController extends Controller {
 	{
 		$this->middleware('auth');
 	}
+	
 	public function index()
-	{
-		return view('animal.index');
+	{		
+		$animal= Animal::all();
+		return view('animal.index',compact('$animal'));
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		return view("animal.create");
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-
-	public function cargarPadre()
-	{
-		$padre = Animal::getPadre();
-		return Response::json($padre);
-	}
-
-	public function store(Request $request)
+	public function add(Request $request)
 	{	
 			$rules =array(
 
@@ -66,26 +44,37 @@ class AnimalController extends Controller {
 			'pesoNacimiento'			=> 'required|integer',
 			'fechaMuerte'				=> 'required',
 			'observaciones'				=> 'required',
-			'foto'					 	=> 'required|mimes:jpeg,bmp,png',		
+			'image'					 	=> 'required|mimes:jpeg,bmp,png',		
 
 			);
 
-		$this->validate($request,$rules);
 
+		$this->validate($request,$rules);
 		$animal = new \App\Animal($request->all());
 		$id_users= Auth::id(); 
 		$animal->idUser = $id_users;
-		         						  							
-		$file = array('image' => Input::file('image'));
-		$destinationPath = 'img/fierro'; 
-		$extension = Input::file('image')->getClientOriginalExtension();
-		$fileName = rand(11111,99999).'.'.$extension;
-		Input::file('image')->move($destinationPath, $fileName); 
-		$animal->image = $fileName;
-      	$animal->save(); 
- 
-		return redirect('animal/create')->with('message', 'Registro Guardado');
+
+		$file = Request::file('image');
+		$extension = $file->getClientOriginalExtension();
+		Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
+		$animal = new Animal();
+		$animal->save();
+
+		return redirect('animal.index');
+
+
+	
 		
+		
+	}
+
+	public function get($nombre){
+	
+		$animal = Animal::where('nombre', '=', $nombre)->firstOrFail();
+		$file = Storage::disk('local')->get($animal->nombre);
+
+		return (new Response($file, 200))
+              ->header('Content-Type', $animal->nombre);
 	}
 
 	/**
@@ -127,9 +116,21 @@ class AnimalController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($id = null)
 	{
-		//
+		chmod($this->folder.'/'.$id, 0777);
+
+		if (unlink($this->folder.'/'.$id)) {
+			Session::flash('message','Eliminado correctamente');
+			Session::flash('class','success');
+		} else {
+			Session::flash('message','Error al eliminar');
+			Session::flash('class','danger');
+		}
+
+		return Redirect::to('/');
 	}
+
+
 
 }

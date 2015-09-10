@@ -19,6 +19,28 @@
 				@if (Session::has('message'))
 				    <div class="alert alert-success">{{ Session::get('message') }}</div>
 				@endif
+
+				<script>
+
+				function readURL(input) { 
+
+
+					if (input.files && input.files[0]) { 
+
+						var reader = new FileReader(); 
+						reader.onload = function (e) { 
+							$('#blah').attr('src', e.target.result);
+							 } 
+
+							 reader.readAsDataURL(input.files[0]); 
+							}
+						} 
+						$("#image").change(function(){ readURL(this); });
+
+
+
+
+				</script>
  
 				<div class="panel-body">
 					{!! Form::open(['route' => 'animal.store','class' =>'form','novalidate' =>'novalidate','files' => true]) !!}
@@ -75,7 +97,9 @@
 
 							<div class="controls">
 								{!!Form::label('foto', 'Foto')!!}
-         						 {!! Form::file('image') !!}	  							
+         						
+         						<input type="file" name="image" required> 
+         													
        						 </div>
  
 							

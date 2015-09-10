@@ -55,7 +55,7 @@ class FincaController extends Controller {
 			'representante'  		=> 'required',
 			'certficadoOperacion'   => 'required',			
 			'direcion'       		=> 'required',
-			//'marca'					=> 'required|mimes:jpeg'
+			'marca'					=> 'required|mimes:jpeg'
 			
 			
 

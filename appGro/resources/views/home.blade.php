@@ -2,10 +2,10 @@
 
 @section('content')
                 
-        <div style="position: relative; left: 50%; width: 5000px; text-align: center; margin-left: -2500px;">
+        <div style="position: relative;   background-color: #313132; left: 50%; width: 5000px;  text-align: center; margin-left: -2500px;">
             <!-- Jssor Slider Begin -->
-            <div id="slider1_container" style="position: relative; margin: 0 auto;
-                top: 0px; left: 0px; width: 980px; height: 400px; background: url(../img/header-app/main_bg.jpg) top center no-repeat;">
+            <div  id="slider1_container" style="position: relative; margin: 0 auto; 
+                top: 0px; left: 0px; width: 980px; height: 400px;  background: url(../img/header-app/main_bg.jpg) top center no-repeat;">
                 <!-- Loading Screen -->
                 <div u="loading" style="position: absolute; top: 0px; left: 0px;">
                     <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block;
@@ -45,7 +45,7 @@
                         -->
                         </div>
                      <img src="../img/header-app/noticias-1.jpg" style="position: absolute; top: 23px; left: 480px; width: 500px; height: 300px;" />
-                        <img u="thumb" src="../img/header-app/noticias-1.jpg" class="img-circle" />
+                        <img u="thumb" class="img-circle" src="../img/header-app/noticias-1.jpg" class="img-circle" />
                     </div>
 
                     <div>
