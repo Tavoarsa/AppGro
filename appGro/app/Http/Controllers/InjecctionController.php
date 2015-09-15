@@ -71,30 +71,20 @@ class InjecctionController extends Controller {
    return redirect()->route('injection.index');
 
 	 }
-
-	 $image = \Image::make('img/vacuna.jpg');
-   //Ruta donde queremos guardar las imagenes
-   $path = 'img/injections/';
- 
-   // Guardar Original
-   //$image->save($path.$file->getClientOriginalName());
-   // Cambiar de tamaño
-   $image->resize(450,450);
-   $image->save($path.$file->getClientOriginalName());
-
-   
-   $injection = new Injection();
-   $injection->name = Input::get('name');
-   $injection->descrition= Input::get('descrition');
-   $injection->image = $image;
-   $injection->save();
-   
-   return redirect()->route('injection.index');
+			
+	   $image = 'vacuna.jpg';    
+	   $injection = new Injection();
+	   $injection->name = Input::get('name');
+	   $injection->descrition= Input::get('descrition');
+	   $injection->image = $image;
+	   $injection->save();
+	   
+	   return redirect()->route('injection.index');
 
    
 	}
 
-	/**
+		/**
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
@@ -102,12 +92,44 @@ class InjecctionController extends Controller {
 	 */
 	public function show(Request $request)
 	{
-			//dd($request->get('name'));	
+		
+		//dd($request->name);
+		if($request->name==""){		
 
+			$injections=Injection::where('name','Error 404')->get();
+		}else
+		{
 			$injections= Injection::where('name','ILIKE','%'.trim($request->get(trim('name'))) .'%')->get();
 
-			return view ('injections.show',compact('injections'));	
+		if(sizeof($injections)==0){
+			//dd($injections);
+
+			$injections=Injection::where('name','Error 404')->get();
+
+		}
+
+
+		}
+
+		
+		
+
+	
+
+		return view ('injections.show',compact('injections'));	
 	}
+
+	public function show1($id)
+	{
+		$injections= Injection::where('id', $id)->get();
+		//dd($injections);
+		return view('injections.show1',compact('injections'));
+	}
+	
+	
+	
+
+
 
 	/**
 	 * Show the form for editing the specified resource.

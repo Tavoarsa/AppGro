@@ -55,11 +55,9 @@ Route::post('fileentry/add',[
 
 Route::resource('injection','InjecctionController');
 Route::get('injections/edit/{id}','InjecctionController@edit');
-Route::get('injections/show/{baymec}','InjecctionController@show');
+Route::get('injections/show1/{id}','InjecctionController@show1');
 
-//Route::get('injection', 'InjecctionController@search');
 
-//
 
 //Vacunas
 

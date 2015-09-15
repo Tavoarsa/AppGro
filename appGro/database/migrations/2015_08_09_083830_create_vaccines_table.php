@@ -16,11 +16,13 @@ class CreateVaccinesTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string ('name');			
-			$table->string ('filename');
-			$table->string('description');
-			$table->string('mime');			
-			$table->string('original_filename');
-
+			$table->string ('indications');
+			$table->string('Dosage');
+			$table->string ('composition');
+			$table->string ('application');
+			$table->string ('precautions');	
+			$table->string ('effects');		
+			$table->string ('image');			
 			$table->timestamps();
 		});
 	}

@@ -26,6 +26,7 @@
 
        
                      {!!Form::open(['route'=>'injection.show','method'=>'GET', 'class'=>'navbar-form navbar-left pull-right', 'role'=>'search'])!!}
+
                          <div class="form-group">
 
                             {!!Form::text('name',null,['class'=>'form-control','placeholder'=>'Nombre de Inyección'])!!}
@@ -80,11 +81,12 @@
                             @foreach($injections as $injection)
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
+                                    
                                       
                                       <img src="/img/injections/{{$injection->image}}" alt="{{$injection->name}}">
                                  
                                     <div class="caption">
-                                        <a href="{{url('injections/show', $injection->name) }}">
+                                        <a href="{{url('injections/show1', $injection->id) }}">
                                         <h3 >{{$injection->name}}</h3>
                                          </a>
 

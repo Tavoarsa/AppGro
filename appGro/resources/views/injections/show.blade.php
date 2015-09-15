@@ -28,21 +28,22 @@
 
                         <div class="row">
                             @foreach($injections as $injection)
-
+                            @if($injection->name=="Error 404")
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
                                   <a >
                                       <img src="/img/injections/{{$injection->image}}" alt="{{$injection->name}}">
                                   </a>
-                                  
-                                    <div class="caption">
-                                        <h3 >{{$injection->name}}</h3>
-                                        <h3>{{$injection->descrition}}</h3>
-                                        <p><a class="btn btn-primary" href="{{url('injections/edit', $injection->id) }}">Editar</a> </p>
-
-                                    </div>
+                                    
                                 </div>
                             </div>
+                           
+
+                         
+                            @endif
+
+                            
+                           
                             @endforeach                           
                         </div>
                     </div>
