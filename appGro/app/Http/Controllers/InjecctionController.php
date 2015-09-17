@@ -1,4 +1,5 @@
-<?php namespace App\Http\Controllers;
+<?php
+namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateInjectionRequest;
 use App\Http\Controllers\Controller;
@@ -6,7 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Injection;
 use Input;
 
-use Illuminate\Http\Request;//inyeccion de dependencias
+use Illuminate\Http\Request;
+//inyeccion de dependencias
 
 class InjecctionController extends Controller {
 
@@ -15,14 +17,12 @@ class InjecctionController extends Controller {
 	 *
 	 * @return Response
 	 */
-	
 
-	public function index()
-	{	
+	public function index() {
 
-		$injections= Injection::all();					
-		return view ('injections.index',compact('injections'));	
-		
+		$injections = Injection::all();
+		return view('injections.index', compact('injections'));
+
 	}
 
 	/**
@@ -30,8 +30,7 @@ class InjecctionController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
-	{
+	public function create() {
 		return view('injections.create');
 	}
 
@@ -40,96 +39,97 @@ class InjecctionController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
-	{
+	public function store() {
 
-	 
+		if (Input::hasFile('image')) {
+			$file = Input::file('image');
+			//Creamos una instancia de la libreria instalada
+			$image = \Image::make(\Input::file('image'));
+			//Ruta donde queremos guardar las imagenes
+			$path = 'img/injections/';
 
-	 if(Input::hasFile('image'))
-	 {
-	 	$file = Input::file('image');
-	 	//Creamos una instancia de la libreria instalada   
-   $image = \Image::make(\Input::file('image'));
-   //Ruta donde queremos guardar las imagenes
-   $path = 'img/injections/';
- 
-   // Guardar Original
-   //$image->save($path.$file->getClientOriginalName());
-   // Cambiar de tamaño
-   $image->resize(450,450);
-   $image->save($path.$file->getClientOriginalName());
-   // Guardar
-   //$image->save($path.'injec_'.$file->getClientOriginalName());
-   
-   //Guardamos nombre y nombreOriginal en la BD
-   $injection = new Injection();
-   $injection->name = Input::get('name');
-   $injection->descrition= Input::get('descrition');
-   $injection->image = $file->getClientOriginalName();
-   $injection->save();
-   
-   return redirect()->route('injection.index');
+			// Guardar Original
+			//$image->save($path.$file->getClientOriginalName());
+			// Cambiar de tamaño
+			$image -> resize(450, 450);
+			$image -> save($path . $file -> getClientOriginalName());
+			// Guardar
+			//$image->save($path.'injec_'.$file->getClientOriginalName());
 
-	 }
-			
-	   $image = 'vacuna.jpg';    
-	   $injection = new Injection();
-	   $injection->name = Input::get('name');
-	   $injection->descrition= Input::get('descrition');
-	   $injection->image = $image;
-	   $injection->save();
-	   
-	   return redirect()->route('injection.index');
+			//Guardamos nombre y nombreOriginal en la BD
+			$injection = new Injection();
+			$injection -> name = Input::get('name');
+			$injection -> descrition = Input::get('descrition');
+			$injection -> image = $file -> getClientOriginalName();
+			$injection -> save();
 
-   
+			return redirect() -> route('injection.index');
+
+		}
+
+		$image = 'vacuna.jpg';
+		$injection = new Injection();
+		$injection -> name = Input::get('name');
+		$injection -> descrition = Input::get('descrition');
+		$injection -> image = $image;
+		$injection -> save();
+
+		return redirect() -> route('injection.index');
+
 	}
 
-		/**
+	/**
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show(Request $request)
-	{
-		
-		//dd($request->name);
-		if($request->name==""){		
+	public function show(Request $request) {
 
-			$injections=Injection::where('name','Error 404')->get();
-		}else
+		
+		if ($request -> name == "") {
+
+			$injections = Injection::where('name', 'Error 404') -> get();
+			return view('injections.show', compact('injections'));
+
+		} else 
 		{
-			$injections= Injection::where('name','ILIKE','%'.trim($request->get(trim('name'))) .'%')->get();
+			$injections = Injection::where('name', 'ILIKE', '%' . trim($request -> get(trim('name'))) . '%') -> get();
+			
 
-		if(sizeof($injections)==0){
-			//dd($injections);
+			if (sizeof($injections) == 0) {
 
-			$injections=Injection::where('name','Error 404')->get();
+				
+				$injections = Injection::where('name', 'Error 404') -> get();
+				//dd($injections);
+
+				return view('injections.show', compact('injections'));				
+
+			}			
+
+			
+
+				$injections = Injection::where('name', 'ILIKE', '%' . trim($request -> get(trim('name'))) . '%') -> get();
+
+				return view('injections.show1', compact('injections'));	
+
+
+			
+
+			
+
 
 		}
-
-
-		}
-
-		
 		
 
-	
-
-		return view ('injections.show',compact('injections'));	
+		
 	}
 
-	public function show1($id)
-	{
-		$injections= Injection::where('id', $id)->get();
+	public function show1($id) {
+		$injections = Injection::where('id', $id) -> get();
 		//dd($injections);
-		return view('injections.show1',compact('injections'));
+		return view('injections.show1', compact('injections'));
 	}
-	
-	
-	
-
-
 
 	/**
 	 * Show the form for editing the specified resource.
@@ -137,10 +137,9 @@ class InjecctionController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
-	{
-		$injection= Injection::findOrFail($id);
-		return view('injections.edit',compact('injection'));
+	public function edit($id) {
+		$injection = Injection::findOrFail($id);
+		return view('injections.edit', compact('injection'));
 	}
 
 	/**
@@ -149,56 +148,46 @@ class InjecctionController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
-	{
+	public function update($id) {
 
-		
-		$injection= Injection::findOrFail($id);
-		 if(Input::hasFile('image')){
+		$injection = Injection::findOrFail($id);
+		if (Input::hasFile('image')) {
 
-		 	
-		 $file = Input::file('image');
-	 	//Creamos una instancia de la libreria instalada   
-   $image = \Image::make(\Input::file('image'));
-   //Ruta donde queremos guardar las imagenes
-   $path = 'img/injections/';;
- 
-   // Guardar Original
-   //$image->save($path.$file->getClientOriginalName());
-   // Cambiar de tamaño
-   $image->resize(450,450);
-   $image->save($path.$file->getClientOriginalName());
-   // Guardar
-   //$image->save($path.'injec_'.$file->getClientOriginalName());
-   
-   //Guardamos nombre y nombreOriginal en la BD
- 
-   $injection->name = Input::get('name');
-   $injection->descrition= Input::get('descrition');
-   $injection->image = $file->getClientOriginalName();
-   $injection->save();
-   
-   return redirect()->route('injection.index');
+			$file = Input::file('image');
+			//Creamos una instancia de la libreria instalada
+			$image = \Image::make(\Input::file('image'));
+			//Ruta donde queremos guardar las imagenes
+			$path = 'img/injections/';
+			;
 
-		 	
+			// Guardar Original
+			//$image->save($path.$file->getClientOriginalName());
+			// Cambiar de tamaño
+			$image -> resize(450, 450);
+			$image -> save($path . $file -> getClientOriginalName());
+			// Guardar
+			//$image->save($path.'injec_'.$file->getClientOriginalName());
 
+			//Guardamos nombre y nombreOriginal en la BD
 
+			$injection -> name = Input::get('name');
+			$injection -> descrition = Input::get('descrition');
+			$injection -> image = $file -> getClientOriginalName();
+			$injection -> save();
 
-		 }
+			return redirect() -> route('injection.index');
 
-$file = Injection::where('id',$id)->pluck('image');	
-		   
-		   $injection->name = Input::get('name');
-		   $injection->descrition= Input::get('descrition');
-		   $injection->image = $file;
-		   $injection->save();
-		   
-		   return redirect()->route('injection.index');
+		}
 
-		
-	 
-	 
-   
+		$file = Injection::where('id', $id) -> pluck('image');
+
+		$injection -> name = Input::get('name');
+		$injection -> descrition = Input::get('descrition');
+		$injection -> image = $file;
+		$injection -> save();
+
+		return redirect() -> route('injection.index');
+
 	}
 
 	/**
@@ -207,8 +196,7 @@ $file = Injection::where('id',$id)->pluck('image');
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
+	public function destroy($id) {
 		//
 	}
 

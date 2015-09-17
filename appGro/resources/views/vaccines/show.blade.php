@@ -11,12 +11,12 @@
 
 
                 <div class="panel-heading">
-               <a href="{{ url('/injection') }}" class="btn btn-info" role="button">Listado de Inyecciones</a>
+               <a href="{{ url('/vaccine') }}" class="btn btn-info" role="button">Listado de Vacunas</a>
        
-                     {!!Form::open(['route'=>'injection.show','method'=>'GET', 'class'=>'navbar-form navbar-left pull-right', 'role'=>'search'])!!}
+                     {!!Form::open(['route'=>'vaccine.show','method'=>'GET', 'class'=>'navbar-form navbar-left pull-right', 'role'=>'search'])!!}
                          <div class="form-group">
 
-                            {!!Form::text('name',null,['class'=>'form-control','placeholder'=>'Nombre de Inyección'])!!}
+                            {!!Form::text('name',null,['class'=>'form-control','placeholder'=>'Nombre de Vacuna'])!!}
                                                     
                          </div>
                           <button class= "btn btn-info" type="submit">Buscar</button> 
@@ -27,14 +27,14 @@
                 <div class="panel-body">
 
                         <div class="row">
-                            @foreach($injections as $injection)
+                            @foreach($vaccines as $vaccine)
 
-                            @if($injection->name==="Error 404") 
+                            @if($vaccine->name==="Error 404") 
 
                              <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
                                   <a >
-                                      <img src="/img/injections/{{$injection->image}}" alt="{{$injection->name}}">
+                                      <img src="/img/vaccines/{{$vaccine->image}}" alt="{{$vaccine->name}}">
                                   </a>
                                     
                                 </div>
@@ -46,12 +46,12 @@
 
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                    <img src="/img/injections/{{$injection->image}}" alt="{{$injection->name}}">
+                                    <img src="/img/vaccines/{{$vaccine->image}}" alt="{{$vaccine->name}}">
                                 
                                     <div class="caption">
-                                        <h3 >{{$injection->name}}</h3>
-                                        <h3>{{$injection->descrition}}</h3>
-                                        <p><a class="btn btn-primary" href="{{url('injections/edit', $injection->id) }}">Editar</a> </p>
+                                        <h3 >{{$vaccine->name}}</h3>
+                                        <h3>{{$vaccine->indications}}</h3>
+                                        <p><a class="btn btn-primary" href="{{url('vaccines/edit', $vaccine->id) }}">Editar</a> </p>
 
                                     </div>
                                 </div>

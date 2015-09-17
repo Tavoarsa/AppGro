@@ -1,19 +1,21 @@
-<?php namespace App\Http\Controllers;
+<?php
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Vaccine;
-use Request;
+	
+	
+use Input;
+use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
- 
 
 class VaccineController extends Controller {
 
-	public function __construct()
-	{
-		$this->middleware('auth');
+	public function __construct() {
+		$this -> middleware('auth');
 	}
 
 	/**
@@ -21,18 +23,17 @@ class VaccineController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
+	public function index() {
 		$vaccines = Vaccine::all();
-		return view('vaccines.index', compact('vaccines'));		
+		return view('vaccines.index', compact('vaccines'));
 	}
-/**
+
+	/**
 	 * Show the form for creating a new resource.
 	 *
 	 * @return Response
 	 */
-	public function create()
-	{
+	public function create() {
 		return view('vaccines.create');
 	}
 
@@ -41,95 +42,98 @@ class VaccineController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
-	{
-	 if(Input::hasFile('image'))
-	 {
-	 	$file = Input::file('image');//Creamos una instancia de la libreria instalada   
-  	    $image = \Image::make(\Input::file('image'));//Ruta donde queremos guardar las imagenes
-   		$path = 'img/injections/'; 
-	   // Cambiar de tamaño
-	    $image->resize(450,450);
-	    $image->save($path.$file->getClientOriginalName());//Guardar imagen.	   
-	   //Guardamos nombre y nombreOriginal en la BD
-	    $vaccine = new Vaccine();
-	    $vaccine->name = Input::get('name');
-	    $vaccine->indications= Input::get('indications');
-	    $vaccine->Dosage= Input::get('Dosage');
-	    $vaccine->composition= Input::get('composition');
-	    $vaccine->application= Input::get('application');
-	    $vaccine->precautions= Input::get('precautions');
-	    $vaccine->effects= Input::get('effects');
+	public function store() {
+		if (Input::hasFile('image')) {
+			$file = Input::file('image');
+			//Creamos una instancia de la libreria instalada
+			$image = \Image::make(\Input::file('image'));
+			//Ruta donde queremos guardar las imagenes
+			$path = 'img/vaccines/';
+			// Cambiar de tamaño
+			$image -> resize(450, 450);
+			$image -> save($path . $file -> getClientOriginalName());
+			//Guardar imagen.
+			//Guardamos nombre y nombreOriginal en la BD
+			$vaccine = new Vaccine();
+			$vaccine -> name = Input::get('name');
+			$vaccine -> indications = Input::get('indications');
+			$vaccine -> Dosage = Input::get('Dosage');
+			$vaccine -> composition = Input::get('composition');
+			$vaccine -> application = Input::get('application');
+			$vaccine -> precautions = Input::get('precautions');
+			$vaccine -> effects = Input::get('effects');
 
-	    $vaccine->image = $file->getClientOriginalName();
-	    $vaccine->save();
-	   
-	   return redirect()->route('vaccine.index');
+			$vaccine -> image = $file -> getClientOriginalName();
+			$vaccine -> save();
 
-	 }
-			
-	   $image = 'vacuna.jpg';    
-	   $vaccine = new Vaccine();
-	   $vaccine->name = Input::get('name');
-	   $vaccine->indications= Input::get('indications');
-	   $vaccine->Dosage= Input::get('Dosage');
-	   $vaccine->composition= Input::get('composition');
-	   $vaccine->application= Input::get('application');
-	   $vaccine->precautions= Input::get('precautions');
-	   $vaccine->effects= Input::get('effects');
-	   $vaccine->image = $image;
-	   $vaccine->save();
-	   
-	   return redirect()->route('vaccine.index');
+			return redirect() -> route('vaccine.index');
 
-   
+		}
+
+		$image = 'vacuna.jpg';
+		$vaccine = new Vaccine();
+		$vaccine -> name = Input::get('name');
+		$vaccine -> indications = Input::get('indications');
+		$vaccine -> Dosage = Input::get('Dosage');
+		$vaccine -> composition = Input::get('composition');
+		$vaccine -> application = Input::get('application');
+		$vaccine -> precautions = Input::get('precautions');
+		$vaccine -> effects = Input::get('effects');
+		$vaccine -> image = $image;
+		$vaccine -> save();
+
+		return redirect() -> route('vaccine.index');
+
 	}
 
-		/**
+	/**
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show(Request $request)
-	{
-		
-		//dd($request->name);
-		if($request->name==""){		
+	public function show(Request $request) {
+			if ($request -> name == "") {
 
-			$vaccines=Vaccine::where('name','Error 404')->get();
-		}else
+			$vaccines = Vaccine::where('name', 'Error 404') -> get();
+			return view('vaccines.show', compact('vaccines'));
+
+		} else 
 		{
-			$vaccines= Vaccine::where('name','ILIKE','%'.trim($request->get(trim('name'))) .'%')->get();
+			$vaccines = Vaccine::where('name', 'ILIKE', '%' . trim($request -> get(trim('name'))) . '%') -> get();
+			
 
-		if(sizeof($vaccines)==0){
-			//dd($injections);
+			if (sizeof($vaccines) == 0) {
 
-			$vaccines=Vaccine::where('name','Error 404')->get();
+				
+				$vaccines = Vaccine::where('name', 'Error 404') -> get();
+				//dd($injections);
+
+				return view('vaccines.show', compact('vaccines'));				
+
+			}			
+
+			
+
+				$vaccines = Vaccine::where('name', 'ILIKE', '%' . trim($request -> get(trim('name'))) . '%') -> get();
+
+				return view('vaccines.show1', compact('vaccines'));	
+
+
+			
+
+			
+
 
 		}
-
-
-		}
-
-		
-		
-
-	
-
-		return view ('injections.show',compact('injections'));	
 	}
 
-	public function show1($id)
-	{
-		$vaccines= Vaccine::where('id', $id)->get();
+	public function show1($id) {
+
+		$vaccines = Vaccine::where('id', $id) -> get();
 		//dd($injections);
-		return view('vaccines.show1',compact('vaccines'));
+		return view('vaccines.show1', compact('vaccines'));
 	}
-	
-	
-	
-
 
 
 	/**
@@ -138,10 +142,9 @@ class VaccineController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
-	{
-		$vaccine= Vaccine::findOrFail($id);
-		return view('vaccines.edit',compact('vaccine'));
+	public function edit($id) {
+		$vaccine = Vaccine::findOrFail($id);
+		return view('vaccines.edit', compact('vaccine'));
 	}
 
 	/**
@@ -150,65 +153,55 @@ class VaccineController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
-	{
+	public function update($id) {
 
-		
-		$vaccine= Vaccine::findOrFail($id);
-		 if(Input::hasFile('image')){
+		$vaccine = Vaccine::findOrFail($id);
+		if (Input::hasFile('image')) {
 
-		 	
-		 $file = Input::file('image');
-	 	//Creamos una instancia de la libreria instalada   
-   $image = \Image::make(\Input::file('image'));
-   //Ruta donde queremos guardar las imagenes
-   $path = 'img/vaccines/';;
- 
-   // Guardar Original
-   //$image->save($path.$file->getClientOriginalName());
-   // Cambiar de tamaño
-   $image->resize(450,450);
-   $image->save($path.$file->getClientOriginalName());
-   // Guardar
-   //$image->save($path.'injec_'.$file->getClientOriginalName());
-   
-   //Guardamos nombre y nombreOriginal en la BD
-  		$vaccine->name = Input::get('name');
-	   $vaccine->indications= Input::get('indications');
-	   $vaccine->Dosage= Input::get('Dosage');
-	   $vaccine->composition= Input::get('composition');
-	   $vaccine->application= Input::get('application');
-	   $vaccine->precautions= Input::get('precautions');
-	   $vaccine->effects= Input::get('effects');
-   $vaccine->image = $file->getClientOriginalName();
-   $vaccine->save();
-   
-   return redirect()->route('vaccine.index');
+			$file = Input::file('image');
+			//Creamos una instancia de la libreria instalada
+			$image = \Image::make(\Input::file('image'));
+			//Ruta donde queremos guardar las imagenes
+			$path = 'img/vaccines/';
+			;
 
-		 	
+			// Guardar Original
+			//$image->save($path.$file->getClientOriginalName());
+			// Cambiar de tamaño
+			$image -> resize(450, 450);
+			$image -> save($path . $file -> getClientOriginalName());
+			// Guardar
+			//$image->save($path.'injec_'.$file->getClientOriginalName());
 
+			//Guardamos nombre y nombreOriginal en la BD
+			$vaccine -> name = Input::get('name');
+			$vaccine -> indications = Input::get('indications');
+			$vaccine -> Dosage = Input::get('Dosage');
+			$vaccine -> composition = Input::get('composition');
+			$vaccine -> application = Input::get('application');
+			$vaccine -> precautions = Input::get('precautions');
+			$vaccine -> effects = Input::get('effects');
+			$vaccine -> image = $file -> getClientOriginalName();
+			$vaccine -> save();
 
+			return redirect() -> route('vaccine.index');
 
-		 }
+		}
 
-$file = Vaccine::where('id',$id)->pluck('image');	
-		   
-		    $vaccine->name = Input::get('name');
-	   $vaccine->indications= Input::get('indications');
-	   $vaccine->Dosage= Input::get('Dosage');
-	   $vaccine->composition= Input::get('composition');
-	   $vaccine->application= Input::get('application');
-	   $vaccine->precautions= Input::get('precautions');
-	   $vaccine->effects= Input::get('effects');
-		   $vaccine->image = $file;
-		   $vaccine->save();
-		   
-		   return redirect()->route('vaccine.index');
+		$file = Vaccine::where('id', $id) -> pluck('image');
 
-		
-	 
-	 
-   
+		$vaccine -> name = Input::get('name');
+		$vaccine -> indications = Input::get('indications');
+		$vaccine -> Dosage = Input::get('Dosage');
+		$vaccine -> composition = Input::get('composition');
+		$vaccine -> application = Input::get('application');
+		$vaccine -> precautions = Input::get('precautions');
+		$vaccine -> effects = Input::get('effects');
+		$vaccine -> image = $file;
+		$vaccine -> save();
+
+		return redirect() -> route('vaccine.index');
+
 	}
 
 	/**
@@ -217,8 +210,7 @@ $file = Vaccine::where('id',$id)->pluck('image');
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
+	public function destroy($id) {
 		//
 	}
 

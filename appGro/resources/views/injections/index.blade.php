@@ -81,12 +81,11 @@
                             @foreach($injections as $injection)
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                    
                                       
                                       <img src="/img/injections/{{$injection->image}}" alt="{{$injection->name}}">
                                  
                                     <div class="caption">
-                                        <a href="{{url('injections/show1', $injection->id) }}">
+                                        <a href="{{url('injection/show1', $injection->id) }}">
                                         <h3 >{{$injection->name}}</h3>
                                          </a>
 
