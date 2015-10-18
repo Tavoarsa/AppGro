@@ -12,7 +12,7 @@
                         {!!Form::open(['route'=>'vaccine.show','method'=>'GET', 'class'=>'navbar-form navbar-left pull-right', 'role'=>'search'])!!}
 
                         <div class="form-group">
-                        {!!Form::text('name',null,['class'=>'form-control','placeholder'=>'Nombre de Inyección'])!!}
+                        {!!Form::text('name',null,['class'=>'form-control','placeholder'=>'Nombre de Vacuna'])!!}
                         </div>
                         <button class= "btn btn-info" type="submit">Buscar</button> 
 

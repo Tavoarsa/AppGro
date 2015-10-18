@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Vaccine;
+use App\Defoult;
 	
 	
 use Input;
@@ -70,7 +71,9 @@ class VaccineController extends Controller {
 
 		}
 
-		$image = 'vacuna.jpg';
+
+		$default = Defoult::where('name', 'vaccine') -> pluck('image');
+
 		$vaccine = new Vaccine();
 		$vaccine -> name = Input::get('name');
 		$vaccine -> indications = Input::get('indications');
@@ -79,7 +82,7 @@ class VaccineController extends Controller {
 		$vaccine -> application = Input::get('application');
 		$vaccine -> precautions = Input::get('precautions');
 		$vaccine -> effects = Input::get('effects');
-		$vaccine -> image = $image;
+		$vaccine -> image = $default;
 		$vaccine -> save();
 
 		return redirect() -> route('vaccine.index');
@@ -95,7 +98,12 @@ class VaccineController extends Controller {
 	public function show(Request $request) {
 			if ($request -> name == "") {
 
-			$vaccines = Vaccine::where('name', 'Error 404') -> get();
+			$vaccines = Defoult::where('name', 'no_found') -> get();
+			//pluck('name');
+			
+			//$vaccines = Vaccine::where('name', '$default') -> get();
+			//dd($vaccines);
+
 			return view('vaccines.show', compact('vaccines'));
 
 		} else 
@@ -106,9 +114,8 @@ class VaccineController extends Controller {
 			if (sizeof($vaccines) == 0) {
 
 				
-				$vaccines = Vaccine::where('name', 'Error 404') -> get();
-				//dd($injections);
-
+				$vaccines = Defoult::where('name', 'no_found') -> get();
+				
 				return view('vaccines.show', compact('vaccines'));				
 
 			}			

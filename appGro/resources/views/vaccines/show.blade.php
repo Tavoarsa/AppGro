@@ -29,7 +29,7 @@
                         <div class="row">
                             @foreach($vaccines as $vaccine)
 
-                            @if($vaccine->name==="Error 404") 
+                            @if($vaccine->name==="no_found") 
 
                              <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">

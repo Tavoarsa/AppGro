@@ -5,6 +5,7 @@ use App\Http\Requests\CreateInjectionRequest;
 use App\Http\Controllers\Controller;
 
 use App\Injection;
+use App\Defoult;
 use Input;
 
 use Illuminate\Http\Request;
@@ -67,11 +68,15 @@ class InjecctionController extends Controller {
 
 		}
 
-		$image = 'vacuna.jpg';
+	
+
+		
+		$default = Defoult::where('name', 'injection') -> pluck('image');
+
 		$injection = new Injection();
 		$injection -> name = Input::get('name');
 		$injection -> descrition = Input::get('descrition');
-		$injection -> image = $image;
+		$injection -> image = $default;
 		$injection -> save();
 
 		return redirect() -> route('injection.index');
@@ -89,7 +94,7 @@ class InjecctionController extends Controller {
 		
 		if ($request -> name == "") {
 
-			$injections = Injection::where('name', 'Error 404') -> get();
+			$injections =  Defoult::where('name', 'no_found') -> get();
 			return view('injections.show', compact('injections'));
 
 		} else 
@@ -100,7 +105,7 @@ class InjecctionController extends Controller {
 			if (sizeof($injections) == 0) {
 
 				
-				$injections = Injection::where('name', 'Error 404') -> get();
+				$injections =  Defoult::where('name', 'no_found') -> get();
 				//dd($injections);
 
 				return view('injections.show', compact('injections'));				

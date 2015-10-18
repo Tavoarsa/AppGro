@@ -10,6 +10,7 @@ use Input;
 use Session;
 use Redirect;
 use App\Animal;
+use App\Defoult;
 
 class AnimalController extends Controller {
 
@@ -25,58 +26,95 @@ class AnimalController extends Controller {
 	
 	public function index()
 	{		
-		$animal= Animal::all();
-		return view('animal.index',compact('$animal'));
+		$animals= Animal::all();
+		return view('animals.index',compact('animals'));
+	}
+		public function create()
+	{
+		$madre= Animal::where('genero', 'hembra') -> lists('nombre','id');
+		$padre= Animal::where('genero', 'macho') -> lists('nombre','id');
+		$selected=array();
+		
+		//dd($madre);
+
+		return view("animals.create",compact('madre','selected','padre'));
 	}
 
-	public function add(Request $request)
+
+	public function store(Request $request)
 	{	
 			$rules =array(
 
 
 			'numeroAnimal'	 		 	=> 'required',	
 			'nombre'  					=> 'required',
-			'idPadre'   				=> 'required|integer',			
-			'idMadre'       			=> 'required|integer',
+			//'idPadre'   				=> 'required|integer',			
+			//'idMadre'       			=> 'required|integer',
 			'raza'						=> 'required',
 			'genero'					=> 'required',
 			'fechaNacimiento'			=> 'required',
 			'pesoNacimiento'			=> 'required|integer',
 			'fechaMuerte'				=> 'required',
 			'observaciones'				=> 'required',
-			'image'					 	=> 'required|mimes:jpeg,bmp,png',		
+			//'image'					 	=> 'required|mimes:jpeg,bmp,png',		
 
 			);
 
 
+
 		$this->validate($request,$rules);
+		
+
+
+		
+		
+
 		$animal = new \App\Animal($request->all());
+
 		$id_users= Auth::id(); 
+		$madre=$request->madre;
+		$padre=$request->padre;
+		//dd($madre);
+
+		$animal->idMadre= $madre;
+		$animal->idPadre= $padre;
+
 		$animal->idUser = $id_users;
 
-		$file = Request::file('image');
-		$extension = $file->getClientOriginalExtension();
-		Storage::disk('local')->put($file->getFilename().'.'.$extension,  File::get($file));
-		$animal = new Animal();
-		$animal->save();
+		if (Input::hasFile('image')) {
+			//dd('hola');
 
-		return redirect('animal.index');
+		$file = Input::file('image');//Creamos una instancia de la libreria instalada
+		$image = \Image::make(\Input::file('image'));//Ruta donde queremos guardar las imagenes
+		$path = 'img/animal/';			
+			// Cambiar de tamaño
+		$image -> resize(450, 450);
+		$image -> save($path . $file -> getClientOriginalName());	
+		$animal->image = $file -> getClientOriginalName();
 
+		
+		
+      	$animal->save(); 
+
+      	return redirect() -> route('animal.index');
+      	}
+
+      	$image='animal';	     
+
+      	$default = Defoult::where('name', $image) -> pluck('image');
+
+      	$animal->image = $default;
+      	//dd($farm->patent);
+      	
+      	$animal->save();
+      	return redirect() -> route('animal.index');
 
 	
 		
 		
 	}
 
-	public function get($nombre){
 	
-		$animal = Animal::where('nombre', '=', $nombre)->firstOrFail();
-		$file = Storage::disk('local')->get($animal->nombre);
-
-		return (new Response($file, 200))
-              ->header('Content-Type', $animal->nombre);
-	}
-
 	/**
 	 * Display the specified resource.
 	 *

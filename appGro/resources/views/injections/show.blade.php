@@ -29,7 +29,7 @@
                         <div class="row">
                             @foreach($injections as $injection)
 
-                            @if($injection->name==="Error 404") 
+                            @if($injection->name==="no_found") 
 
                              <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">

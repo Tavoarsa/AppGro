@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,44 +13,34 @@
 */
 
 //Route::get('/', 'WelcomeController@index');
+
+//Home
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
-Route::resource('animal','AnimalController' );
-Route::resource('vacuna','VacunaController');
-
-//Route::resource('finca','FincaController' );
-//Route::get('animal/catAnimal','AnimalController@catAnimal');
 
 
-Route::post('/store','AnimalController@store');
-Route::get('/destroy/{id}','AnimalController@destroy');
-
-
-Route::resource('/','AnimalController');
 
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
-	'index '=>'AnimalController',
+	'index '=>'HomeController',
 ]);
 
-Route::get('catalago/animal', 'CatalagoController@index');
-
-//Routes animal
-Route::get('animal', 'AnimalController@index');
-Route::get('animal/get/{nombre}', [
-	'as' => 'getanimal', 'uses' => 'AnimalController@get']);
-Route::post('animal/add',[ 
-        'as' => 'addanimal', 'uses' => 'AnimalController@add']);
+//Animal
 
 
+Route::resource('animal','AnimalController');
 
-Route::get('fileentry', 'FileEntryController@index');
-Route::get('fileentry/get/{filename}', [
-	'as' => 'getentry', 'uses' => 'FileEntryController@get']);
-Route::post('fileentry/add',[ 
-        'as' => 'addentry', 'uses' => 'FileEntryController@add']);
+//Disease
+
+Route::resource('disease','DiseaseController');
+
+
+
+//Farm
+Route::resource('farm','FarmController');
+      
 
 //Injection
 
@@ -63,13 +54,31 @@ Route::resource('vaccine','VaccineController');
 Route::get('vaccine/edit/{id}','VaccineController@edit');
 Route::get('vaccine/show1/{id}','VaccineController@show1');
 
+//Mail
+Route::get('sendemail', function () {
+
+    $data = array(
+        'name' => "Learning Laravel",
+    );
+
+    Mail::send('emails.test', $data, function ($message) {
+
+        $message->from('tavo.cr23@gmail.com', 'Learning Laravel');
+
+        $message->to('tavo.cr23@gmail.com')->subject('Learning Laravel test email');
+
+    });
+
+    return "Your email has been sent successfully";
+
+});
+
+//Calendar
+
+Route::resource('calendar','CalendarController');
 
 
 
-//Vacunas
 
-Route::get('vaccine', 'VaccineController@index');
-Route::get('vaccine/get/{original_filename}', [
-	'as' => 'getvaccine', 'uses' => 'VaccineController@get']);
-Route::post('VaccineController/add',[ 
-        'as' => 'addvaccine', 'uses' => 'VaccineController@add']);
+
+
