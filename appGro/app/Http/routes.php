@@ -31,6 +31,7 @@ Route::controllers([
 
 
 Route::resource('animal','AnimalController');
+Route::get('animal/registro_sanitario/{id}','AnimalController@registroSanitario');
 
 //Disease
 

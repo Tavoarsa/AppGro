@@ -46,7 +46,7 @@
 					{!! Form::open(['route' => 'animal.store','class' =>'form','novalidate' =>'novalidate','files' => true]) !!}
  							<div class="form-group">
 								{!!Form::label('numeroAnimal', 'Numero Animal')!!}
-								{!! Form::text('numeroAnimal', $numeroAnimal, array("class" => "form-control", 'placeholder' => 'Ejemplo:0001')) !!}
+								{!! Form::text('numeroAnimal',null, array("class" => "form-control", 'placeholder' => 'Ejemplo:0001')) !!}
 							</div>
 
 							<div class="form-group">

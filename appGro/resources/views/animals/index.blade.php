@@ -14,13 +14,14 @@
 
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
+                                <h3>{{$animal->nombre}}</h3>
                                       
                                       <img src="/img/animal/{{$animal->image}}" alt="{{$animal->nombre}}">
+                                       <a class="btn btn-primary" href="{{url('animal/registro_sanitario',$animal->id) }}"></a> 
                                  
                                     <div class="caption">
-                                        <a>
-                                       
-                                         </a>
+                                      <h3>{{$animal->id}}</h3>
+                                        
 
                                     </div>
                                 </div>

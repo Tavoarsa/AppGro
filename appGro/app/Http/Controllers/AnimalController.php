@@ -11,6 +11,7 @@ use Session;
 use Redirect;
 use App\Animal;
 use App\Defoult;
+use App\Farm;
 
 class AnimalController extends Controller {
 
@@ -34,8 +35,8 @@ class AnimalController extends Controller {
 	public function create()
 	{
 		//Cosecutivo de numeroAnimal
-		$numeroAnimal_Q= Animal::where('idUser',Auth::id())->max('numeroAnimal');//dd($numeroAnimal_Q);
-		$numeroAnimal=$numeroAnimal_Q+ "1";
+		//$numeroAnimal_Q= Animal::where('idUser',Auth::id())->max('numeroAnimal');//dd($numeroAnimal_Q);
+		//$numeroAnimal=$numeroAnimal_Q+ "1";
 		//Retorno del nombre de padre y madre		
 		$madre= \DB::table('animals')
                     ->where('genero','hembra')
@@ -89,36 +90,58 @@ class AnimalController extends Controller {
 		//$madre=$request->madre;
 
 		//$padre=$request->padre;
-		$animal = new Animal();	
-		//Validamos si padre o madre son desconocido y asignamos nombre
-		if(empty($request->madre) || empty($request->padre))
-		{//dd("hola");
-			$animal->idUser = $id_users;
-			$animal->numeroAnimal=$request->numeroAnimal .''."arsa";
-			$animal->nombre= "Desconocido";
-			$animal->idMadre= "1000000";
-			$animal->idPadre= "10000000";
-			$animal->raza = $request->raza;
-			$animal->genero= $request->genero;
-			$animal->fechaNacimiento= $request->fechaNacimiento;
-			$animal->pesoNacimiento= $request->pesoNacimiento;
-			$animal->observaciones= $request->observaciones;
-
-		}else
-		{
+		$animal = new Animal();
+		$farm= \DB::table('farms')->first();
 			
-			$animal->numeroAnimal=$request->numeroAnimal .''."arsa";
-			$animal->nombre= $request->nombre;
-			$animal->idMadre= $request->madre;
-			$animal->idPadre= $request->padre;
-			$animal->idUser = $id_users;
-			$animal->raza = $request->raza;
-			$animal->genero= $request->genero;
-			$animal->fechaNacimiento= $request->fechaNacimiento;
-			$animal->pesoNacimiento= $request->pesoNacimiento;
-			$animal->observaciones= $request->observaciones;
+		//Validamos si padre o madre son desconocido y asignamos nombre
 
-		}
+				
+
+			if($request->madre == null && $request->padre ==null)
+			{
+				$animal->idMadre= "000";
+				$animal->idPadre= "000";				
+
+			}elseif($request->padre==null){
+				
+				$animal->idPadre= "000";
+				$animal->idMadre=$request->madre;
+			
+				
+			}elseif($request->madre==null){
+				$animal->idMadre='000';	
+				$animal->idPadre= $request->padre;		
+
+
+			}else{
+			$animal->idMadre=$request->madre;
+			$animal->idPadre= $request->padre;	
+				
+				
+
+
+			}	
+				$animal->idUser = $id_users;
+				$animal->numeroAnimal= $farm->name.''.$request->numeroAnimal;//dd($animal->numeroAnimal);
+				$animal->nombre= $request->nombre;			
+				$animal->raza = $request->raza;
+				$animal->genero= $request->genero;
+				$animal->fechaNacimiento= $request->fechaNacimiento;
+				$animal->pesoNacimiento= $request->pesoNacimiento;
+				$animal->observaciones= $request->observaciones;
+
+			
+			
+				
+
+				
+							
+						
+
+				
+		//dd($request->padre);
+
+		
 						
 
 		if (Input::hasFile('image')) {
@@ -154,6 +177,19 @@ class AnimalController extends Controller {
 		
 		
 	}
+
+	public function registroSanitario($id)
+	{
+		
+
+		$animals= \DB::table('animals')                    
+                    ->Where('id',$id)
+                    ->lists('genero','nombre');
+		
+
+		return view('animals.hembra',compact('animals'));
+	}
+
 
 	
 	/**
