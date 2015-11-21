@@ -18,8 +18,8 @@
                                       <img src="/img/animal/{{$animal->image}}" alt="{{$animal->nombre}}">
                                  
                                     <div class="caption">
-                                        
-                                        <h3 >{{$animal->nombre}}</h3>
+                                        <a>
+                                       
                                          </a>
 
                                     </div>

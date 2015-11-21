@@ -26,18 +26,30 @@ class AnimalController extends Controller {
 	
 	public function index()
 	{		
-		$animals= Animal::all();
+		$animals= Animal::where('idUser',Auth::id())->get();
+		//dd($animals);
 		return view('animals.index',compact('animals'));
 	}
-		public function create()
+
+	public function create()
 	{
-		$madre= Animal::where('genero', 'hembra') -> lists('nombre','id');
-		$padre= Animal::where('genero', 'macho') -> lists('nombre','id');
+		//Cosecutivo de numeroAnimal
+		$numeroAnimal_Q= Animal::where('idUser',Auth::id())->max('numeroAnimal');//dd($numeroAnimal_Q);
+		$numeroAnimal=$numeroAnimal_Q+ "1";
+		//Retorno del nombre de padre y madre		
+		$madre= \DB::table('animals')
+                    ->where('genero','hembra')
+                    ->Where('idUser',Auth::id())
+                    ->lists('nombre','id');//dd($madre);
+		$padre= \DB::table('animals')
+                    ->where('genero','macho')
+                    ->Where('idUser',Auth::id())
+                    ->lists('nombre','id');
 		$selected=array();
 		
 		//dd($madre);
 
-		return view("animals.create",compact('madre','selected','padre'));
+		return view("animals.create",compact('madre','selected','padre','numeroAnimal'));
 	}
 
 
@@ -54,7 +66,7 @@ class AnimalController extends Controller {
 			'genero'					=> 'required',
 			'fechaNacimiento'			=> 'required',
 			'pesoNacimiento'			=> 'required|integer',
-			'fechaMuerte'				=> 'required',
+			//'fechaMuerte'				=> 'required',
 			'observaciones'				=> 'required',
 			//'image'					 	=> 'required|mimes:jpeg,bmp,png',		
 
@@ -63,23 +75,51 @@ class AnimalController extends Controller {
 
 
 		$this->validate($request,$rules);
-		
+		$id_users= Auth::id();
 
 
 		
 		
 
-		$animal = new \App\Animal($request->all());
+			//Registramos el Peso del animal.
+		//$weight= new Weight();
+		//$weight->idUser=$id_users;
 
-		$id_users= Auth::id(); 
-		$madre=$request->madre;
-		$padre=$request->padre;
-		//dd($madre);
+		 
+		//$madre=$request->madre;
 
-		$animal->idMadre= $madre;
-		$animal->idPadre= $padre;
+		//$padre=$request->padre;
+		$animal = new Animal();	
+		//Validamos si padre o madre son desconocido y asignamos nombre
+		if(empty($request->madre) || empty($request->padre))
+		{//dd("hola");
+			$animal->idUser = $id_users;
+			$animal->numeroAnimal=$request->numeroAnimal .''."arsa";
+			$animal->nombre= "Desconocido";
+			$animal->idMadre= "1000000";
+			$animal->idPadre= "10000000";
+			$animal->raza = $request->raza;
+			$animal->genero= $request->genero;
+			$animal->fechaNacimiento= $request->fechaNacimiento;
+			$animal->pesoNacimiento= $request->pesoNacimiento;
+			$animal->observaciones= $request->observaciones;
 
-		$animal->idUser = $id_users;
+		}else
+		{
+			
+			$animal->numeroAnimal=$request->numeroAnimal .''."arsa";
+			$animal->nombre= $request->nombre;
+			$animal->idMadre= $request->madre;
+			$animal->idPadre= $request->padre;
+			$animal->idUser = $id_users;
+			$animal->raza = $request->raza;
+			$animal->genero= $request->genero;
+			$animal->fechaNacimiento= $request->fechaNacimiento;
+			$animal->pesoNacimiento= $request->pesoNacimiento;
+			$animal->observaciones= $request->observaciones;
+
+		}
+						
 
 		if (Input::hasFile('image')) {
 			//dd('hola');
@@ -91,6 +131,7 @@ class AnimalController extends Controller {
 		$image -> resize(450, 450);
 		$image -> save($path . $file -> getClientOriginalName());	
 		$animal->image = $file -> getClientOriginalName();
+		//dd($animal);
 
 		
 		
