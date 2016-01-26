@@ -148,7 +148,9 @@ return [
 		'App\Providers\RouteServiceProvider',
 		'Torann\GeoIP\GeoIPServiceProvider',
 		'Laravel\Socialite\SocialiteServiceProvider',
-		'Intervention\Image\ImageServiceProvider'
+		'Intervention\Image\ImageServiceProvider',
+		'Barryvdh\DomPDF\ServiceProvider'
+		
 		
 
 
@@ -203,7 +205,9 @@ return [
 		'Form'      => 'Illuminate\Html\FormFacade',
 		'GeoIP'		=> 'Torann\GeoIP\GeoIPFacade',
 		'Socialize' => 'Laravel\Socialite\Facades\Socialite',
-		'Image'		 => 'Intervention\Image\Facades\Image',
+		'Image'		=> 'Intervention\Image\Facades\Image',
+		'PDF'       => 'Barryvdh\DomPDF\Facade',
+		
 		
 
 	],

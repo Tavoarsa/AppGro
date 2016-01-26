@@ -17,6 +17,8 @@ class CreateCalendarsTable extends Migration {
 			$table->increments('id');
 			$table->integer('idUser');
 			$table->foreign('idUser')->references('id')->on('users');
+			$table->integer('idFarm');
+		    $table->foreign('idFarm')->references('id')->on('farms');	
 			$table->string ('title');
 			$table->string ('body');
 			$table->string ('url');

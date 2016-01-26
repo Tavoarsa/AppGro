@@ -16,11 +16,12 @@
                                 <div class="thumbnail">
                                 <h3>{{$animal->nombre}}</h3>
                                       
-                                      <img src="/img/animal/{{$animal->image}}" alt="{{$animal->nombre}}">
-                                       <a class="btn btn-primary" href="{{url('animal/registro_sanitario',$animal->id) }}"></a> 
+                                       <a  href="{{url('animal/control_animal',$animal->id) }}">
+                                            <img src="/img/animal/{{$animal->image}}" alt="{{$animal->nombre}}">
+                                        </a> 
                                  
                                     <div class="caption">
-                                      <h3>{{$animal->id}}</h3>
+                                    
                                         
 
                                     </div>

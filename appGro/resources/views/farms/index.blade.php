@@ -11,19 +11,15 @@
                     <div class="panel-body">
                         <div class="row">
                             @foreach($farms as $farm)
-
-                            <div class="col-sm-6 col-md-4">
-                                <div class="thumbnail">
-                                      
-                                      <img src="/img/patent/{{$farm->patent}}" alt="{{$farm->name}}">
-                                 
-                                    <div class="caption">
-                                        
-                                        <h3 >{{$farm->name}}</h3>
-                                         </a>
-
+                                <div class="col-sm-6 col-md-4">
+                                   <div class="thumbnail">                                      
+                                      <a href="{{ url('/portal',$farm->id) }}">
+                                        <img src="/img/patent/{{$farm->patent}}" alt="{{$farm->name}}">
+                                      </a>                                
+                                    <div class="caption">                                        
+                                       <h3 >{{$farm->name}}</h3>
                                     </div>
-                                </div>
+                                    </div>
                             </div>
                             @endforeach                           
                         </div>
