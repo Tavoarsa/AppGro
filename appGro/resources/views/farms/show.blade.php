@@ -22,7 +22,7 @@
                                     <div class="caption">
                                         <h3 >{{$farm->name}}</h3>
                                         <h3>{{$farm->exploitation}}</h3>
-                                        <p><a class="btn btn-primary" href="{{url('farm/edit', $farm->id) }}">Editar</a> </p>
+                                        <p><a class="btn btn-small btn-info" href="{{url('farm/edit', $farm->id) }}">Editar</a> </p>
 
                                     </div>
                                 </div>

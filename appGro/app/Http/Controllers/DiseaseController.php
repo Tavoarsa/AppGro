@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Disease;
 use Auth;
+use Session;
 
 class DiseaseController extends Controller {
 
@@ -52,15 +53,22 @@ class DiseaseController extends Controller {
 				'name'	 		 	=> 'required',	
 				'description'  					=> 'required',		
 				'symptom'						=> 'required',
-				'genero'					=> 'required',
-				'vaccinationAge'			=> 'required|integer',
-				'boosterInjection'			=> 'required|integer',
+				
+				'vaccinationAge'			=> 'required',
+				'boosterInjection'			=> 'required',
 					
 
 				);
 			$this->validate($request,$rules);
+			$idFarm=Session::get('key');
 			
 		$disease = new Disease();
+		if($idFarm==null){			
+				$disease->idFarm=1;
+			}else
+			{
+				$disease->idFarm=$idFarm;	
+			}
 		$disease->idUser=Auth::id();
 		$disease->name= $request->name;
 		$disease->description=$request->description;

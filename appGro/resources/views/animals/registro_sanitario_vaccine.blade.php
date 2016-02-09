@@ -14,7 +14,7 @@
 
 
 
-				 {!! Form::open(array('url'=>'animal/registro_sanitario/ejecutar_vacunas','method'=>'POST', 'files'=>true)) !!}				
+				 {!! Form::open(array('url'=>'animal/registro_sanitario/ejecutar_vacunas','method'=>'POST','novalidate' =>'novalidate', 'class' =>'form','files'=>true)) !!}				
 				 
 				 			<div  class="form-group">
 								{!!Form::label('animalName', 'Animal')!!}

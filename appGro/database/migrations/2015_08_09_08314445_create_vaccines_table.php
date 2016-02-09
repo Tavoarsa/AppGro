@@ -21,7 +21,7 @@ class CreateVaccinesTable extends Migration {
 			$table->foreign('idProvider')->references('id')->on('providers');
 			$table->integer('idFarm');
 		    $table->foreign('idFarm')->references('id')->on('farms');	
-			$table->string ('name');			
+			$table->string ('nameV');			
 			$table->string ('indications')->nullable();
 			$table->string('Dosage')->nullable();
 			$table->string ('composition')->nullable();

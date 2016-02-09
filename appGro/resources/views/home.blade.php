@@ -41,16 +41,16 @@
         <div class="flexslider">
           <ul class="slides">
             <li>
-              <img src="/img/home/kitchen_adventurer_cheesecake_brownie.jpg" />
+              <img src="/img/home/dia_inginiero_agronomo.jpg" />
             </li>
             <li>
-              <img src="/img/home/kitchen_adventurer_lemon.jpg" />
+              <img src="/img/home/vacas.jpg" />
             </li>
             <li>
-              <img src="/img/home/kitchen_adventurer_donut.jpg" />
+              <img src="/img/home/vacas1.jpg" />
             </li>
             <li>
-              <img src="/img/home/kitchen_adventurer_caramel.jpg" />
+              <img src="/img/home/expo.jpg" />
             </li>
           </ul>
         </div>

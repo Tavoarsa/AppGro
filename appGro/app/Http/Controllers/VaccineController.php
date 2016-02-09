@@ -7,6 +7,7 @@ use App\Defoult;
 use App\Provider;
 
 use Auth;
+use Session;
 	
 	
 use Input;
@@ -40,6 +41,10 @@ class VaccineController extends Controller {
 	public function create() {
 
 		$providers= Provider::all()->lists('name','id');
+		if(count($providers)==0)
+		{
+			return view('providers.store');
+		}
 		return view('vaccines.create',compact('providers'));
 	}
 
@@ -49,6 +54,21 @@ class VaccineController extends Controller {
 	 * @return Response
 	 */
 	public function store(Request $request) {
+
+		$rules =array(
+
+				'nameV'  					=> 'required',		
+				'application'				=> 'required',
+				'precautions'				=> 'required',
+				'effects'					=> 'required',
+				'size'						=> 'required',
+				'price'					=> 'required|integer',
+				
+				);
+				//dd($request->idFarm);
+		$this->validate($request,$rules);
+		//GET ID FARM
+		$idFarm=Session::get('key');
 		if (Input::hasFile('image')) {
 			$file = Input::file('image');
 			//Creamos una instancia de la libreria instalada
@@ -61,21 +81,27 @@ class VaccineController extends Controller {
 			//Guardar imagen.
 			//Guardamos nombre y nombreOriginal en la BD
 			$vaccine = new Vaccine();
+			if($idFarm==null){			
+				$vaccine->idFarm=1;
+			}else
+			{
+				$vaccine->idFarm=$idFarm;	
+			}
 			$vaccine -> idUser = Auth::id();
 		
 			$vaccine -> idProvider = $request->idProvider;
 
-			$vaccine -> nameV = Input::get('name');
+			$vaccine -> nameV = Input::get('nameV');
 			$vaccine -> indications = Input::get('indications');
 			$vaccine -> Dosage = Input::get('Dosage');
 			$vaccine -> composition = Input::get('composition');
 			$vaccine -> application = Input::get('application');
 			$vaccine -> precautions = Input::get('precautions');
 			$vaccine -> effects = Input::get('effects');
-			$vaccine-> size=Input::get('sizes');
-			$vaccine-> price =Input::get('prices');
+			$vaccine-> size=Input::get('size');
+			$vaccine-> price =Input::get('price');
 			
-			$price_ml= $request->prices/$request->sizes;	
+			$price_ml= $request->priceS/$request->size;	
 			
 			$vaccine-> price_ml=$price_ml;
 			$vaccine-> due_date=Input::get('due_date');
@@ -91,10 +117,16 @@ class VaccineController extends Controller {
 			$default = Defoult::where('name', 'vaccine') -> pluck('image');
 
 			$vaccine = new Vaccine();
+			if($idFarm==null){			
+				$vaccine->idFarm=1;
+			}else
+			{
+				$vaccine->idFarm=$idFarm;	
+			}
 			$vaccine -> idUser = Auth::id();
 			$vaccine -> idProvider = $request->idProvider;
 
-			$vaccine -> nameV = Input::get('name');
+			$vaccine -> nameV = Input::get('nameV');
 			$vaccine -> indications = Input::get('indications');
 			$vaccine -> Dosage = Input::get('Dosage');
 			$vaccine -> composition = Input::get('composition');
@@ -102,10 +134,10 @@ class VaccineController extends Controller {
 			$vaccine -> precautions = Input::get('precautions');
 			$vaccine -> effects = Input::get('effects');
 
-			$vaccine-> size=Input::get('sizes');
-			$vaccine-> price=Input::get('prices');
+			$vaccine-> size=Input::get('size');
+			$vaccine-> price=Input::get('price');
 			//dd($request->price);
-			$price_ml= $request->prices/$request->sizes;		
+			$price_ml= $request->price/$request->size;		
 			$vaccine-> price_ml=$price_ml;
 			$vaccine-> due_date=Input::get('due_date');
 
@@ -123,8 +155,9 @@ class VaccineController extends Controller {
 	 * @return Response
 	 */
 	public function show(Request $request) {
+		//dd($request);
 
-			if ($request -> nameV == "") {
+			if ($request ->name == "") {
 
 			$vaccines = Defoult::where('name', 'no_found') -> get();
 			//pluck('name');
@@ -136,7 +169,7 @@ class VaccineController extends Controller {
 
 		} else 
 		{
-			$vaccines = Vaccine::where('name', 'ILIKE', '%' . trim($request -> get(trim('name'))) . '%') -> get();
+			$vaccines = Vaccine::where('nameV', 'ILIKE', '%' . trim($request -> get(trim('name'))) . '%') -> get();
 			
 
 			if (sizeof($vaccines) == 0) {
@@ -150,7 +183,7 @@ class VaccineController extends Controller {
 
 			
 
-				$vaccines = Vaccine::where('name', 'ILIKE', '%' . trim($request -> get(trim('name'))) . '%') -> get();
+				$vaccines = Vaccine::where('nameV', 'ILIKE', '%' . trim($request -> get(trim('name'))) . '%') -> get();
 
 				return view('vaccines.show1', compact('vaccines'));	
 
@@ -179,6 +212,7 @@ class VaccineController extends Controller {
 	 */
 	public function edit($id) {
 		$vaccine = Vaccine::findOrFail($id);
+		//dd($vaccine);
 		$providers= Provider::all()->lists('name','id');
 		return view('vaccines.edit', compact('vaccine','providers'));
 	}
@@ -212,7 +246,7 @@ class VaccineController extends Controller {
 			//Guardamos nombre y nombreOriginal en la BD
 
 
-			$vaccine -> nameV = Input::get('name');
+			$vaccine -> nameV = Input::get('nameV');
 			$vaccine -> indications = Input::get('indications');
 			$vaccine -> Dosage = Input::get('Dosage');
 			$vaccine -> composition = Input::get('composition');
@@ -220,10 +254,10 @@ class VaccineController extends Controller {
 			$vaccine -> precautions = Input::get('precautions');
 			$vaccine -> effects = Input::get('effects');
 
-			$vaccine-> size=Input::get('sizes');
-			$vaccine-> price=Input::get('prices');
+			$vaccine-> size=Input::get('size');
+			$vaccine-> price=Input::get('price');
 			//dd($request->price);
-			$price_ml= $request->prices/$request->sizes;		
+			$price_ml= $request->price/$request->size;		
 			$vaccine-> price_ml=$price_ml;
 			$vaccine-> due_date=Input::get('due_date');		
 			$vaccine -> image = $file -> getClientOriginalName();
@@ -236,16 +270,16 @@ class VaccineController extends Controller {
 		$file = Vaccine::where('id', $id) -> pluck('image');
 		
 
-		$vaccine -> nameV = Input::get('name');
+		$vaccine -> nameV = Input::get('nameV');
 		$vaccine -> indications = Input::get('indications');
 		$vaccine -> Dosage = Input::get('Dosage');
 		$vaccine -> composition = Input::get('composition');
 		$vaccine -> application = Input::get('application');
 		$vaccine -> precautions = Input::get('precautions');
 		$vaccine -> effects = Input::get('effects');
-		$vaccine -> size=Input::get('sizes');
-		$vaccine -> price=Input::get('prices');
-		$price_ml = $request->prices/$request->sizes;
+		$vaccine -> size=Input::get('size');
+		$vaccine -> price=Input::get('price');
+		$price_ml = $request->price/$request->size;
 		$vaccine -> price_ml=$price_ml;
 		$vaccine -> due_date=Input::get('due_date');	
 		$vaccine -> image = $file;

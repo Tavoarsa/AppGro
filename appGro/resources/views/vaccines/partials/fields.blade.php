@@ -1,6 +1,6 @@
 <div class="form-group">
     {!! form::label('nameV','Nombre')!!}
-    {!! form::text('name',null,['class' => 'form-control']) !!}
+    {!! form::text('nameV',null,['class' => 'form-control']) !!}
 </div>
 
  <div class="form-group">
@@ -34,12 +34,12 @@
     {!! form::text('effects',null,['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! form::label('sizes','Tamaño')!!}
-    {!! form::text('sizes',null,['class' => 'form-control']) !!}
+    {!! form::label('size','Tamaño')!!}
+    {!! form::text('size',null,['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! form::label('prices','Precio')!!}
-    {!! form::text('prices',null,['class' => 'form-control']) !!}
+    {!! form::label('price','Precio')!!}
+    {!! form::text('price',null,['class' => 'form-control']) !!}
 </div>
 
  {!!Form::label('due_date', 'Fecha Vencimiento')!!}

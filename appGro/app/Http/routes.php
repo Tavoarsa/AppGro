@@ -32,6 +32,8 @@ Route::controllers([
 
 
 Route::resource('animal','AnimalController');
+Route::post('animal/create/','AnimalController@store');
+
 Route::get('animal/control_animal/{id}','AnimalController@control_animal');
 Route::get('animal/registro_sanitario/vaccine/{id}','AnimalController@registro_sanitario_vaccine');
 Route::get('animal/registro_sanitario/injection/{id}','AnimalController@registro_sanitario_injection');

@@ -33,11 +33,11 @@
 </div>
 <div class="form-group">
     {!! form::label('sizes','Tamaño')!!}
-    {!! form::text('sizes',null,['class' => 'form-control']) !!}
+    {!! form::text('sizes',null,array("class" => "form-control", 'placeholder' => 'Tamaño en mililitros')) !!}
 </div>
 <div class="form-group">
     {!! form::label('prices','Precio')!!}
-    {!! form::text('prices',null,['class' => 'form-control']) !!}
+    {!! form::text('prices',null,array("class" => "form-control", 'placeholder' => 'Precio en colones')) !!}
 </div>
 
 {!!Form::label('due_date', 'Fecha Vencimiento')!!}

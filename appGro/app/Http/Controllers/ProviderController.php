@@ -8,6 +8,7 @@ use App\Provider;
 use Auth;
 use Input;
 use App\Defoult;
+use Session;
 
 class ProviderController extends Controller {
 
@@ -45,15 +46,36 @@ class ProviderController extends Controller {
 	 */
 	public function store(Request $request)
 	{
+		$rules =array(
+
+				'name'  					=> 'required',		
+				'address'					=> 'required',
+				'phone'					    => 'required|integer',
+				'service'					=> 'required',
+				'email'						=> 'Between:3,64|Email',
+				
+				);
+				//dd($request->idFarm);
+		$this->validate($request,$rules);	
+		//GET ID FARM
+		$idFarm=Session::get('key');		
 		$provider = new Provider();
 		$provider->idUser=Auth::id();
+		//VALIDAD EL ID DE FARM SI EXISTE.
+		if($idFarm==null){			
+			$provider->idFarm=1;
+		}else
+		{
+		$provider->idFarm=$idFarm;		
+		}
 		$provider->name=Input::get('name');
 		$provider->address=Input::get('address');
 		$provider->email=Input::get('email');
 		$provider->phone=Input::get('phone');
 		$provider->service=Input::get('service');
-		$provider->observation=Input::get('observation');
-		$provider->save();		
+		$provider->observation=Input::get('observation');	
+		$provider->save();
+			
 		return redirect() -> route('provider.index');
 	}
 

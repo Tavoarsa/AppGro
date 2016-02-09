@@ -46,7 +46,8 @@ class AnimalController extends Controller {
 	}
 
 	public function create()
-	{				
+	{		
+			//$numeroAnimal= \DB::table('animals')->orderBy('id','desc')->first();//return last row 
 			$madre= \DB::table('animals')
 	                    ->where('genero','hembra')
 	                    ->Where('idUser',Auth::id())
@@ -57,15 +58,12 @@ class AnimalController extends Controller {
 	                    ->lists('nombre','id');
 			$selected=array();
 
-			return view("animals.create",compact('madre','selected','padre','numeroAnimal'));
+			return view("animals.create_fiv");
 	}
 
 	public function store(Request $request)
 	{	
-				$rules =array(
-
-
-				'numeroAnimal'	 		 	=> 'required',	
+				$rules =array(				
 				'nombre'  					=> 'required',		
 				'raza'						=> 'required',
 				'genero'					=> 'required',
@@ -76,6 +74,9 @@ class AnimalController extends Controller {
 				);
 				//dd($request->idFarm);
 			$this->validate($request,$rules);
+			$carbon = new \Carbon\Carbon();
+			$date = $carbon->now();
+			$date = $date->format('Y');
 			$id_users= Auth::id();			
 			$animal = new Animal();
 
@@ -107,7 +108,7 @@ class AnimalController extends Controller {
 					$animal->idFarm= Session::get('key');		
 
 
-					$animal->numeroAnimal= $farm.''.$request->numeroAnimal;
+					$animal->numeroAnimal= $request->nombre.''.Session::get('key') .''.$date;
 					$animal->nombre= $request->nombre;			
 					$animal->raza = $request->raza;
 					$animal->genero= $request->genero;

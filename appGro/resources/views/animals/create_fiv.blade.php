@@ -1,6 +1,8 @@
 @extends('app')
  
 @section('content')
+
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
@@ -8,7 +10,7 @@
 				<div class="panel-heading">Ingresar Nuevo Animal</div>
  
                 @include('partials.messages')
-
+               
 			
  
 				<div class="panel-body">
@@ -20,16 +22,19 @@
 								{!!Form::text('nombre', null, ["class" => "form-control"]) !!}
 							</div>
 							
-							<div  id="padre" class="form-group">
-								{!!Form::label('idPadre', 'Padre')!!}
-								{!!Form::select('padre',$padre,$selected,["class" => "form-control"])!!}
+							<div  class="form-group">
+								{!!Form::label('madre_d', 'Madre Donadora')!!}
+								{!!Form::text('madre_d',null,["class" => "form-control"])!!}
 							</div>
 
 							<div class="form-group">
-								{!!Form::label('idMadre', 'Madre')!!}
-								{!!Form::select('madre',$madre,$selected,["class" => "form-control"])!!}
+								{!!Form::label('madre_r', 'Madre Receptora')!!}
+								{!!Form::text('madre_r',null,["class" => "form-control"])!!}
 								
 							</div>
+						
+
+
 
 							<div class="form-group">
 								{!!Form::label('raza', 'Raza')!!}
