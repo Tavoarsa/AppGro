@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
 Route::get('portal/{id}', 'HomeController@portal');
+Route::get('veterinaria', 'HomeController@veterinaria');
+Route::get('alimentacion', 'HomeController@alimentacion');
 
 
 
@@ -47,6 +49,7 @@ Route::post('animal/control_alimenticio/ejecutar_alimento','AnimalController@eje
 Route::get('animal/milk_production/list_milk_production/{id}','AnimalController@redirect_milk_production');
 Route::get('animal/milk_production/ejecutar_milk_production/{id}','Milk_production@edit');
 Route::get('animal/milk_production/{id}','AnimalController@milk_production');
+Route::get('animal/milk_production/update_milk_production/{id}','AnimalController@update_milk_production');
 
 
 Route::get('animal/peso/{id}','AnimalController@peso');
@@ -90,6 +93,11 @@ Route::get('vaccine/show1/{id}','VaccineController@show1');
 Route::resource('food__supplement','food__supplementsController');
 Route::get('food__supplements/edit/{id}','food__supplementsController@edit');
 Route::get('food__supplements/show1/{id}','food__supplementsController@show1');
+
+//Profitability
+Route::resource('profitability','ProfitabilityController');
+Route::get('profitability/profitability_foodSupplement/{id}','ProfitabilityController@profitability_foodSupplement');
+
 
 
 

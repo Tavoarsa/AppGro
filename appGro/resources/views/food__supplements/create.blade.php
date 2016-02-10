@@ -8,7 +8,7 @@
 				<div class="panel-heading">Nueva Alimento</div>
  
                 @if($errors->any())
-                <p>Corregir los siguientes erroress</p>
+                <p>Corregir los siguientes errores</p>
                     <div class='alert alert-danger'>
                         @foreach ($errors->all('<p>:message</p>') as $message)
                             {!! $message !!}

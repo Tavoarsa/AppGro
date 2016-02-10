@@ -18,7 +18,8 @@ class CreateFoodSupplementsTable extends Migration {
 			$table->integer('idUser');
 			$table->foreign('idUser')->references('id')->on('users');
 			$table->integer('idFarm');
-		    $table->foreign('idFarm')->references('id')->on('farms');	
+		    $table->foreign('idFarm')->references('id')->on('farms');
+		    $table->string ('typeProduct');	
 			$table->string ('nameProduct');
 			$table->double('weight');
 			$table->double ('price');

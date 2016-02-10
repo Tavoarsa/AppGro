@@ -188,6 +188,7 @@ class AnimalController extends Controller {
 
 			$this->validate($request,$rules);
 
+
 		
 			$dateA=	Input::get('dateApplication');
 			$dateApplication=date(microtime(substr($dateA, 6, 4)."-".substr($dateA, 3, 2)."-".substr($dateA, 0, 2)." " .substr($dateA, 10, 6)) * 10000);
@@ -197,6 +198,16 @@ class AnimalController extends Controller {
 			
 			
 			$vc= new VaccinationControl();
+
+			$idFarm=Session::get('key');
+
+			$food__supplement = new Food_Supplement();
+			if($idFarm==null){			
+				$vc->idFarm=1;
+			}else
+			{
+				$vc->idFarm=$idFarm;	
+			}
 			$vc->idUser=Auth::id();
 			$vc->animalName=$request->animalName;
 		
@@ -214,6 +225,12 @@ class AnimalController extends Controller {
 
 			$event = new Calendar();
 			$event ->idUser=Auth::id();
+			if($idFarm==null){			
+				$event->idFarm=1;
+			}else
+			{
+				$event->idFarm=$idFarm;	
+			}
 			$event ->title ='Vacunacion';
 			$event ->body = 'Programada'; 
 			$event ->url = 'http://localhost:8000/vaccinationControl';
@@ -252,6 +269,7 @@ class AnimalController extends Controller {
 			);
 
 			$this->validate($requestI,$rules);
+			$idFarm=Session::get('key');
 		
 			$dateA=	Input::get('dateApplication');
 			$dateApplication=date(microtime(substr($dateA, 6, 4)."-".substr($dateA, 3, 2)."-".substr($dateA, 0, 2)." " .substr($dateA, 10, 6)) * 10000);
@@ -261,6 +279,12 @@ class AnimalController extends Controller {
 
 			
 			$ic= new InjecctionControl();
+			if($idFarm==null){			
+				$ic->idFarm=1;
+			}else
+			{
+				$ic->idFarm=$idFarm;	
+			}
 			$ic->idUser=Auth::id();
 			$ic->animalName=$requestI->animalName;
 		
@@ -275,6 +299,12 @@ class AnimalController extends Controller {
 			$ic->save();
 
 			$event = new Calendar();
+			if($idFarm==null){			
+				$event->idFarm=1;
+			}else
+			{
+				$event->idFarm=$idFarm;	
+			}
 			$event ->idUser=Auth::id();
 			$event ->title ='Vacunacion';
 			$event ->body = 'Programada'; 
@@ -312,6 +342,7 @@ class AnimalController extends Controller {
 			);
 
 			$this->validate($request,$rules);
+			$idFarm=Session::get('key');
 
 			$dateA=	Input::get('dateApplication');
 			$dateApplication=date(microtime(substr($dateA, 6, 4)."-".substr($dateA, 3, 2)."-".substr($dateA, 0, 2)." " .substr($dateA, 10, 6)) * 10000);
@@ -323,6 +354,12 @@ class AnimalController extends Controller {
 			//$food_supplement=Food_Supplement::where('id',$request->food_supplements)->pluck('nameProduct');		
 
 			$dc= new DietaryControl();
+			if($idFarm==null){			
+				$dc->idFarm=1;
+			}else
+			{
+				$dc->idFarm=$idFarm;	
+			}
 			$dc->idUser=Auth::id();
 			$dc->idAnimal=$request->animalName;			
 			$dc->idFood_Supplemet=$request->food_supplements;
@@ -334,6 +371,12 @@ class AnimalController extends Controller {
 
 
 			$event = new Calendar();
+			if($idFarm==null){			
+				$event->idFarm=1;
+			}else
+			{
+				$event->idFarm=$idFarm;	
+			}
 			$event ->idUser=Auth::id();
 			$event ->title ='Alimentacion';
 			$event ->body = 'Programada'; 
@@ -371,14 +414,41 @@ class AnimalController extends Controller {
 			);
 
 			$this->validate($request,$rules);
+			$idFarm=Session::get('key');
 
 
 			$weight= new Weight();
+			if($idFarm==null){			
+				$weight->idFarm=1;
+			}else
+			{
+				$weight->idFarm=$idFarm;	
+			}
+
 			$weight->idUser= Auth::id();
 			$weight->idAnimal=$request->animalName;
 			$weight->weight=$request->weight;
 			$weight->dateWeight=$request->dateweight;
 			$weight->save();
+
+			$event = new Calendar();
+			if($idFarm==null){			
+				$event->idFarm=1;
+			}else
+			{
+				$event->idFarm=$idFarm;	
+			}
+
+			$event ->idUser=Auth::id();
+			$event ->title ='Alimentacion';
+			$event ->body = 'Programada'; 
+			$event ->url = 'http://localhost:8000/vaccinationControl';
+			$event ->class = 'Preventivo';
+			$event ->start = $request->dateweight;
+			$event ->end = $request->dateweight;
+			
+
+			$event->save();
 			return redirect()->route('animal.index');
 
 
@@ -387,10 +457,19 @@ class AnimalController extends Controller {
 	public function redirect_milk_production($id){
 
 			$mp= new MilkProduction();
+			$idFarm=Session::get('key');
+			if($idFarm==null){			
+				$mp->idFarm=1;
+			}else
+			{
+				$mp->idFarm=$idFarm;	
+			}
 
 			$mp->idUser= Auth::id();
 			$mp->idAnimal=$id;
+			
 			$mp->save();
+
 			$milk_productions= MilkProduction::where('milk_productions.idUser',Auth::id())
 									 ->where('milk_productions.idAnimal',$id)
 						      	     ->join('animals','animals.id','=','milk_productions.idAnimal')						      	     
@@ -398,6 +477,25 @@ class AnimalController extends Controller {
 						  			 ->get();//dd($milk_productions);
 
 			return view('animals.list_milk_production',compact('milk_productions'));
+		
+
+
+	}
+
+	public function update_milk_production($id, Request $request){
+
+			$mp = MilkProduction::findOrFail($id);
+			
+
+			$mp->later_production= $request->later_production;
+			$mp->morning_production=$request->morning_production;
+			$mp->total_production=$request->morning_production +$request->later_production;
+			$mp->price_production=$request->morning_production +$request->later_production * 310;
+			 
+			$mp->save();
+			
+
+			return view('animals.list_milk_production');
 		
 
 

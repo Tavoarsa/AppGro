@@ -5,12 +5,14 @@ use App\Http\Controllers\Controller;
 use App\Provider;
 use App\Food_Supplement;
 use App\Defoult;
-use Auth;	
+use Auth;
+use Session;	
 use Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use App\DietaryControl;
 
 class food__supplementsController extends Controller {
 
@@ -26,8 +28,17 @@ class food__supplementsController extends Controller {
 	 */
 	public function index()
 	{
-		$food__supplements = Food_Supplement::where('idUser',Auth::id())-> get();
-		return view('food__supplements.index', compact('food__supplements'));
+		$request=2;
+		$food__supplement= DietaryControl::where('dietary_controls.idUser',Auth::id())
+									 ->where('dietary_controls.idAnimal',$request)
+						      	     ->join('animals','animals.id','=','dietary_controls.idAnimal')
+						      	     ->join('food__supplements','food__supplements.id','=','dietary_controls.idFood_Supplemet')
+						      	     ->select('food__supplements.nameProduct','animals.nombre','dietary_controls.value')
+						  			 ->get();
+
+						  			 dd($food__supplement);
+		/*$food__supplements = Food_Supplement::where('idUser',Auth::id())-> get();
+		return view('food__supplements.index', compact('food__supplements'));*/
 	}
 
 	/**
@@ -48,56 +59,40 @@ class food__supplementsController extends Controller {
 	 */
 	public function store(Request $request)
 	{
-		if (Input::hasFile('image')) {
-			$file = Input::file('image');
-			//Creamos una instancia de la libreria instalada
-			$image = \Image::make(\Input::file('image'));
-			//Ruta donde queremos guardar las imagenes
-			$path = 'img/food__supplement/';		
-			// Cambiar de tamaño
-			$image -> resize(450, 450);
-			$image -> save($path . $file -> getClientOriginalName());
-			//Guardar imagen.
-			//Guardamos nombre y nombreOriginal en la BD
+		dd($request);
+
+		$rules =array(
+
+				'typeProduct'  				=> 'required',		
+				'nameProduct'				=> 'required',
+				'weight'					=> 'required',				
+				'price'						=> 'required',
+				
+				
+				);
+				//dd($request->idFarm);
+		$this->validate($request,$rules);	
+			$idFarm=Session::get('key');
 			$food__supplement = new Food_Supplement();
+			if($idFarm==null){			
+				$food__supplement->idFarm=1;
+			}else
+			{
+				$food__supplement->idFarm=$idFarm;	
+			}			
 			$food__supplement -> idUser = Auth::id();
 			$food__supplement -> idProvider = $request->idProvider;
-
+			$food__supplement -> typeProduct=Input::get('typeProduct');
 			$food__supplement -> nameProduct = Input::get('nameProduct');
 			$food__supplement -> weight = Input::get('weight');
 			$food__supplement -> price = Input::get('price');
 			$price_kg= $request->price/$request->weight;
 			$food__supplement -> price_kg=$price_kg; 				
 			$food__supplement -> due_date = Input::get('due_date');	
-			$food__supplement -> image = $file -> getClientOriginalName();
+			
 			$food__supplement -> save();
 
-			return redirect() -> route('food__supplement.index');
-
-		}
-
-
-			$default = Defoult::where('name', 'food__supplement') -> pluck('image');
-
-			$food__supplement = new Food_Supplement();
-			$food__supplement -> idUser = Auth::id();
-			$food__supplement -> idProvider = $request->idProvider;
-
-			$food__supplement = new Food_Supplement();
-			$food__supplement -> idUser = Auth::id();
-			$food__supplement -> idProvider = $request->idProvider;
-
-			$food__supplement -> nameProduct = Input::get('nameProduct');
-			$food__supplement -> weight = Input::get('weight');
-			$food__supplement -> price = Input::get('price');
-			$price_kg= $request->price/$request->weight;
-			$food__supplement ->price_kg=$price_kg; 
-			$food__supplement -> due_date = Input::get('due_date');	
-
-			$food__supplement -> image = $default;
-			$food__supplement -> save();
-
-			return redirect() -> route('food__supplement.index');
+			return redirect() -> route('food__supplement.index');		
 
 	}
 
@@ -159,52 +154,20 @@ class food__supplementsController extends Controller {
 
 		$food__supplement = Food_Supplement::findOrFail($id);
 
-		if (Input::hasFile('image')) {
-
-			$file = Input::file('image');
-			//Creamos una instancia de la libreria instalada
-			$image = \Image::make(\Input::file('image'));
-			//Ruta donde queremos guardar las imagenes
-			$path = 'img/food__supplement/';		
-			// Cambiar de tamaño
-			$image -> resize(450, 450);
-			$image -> save($path . $file -> getClientOriginalName());
-			//Guardar imagen.
-			//Guardamos nombre y nombreOriginal en la BD
+		
 			
 			$food__supplement -> idProvider = $request->idProvider;
+			$food__supplement -> typeProduct=Input::get('typeProduct');
 			$food__supplement -> nameProduct = Input::get('nameProduct');
 			$food__supplement -> weight = Input::get('weight');
 			$food__supplement -> price = Input::get('price');
 			$price_kg= $request-> price/$request->weight;
 			$food__supplement -> price_kg=$price_kg; 				
-			$food__supplement -> due_date = Input::get('due_date');	
-			$food__supplement -> image = $file -> getClientOriginalName();
+			$food__supplement -> due_date = Input::get('due_date');				
 			$food__supplement -> save();
 
 			return redirect() -> route('food__supplement.index');
-
-		}
-
-			$food__supplement -> idProvider = $request->idProvider;		
-				
-			$food__supplement -> nameProduct = $request->nameProduct;
-			$food__supplement -> weight =$request->weight;
-			$food__supplement -> price = $request->price;
-			
-			
-
-			$price_kg= $request->weight/$request->price;
-			
-			$food__supplement -> price_kg=$price_kg; 
-			$food__supplement -> due_date = Input::get('due_date');	
-
-			
-			$food__supplement -> save();
-
-			return redirect() -> route('food__supplement.index');
-
-	}
+				}
 	
 
 	/**

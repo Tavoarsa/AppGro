@@ -9,6 +9,11 @@ use Auth;
 use Input;
 use App\Provider;
 use App\Medicine;
+use Session;
+use App\Animal;
+use App\Food_Supplement;
+use App\DietaryControl;
+
 class ProfitabilityController extends Controller {
 
 	public function __construct()
@@ -24,7 +29,31 @@ class ProfitabilityController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		$idFarm=Session::get('key');
+		if($idFarm==null)
+		{			
+			$idFarm=1;
+		}else
+		{
+			$idFarm=$idFarm;	
+		}
+		$animals= Animal::where('idUser',Auth::id())
+						  ->where('idFarm',$idFarm)	
+						  ->get();
+			//dd($animals);
+		return view('profitability.index',compact('animals'));
+		
+	}
+
+	public function profitability_foodSupplement(Request $request)
+	{
+		$food__supplement= DietaryControl::where('dietary_controls.idUser',Auth::id())
+									 ->where('dietary_controls.idAnimal',$request->id)
+						      	     ->join('animals','animals.id','=','dietary_controls.idAnimal')
+						      	     ->join('food__supplements','food__supplements.id','=','dietary_controls.idFood_Supplemet')
+						      	     ->select('food__supplements.nameProduct','animals.nombre','dietary_controls.value')
+						  			 ->get();dd($food__supplement);
+
 	}
 
 	/**
@@ -33,7 +62,7 @@ class ProfitabilityController extends Controller {
 	 * @return Response
 	 */
 	
-	
+	/*
 
 	public function createProvider()
 	{

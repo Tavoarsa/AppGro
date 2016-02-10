@@ -1,5 +1,9 @@
 <div class="form-group">
-    {!! form::label('nameProduct','Producto')!!}
+     {!!Form::label('typeProduct', 'Tipo de Alimento')!!}
+     {!! Form::select('typeProduct', array('concentrado' => 'Concentrado', 'silo' => 'Silo','mineral' => 'Mineral','vitamina' => 'Vitamina'), 'Concetrado',["class" => "form-control"])!!}
+</div>
+<div class="form-group">
+    {!! form::label('nameProduct','Nombre Producto')!!}
     {!! form::text('nameProduct',null,['class' => 'form-control']) !!}
 </div>
 
@@ -21,12 +25,6 @@
   <div class='input-group date' id='due_date'>
  {!! Form::input('text', 'due_date',null,['class'=>'form-control']) !!}
  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
- </div>
-
- <div class="form-group">
-    {!! form::label('image','Imagen')!!}   
-    {!! form::file('image',null,['class' => 'form-control']) !!}
-</div>
-            
+ </div>      
  
 

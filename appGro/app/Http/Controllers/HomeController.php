@@ -38,6 +38,21 @@ class HomeController extends Controller {
 		return view ('portal');
 
 	}
+	public function veterinaria()
+	{
+		
+						
+		return view ('veterinaria');
+
+	}
+	public function alimentacion()
+	{
+		
+						
+		return view ('alimentacion');
+
+	}
+	
 	
 
 }

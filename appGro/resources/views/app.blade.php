@@ -11,6 +11,7 @@
    
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/table.css') }}" rel="stylesheet"><!--Style table-->
     <link href="{{ asset('/css/home.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/email.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
@@ -22,8 +23,8 @@
     <link href="{{ asset('/css/demo.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/flexslider.css') }}" rel="stylesheet">
 
-
-
+<!--Js table-->
+   <script type="text/javascript" src="../js/table.js"></script>
 
 <!--Resposive Nav-->
     <link href="{{ asset('/css/responsive-nav.css') }}" rel="stylesheet">
@@ -111,11 +112,11 @@
      </div>
 <div role="navigation" id="foo" class="nav-collapse">
       <ul>
-        <li class="active"><a href="{{ url('/home') }}">Home</a></li>
+        <li><a href="{{ url('/home') }}">Home</a></li>
         <li><a href="#">Normas</a></li>
         <li><a href="{{ asset('files/ley-8495.pdf') }}">Ley SENASA</a></li>
         <li><a href="#">Manejo Agropecuario</a></li>
-        <li class="active"><a href="{{ url('/farm') }}">Mi Finca</a></li>
+        <li><a href="{{ url('/farm') }}">Mi Finca</a></li>
         <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
       </ul>
 
@@ -127,8 +128,8 @@
     @yield('content')
     </div>      
 
-    <script>
+    <!--<script>
       var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
-    </script>      
+    </script> -->     
 </body>
 </html>
