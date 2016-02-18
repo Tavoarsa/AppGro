@@ -149,7 +149,8 @@ return [
 		'Torann\GeoIP\GeoIPServiceProvider',
 		'Laravel\Socialite\SocialiteServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
-		'Barryvdh\DomPDF\ServiceProvider'
+		'Barryvdh\DomPDF\ServiceProvider',
+		'Khill\Lavacharts\Laravel\LavachartsServiceProvider'
 		
 		
 

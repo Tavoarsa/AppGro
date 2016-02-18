@@ -76,7 +76,9 @@ class AnimalController extends Controller {
 			$this->validate($request,$rules);
 			$carbon = new \Carbon\Carbon();
 			$date = $carbon->now();
+			
 			$date = $date->format('Y');
+			
 			$id_users= Auth::id();			
 			$animal = new Animal();
 
@@ -454,7 +456,22 @@ class AnimalController extends Controller {
 
 	}
 
-	public function redirect_milk_production($id){
+	public function redirect_milk_production($idAnimal){
+
+		$milk_production = Animal::findOrFail($idAnimal);
+		$carbon = new \Carbon\Carbon();
+		$today = $carbon->now();
+		$today = $today->format('m/d/Y');
+
+		//dd($today);
+
+		/*$carbon = new \Carbon\Carbon();
+			$date = $carbon->now();
+			
+			$date = $date->format('m/d/Y');
+			dd($date);
+		$providers= Provider::all()->lists('name','id');
+		return view('vaccines.edit', compact('vaccine','providers'));
 
 			$mp= new MilkProduction();
 			$idFarm=Session::get('key');
@@ -468,15 +485,54 @@ class AnimalController extends Controller {
 			$mp->idUser= Auth::id();
 			$mp->idAnimal=$id;
 			
-			$mp->save();
+			$mp->save();*/
 
 			$milk_productions= MilkProduction::where('milk_productions.idUser',Auth::id())
-									 ->where('milk_productions.idAnimal',$id)
+									 ->where('milk_productions.idAnimal',$idAnimal)
 						      	     ->join('animals','animals.id','=','milk_productions.idAnimal')						      	     
-						      	     ->select('animals.nombre','milk_productions.morning_production','later_production')
+						      	     ->select('animals.nombre','milk_productions.date','milk_productions.morning_production','later_production')
 						  			 ->get();//dd($milk_productions);
 
-			return view('animals.list_milk_production',compact('milk_productions'));
+			foreach ($milk_productions as $milk_production) 
+			{
+				$date[] = $milk_production->date ;
+				
+			}
+
+			//dd($date);
+			if(empty($date))
+			{
+				$mp= new MilkProduction();
+				$idFarm=Session::get('key');
+			if($idFarm==null){			
+				$mp->idFarm=1;
+			}else
+			{
+				$mp->idFarm=$idFarm;	
+			}
+
+			$mp->idUser= Auth::id();
+			$mp->idAnimal=$idAnimal;
+			
+			$mp->date=$today;
+			$mp->save();
+
+			}else
+			{
+				for ($i=0; $i < sizeof($date) ; $i++) {
+
+					if($today==$date[$i]){
+						return view('animals.milk_production',compact('milk_productions'));
+					}
+					break;
+
+					
+				}
+				
+			}
+						  			 
+
+		
 		
 
 

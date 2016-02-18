@@ -16,7 +16,9 @@
 		"intervention/image": "^2.3",
 		"guzzlehttp/guzzle": "~5.0",
 		"barryvdh/laravel-dompdf": "0.6.*",
-		"ext-gd": "*"
+		"ext-gd": "*",
+		"khill/lavacharts" : "3.0.*",
+		"openSkill/datatable": "0.1.2"
 
 		
 	

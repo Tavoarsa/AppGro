@@ -52,14 +52,19 @@
                                 </div>
                             </div>
 
+                            @if($animal->genero==="hembra")
+
+
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                    <a href="{{url('animal/milk_production',$animal->id) }}">
+                                   <a  href="{{url('animal/milk_production',$animal->id) }}">
                                         <img src="/img/alimentos.jpeg" alt="Control Alimenticio">
                                     </a> 
                                      <H4>Produción</H4>                
                                 </div>
                             </div>
+                            @endif
+                            
                             
                             @endforeach
                                                    

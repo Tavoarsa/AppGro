@@ -26,6 +26,9 @@
 <!--Js table-->
    <script type="text/javascript" src="../js/table.js"></script>
 
+  
+ 
+
 <!--Resposive Nav-->
     <link href="{{ asset('/css/responsive-nav.css') }}" rel="stylesheet">
     <script type="text/javascript" src="../js/responsive-nav.js"></script>
@@ -53,6 +56,7 @@
     
     <script type="text/javascript" src="../js/underscore-min.js"></script>
     <script type="text/javascript" src="../js/calendar.js"></script>
+    <!--Js Graficos -->
 
     
 

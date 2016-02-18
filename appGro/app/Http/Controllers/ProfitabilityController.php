@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Auth;
+use Lava;
 use Input;
 use App\Provider;
 use App\Medicine;
@@ -47,13 +48,75 @@ class ProfitabilityController extends Controller {
 
 	public function profitability_foodSupplement(Request $request)
 	{
-		$food__supplement= DietaryControl::where('dietary_controls.idUser',Auth::id())
+		$food_supplement= DietaryControl::where('dietary_controls.idUser',Auth::id())
 									 ->where('dietary_controls.idAnimal',$request->id)
 						      	     ->join('animals','animals.id','=','dietary_controls.idAnimal')
 						      	     ->join('food__supplements','food__supplements.id','=','dietary_controls.idFood_Supplemet')
 						      	     ->select('food__supplements.nameProduct','animals.nombre','dietary_controls.value')
-						  			 ->get();dd($food__supplement);
+						  			 ->get();
+		
+		foreach ($food_supplement as $food_supplements) {
 
+			$nameProduct[] = $food_supplements->nameProduct ;
+			$nombre[]=$food_supplements->nombre;
+			$value[]=$food_supplements->value;
+		
+		}
+		dd($value);
+		
+		//$food__supplement= $food__supplement->toJson();
+		//$food__supplement=array_pull($array, 'nameProduct');		  			
+		//dd($food_supplement);
+		/*return view('profitability.food_supplement',compact('food__supplement'));
+		$stocksTable = Lava::DataTable();
+    	$stocksTable->addDateColumn('Day of Month')
+                	->addNumberColumn('Projected')
+                	->addNumberColumn('Official');
+
+    // Random Data For Example
+    for ($a = 1; $a < 30; $a++)
+    {
+        $rowData = [
+          "2014-8-$a", rand(800,1000), rand(800,1000)
+        ];
+
+        $stocksTable->addRow($rowData);
+    }
+
+    Lava::LineChart('Stocks', $stocksTable, ['title' => 'Stock Market Trends']);*/
+
+	// See note below for Laravel
+
+	$temps = Lava::DataTable();
+
+	$temps->addStringColumn('Type')
+	      ->addNumberColumn('Value')
+	      ->addRow(['Producto', rand(0,100)])
+	      ->addRow(['Animal', rand(0,100)])
+	      ->addRow(['Graphics', rand(0,100)]);
+
+	Lava::GaugeChart('Temps', $temps, [
+	    'width'      => 400,
+	    'greenFrom'  => 0,
+	    'greenTo'    => 69,
+	    'yellowFrom' => 70,
+	    'yellowTo'   => 89,
+	    'redFrom'    => 90,
+	    'redTo'      => 100
+	   
+	]);
+
+
+
+
+
+    return view('profitability.food_supplement');
+
+	}
+
+	public function milk_productions(){
+
+		
 	}
 
 	/**

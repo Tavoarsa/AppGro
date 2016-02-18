@@ -6,12 +6,13 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading"><h2>Rentabilidad Animal</h2></div>     
+                <h2>Rentabilidad Animal</h2>
+                <div class="panel-heading"></div>  
 
                 
  
                 <div class="panel-body" >
-                <h2>Seleccione un animal</h2>
+                
 
 
                  <div class="row">
@@ -19,11 +20,9 @@
 
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                <h3>{{$animal->nombre}}</h3>
-                                      
-                                       <a  href="{{url('profitability/profitability_foodSupplement',$animal->id) }}">
-                                            <img src="/img/animal/{{$animal->image}}" alt="{{$animal->nombre}}">
-                                        </a> 
+                                <h3>{{$animal->nombre}}</h3>                                      
+                                       <a href="{{url('profitability/foodSupplement',$animal->id) }}">
+                                            <img src="/img/animal/{{$animal->image}}" alt="{{$animal->nombre}}">                                    </a> 
                                  
                                     <div class="caption">
                                     

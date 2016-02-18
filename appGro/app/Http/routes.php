@@ -46,11 +46,12 @@ Route::post('animal/registro_sanitario/ejecutar_injection','AnimalController@eje
 Route::post('animal/control_alimenticio/ejecutar_alimento','AnimalController@ejecutar_alimento');
 
 
-Route::get('animal/milk_production/list_milk_production/{id}','AnimalController@redirect_milk_production');
+Route::get('animal/milk_production/{id}','AnimalController@redirect_milk_production');
+/*
 Route::get('animal/milk_production/ejecutar_milk_production/{id}','Milk_production@edit');
 Route::get('animal/milk_production/{id}','AnimalController@milk_production');
 Route::get('animal/milk_production/update_milk_production/{id}','AnimalController@update_milk_production');
-
+*/
 
 Route::get('animal/peso/{id}','AnimalController@peso');
 Route::get('animal/control_alimenticio/{id}','AnimalController@control_alimenticio');
@@ -96,7 +97,10 @@ Route::get('food__supplements/show1/{id}','food__supplementsController@show1');
 
 //Profitability
 Route::resource('profitability','ProfitabilityController');
-Route::get('profitability/profitability_foodSupplement/{id}','ProfitabilityController@profitability_foodSupplement');
+Route::get('profitability/foodSupplement/{id}','ProfitabilityController@profitability_foodSupplement');
+
+
+
 
 
 

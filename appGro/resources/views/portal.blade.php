@@ -54,7 +54,7 @@
 
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                    <a href="{{url('animal/milk_production') }}">
+                                    <a href="{{url('profitability/') }}">
                                         <img src="/img/portal/vaca.jpg" alt="Control Alimenticio">
                                     </a> 
                                      <H4>Estadisticas</H4>                
