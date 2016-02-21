@@ -56,7 +56,14 @@
     
     <script type="text/javascript" src="../js/underscore-min.js"></script>
     <script type="text/javascript" src="../js/calendar.js"></script>
-    <!--Js Graficos -->
+    <!--Js Graficos 
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+    <script  type="text/javascript" src="../js/ajax-crud.js"></script>
+   
+    
+
+
 
     
 

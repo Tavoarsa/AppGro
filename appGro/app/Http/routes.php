@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Mail;
-
+use App\MilkProduction;
+use App\Task;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -47,6 +48,41 @@ Route::post('animal/control_alimenticio/ejecutar_alimento','AnimalController@eje
 
 
 Route::get('animal/milk_production/{id}','AnimalController@redirect_milk_production');
+
+
+
+
+Route::get('/tasks/{task_id?}',function($task_id){
+    $task = Task::find($task_id);
+
+    return Response::json($task);
+});
+
+Route::post('/tasks',function(Request $request){
+    dd($request);
+    $task = Task::create($request->all());
+
+    return Response::json($task);
+});
+
+Route::put('/tasks/{task_id?}',function(Request $request,$task_id){
+    $task = Task::find($task_id);
+
+    $task->task = $request->task;
+    $task->description = $request->description;
+
+    $task->save();
+
+    return Response::json($task);
+});
+
+Route::delete('/tasks/{task_id?}',function($task_id){
+    $task = Task::destroy($task_id);
+
+    return Response::json($task);
+});
+
+
 /*
 Route::get('animal/milk_production/ejecutar_milk_production/{id}','Milk_production@edit');
 Route::get('animal/milk_production/{id}','AnimalController@milk_production');
@@ -98,6 +134,7 @@ Route::get('food__supplements/show1/{id}','food__supplementsController@show1');
 //Profitability
 Route::resource('profitability','ProfitabilityController');
 Route::get('profitability/foodSupplement/{id}','ProfitabilityController@profitability_foodSupplement');
+
 
 
 

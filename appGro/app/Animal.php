@@ -5,8 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 class Animal extends Model {
 
 	protected $table ='animals';
-	protected $fillable=['idUser','idFarm','numeroAnimal','nombre','idPadre','idMadre','raza','genero',
-						'fechaNacimiento','pesoNacimiento','fechaMuerte','observaciones','image'];
+	protected $fillable=['idUser','idFarm','numeroAnimal','raza','genero',
+						'fechaNacimiento','fechaMuerte','caracteristicas','image'];
 	protected $guarded = ['id'];
 
 }

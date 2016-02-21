@@ -20,7 +20,8 @@ class CreateWeightsTable extends Migration {
 			$table->integer('idAnimal');
 			$table->foreign('idAnimal')->references('id')->on('animals');
 			$table->integer('idFarm');
-		    $table->foreign('idFarm')->references('id')->on('farms');	
+		    $table->foreign('idFarm')->references('id')->on('farms');
+		    $table->string('razon');
 			$table->string('weight');
 			$table->string('dateWeight');
 			$table->timestamps();

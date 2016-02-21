@@ -23,6 +23,7 @@ use App\VaccinationControl;
 use App\InjecctionControl;
 use App\Weight;
 use App\MilkProduction;
+use Response;
 
 
 class AnimalController extends Controller {
@@ -48,98 +49,76 @@ class AnimalController extends Controller {
 	public function create()
 	{		
 			//$numeroAnimal= \DB::table('animals')->orderBy('id','desc')->first();//return last row 
-			$madre= \DB::table('animals')
+		$madre= \DB::table('animals')
 	                    ->where('genero','hembra')
 	                    ->Where('idUser',Auth::id())
 	                    ->lists('nombre','id');//dd($madre);
-			$padre= \DB::table('animals')
+		$padre= \DB::table('animals')
 	                    ->where('genero','macho')
 	                    ->Where('idUser',Auth::id())
 	                    ->lists('nombre','id');
-			$selected=array();
+		$selected=array();
 
-			return view("animals.create_fiv");
+		return view("animals.create_fiv");
 	}
 
 	public function store(Request $request)
 	{	
-				$rules =array(				
-				'nombre'  					=> 'required',		
-				'raza'						=> 'required',
-				'genero'					=> 'required',
-				'fechaNacimiento'			=> 'required',
-				'pesoNacimiento'			=> 'required|integer',
-				'observaciones'				=> 'required',			
-
-				);
-				//dd($request->idFarm);
-			$this->validate($request,$rules);
-			$carbon = new \Carbon\Carbon();
-			$date = $carbon->now();
-			
-			$date = $date->format('Y');
-			
-			$id_users= Auth::id();			
-			$animal = new Animal();
-
-			$farm=\DB::table('farms')                    
+		//Validaciones
+		$rules =array(				
+						'nombre'  					=> 'required',		
+						'raza'						=> 'required',
+						'genero'					=> 'required',
+						'fechaNacimiento'			=> 'required',
+						'pesoNacimiento'			=> 'required|integer',
+						'caracteristicas'			=> 'required',	
+					  );
+		$farm=\DB::table('farms')                    
 	                    ->Where('id',Session::get('key'))
 	                    ->pluck('name');
 
-			//Validamos si padre o madre son desconocido y asignamos nombre
-				if($request->madre == null && $request->padre ==null)
-				{
-					$animal->idMadre= "000";
-					$animal->idPadre= "000";				
+		$this->validate($request,$rules);
+		$carbon = new \Carbon\Carbon();//Obtener Fecha
+		$date = $carbon->now();			
+		$date = $date->format('Y');//Obtenemos Año			
+		$id_users= Auth::id();
 
-				}elseif($request->padre==null){
-					
-					$animal->idPadre= "000";
-					$animal->idMadre=$request->madre;		
-					
-				}elseif($request->madre==null){
-					$animal->idMadre='000';	
-					$animal->idPadre= $request->padre;
-				}else
-				{
-				$animal->idMadre=$request->madre;
-				$animal->idPadre= $request->padre;	
-
-				}	
-					$animal->idUser = $id_users;
-					$animal->idFarm= Session::get('key');		
-
-
-					$animal->numeroAnimal= $request->nombre.''.Session::get('key') .''.$date;
-					$animal->nombre= $request->nombre;			
-					$animal->raza = $request->raza;
-					$animal->genero= $request->genero;
-					$animal->fechaNacimiento= $request->fechaNacimiento;
-					$animal->pesoNacimiento= $request->pesoNacimiento;
-					$animal->observaciones= $request->observaciones;
+		$animal = new Animal();
+		$animal->idUser = $id_users;
+		if($idFarm==null)
+		{		
+			$animal->idFarm=1;
+		}else{
+			$animal->idFarm=$idFarm;	
+		}
+		$animal->numeroAnimal= $request->nombre.''.Session::get('key') .''.$date;
+		$animal->nombre= $request->nombre;			
+		$animal->raza = $request->raza;
+		$animal->genero= $request->genero;
+		$animal->fechaNacimiento= $request->fechaNacimiento;					
+		$animal->caracteristicas= $request->caracteristicas;
 			//Validacion de imagen 
-			if (Input::hasFile('image')) {		
-
+		if (Input::hasFile('image')) 
+		{	
 			$file = Input::file('image');//Creamos una instancia de la libreria instalada
 			$image = \Image::make(\Input::file('image'));//Ruta donde queremos guardar las imagenes
 			$path = 'img/animal/';			
-				// Cambiar de tamaño
+			// Cambiar de tamaño
 			$image -> resize(450, 450);
 			$image -> save($path . $file -> getClientOriginalName());	
 			$animal->image = $file -> getClientOriginalName();
-		  	$animal->save(); 
-
-	      	return redirect() -> route('animal.index');
-	      	}
-	      	//Si no hay imagen, se guarda una por defecto
-	      		$image='animal';	     
-
+		  	//$animal->save(); 
+	      	//return redirect() -> route('animal.index');
+	     }else
+	     {
+	     	//Si no hay imagen, se guarda una por defecto
+	      	$image='animal';  
 	      	$default = Defoult::where('name', $image) -> pluck('image');
+	      	$animal->image = $default;	        	
+	      	//$animal->save();
+	     }
+	     $animal->save();
 
-	      	$animal->image = $default;
-	      	//dd($farm->patent);
-	      	
-	      	$animal->save();
 	      	return redirect() -> route('animal.index');
 
 	
@@ -490,7 +469,7 @@ class AnimalController extends Controller {
 			$milk_productions= MilkProduction::where('milk_productions.idUser',Auth::id())
 									 ->where('milk_productions.idAnimal',$idAnimal)
 						      	     ->join('animals','animals.id','=','milk_productions.idAnimal')						      	     
-						      	     ->select('animals.nombre','milk_productions.date','milk_productions.morning_production','later_production')
+						      	     ->select('animals.nombre','milk_productions.date','milk_productions.morning_production','milk_productions.later_production')
 						  			 ->get();//dd($milk_productions);
 
 			foreach ($milk_productions as $milk_production) 
@@ -530,6 +509,8 @@ class AnimalController extends Controller {
 				}
 				
 			}
+			
+			return view('animals.milk_production',compact('milk_productions'));
 						  			 
 
 		
