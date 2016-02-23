@@ -16,7 +16,8 @@ class CreateFertilizacionInvitrosTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('idAnimal');
-			$table->foreign('idAnimal')->references('id')->on('animals');			
+			$table->foreign('idAnimal')->references('id')->on('animals');
+			$table->string ('padre')->nullable();			
 			$table->string ('madre_donadora')->nullable();
 			$table->string ('madre_receptora')->nullable();
 			$table->timestamps();

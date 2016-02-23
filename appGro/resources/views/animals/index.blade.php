@@ -16,19 +16,30 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Modal Header</h4>
+                                            <h4 class="modal-title">Procedencia Genetica</h4>
                                         </div>
-                                        <div class="modal-body">
-                                           
-                                <button class="btn btn-default active" title="Fertilización In Vitro">FVI</button>
-                                <button class="btn btn-default active"title="Inseminación Artificial">IA</button>
-                                <button class="btn btn-default active" title="Monta Natural">MN</button>
-                                <button class="btn btn-default active">TE</button>
-                                <button class="btn btn-default active" title="Sin Registro">SR</button>
+                                        <div align="center" class="modal-body">
+                                          
+                                <a  class="btn btn-info" href="{{ url('/animal/create/fiv')  }}">FIV</a>
+                                <a  class="btn btn-info" href="{{ url('/animal/create/ia')}}" >IA</a>
+                                <a  class="btn btn-info" href="{{ url('/animal/create/mt')}}">MT</a>
+                                <a  class="btn btn-info" href="{{ url('/animal/create/te')}}" >TE</a>
+                               
+                                
                             
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <div align="left">
+                                        <p>FIV=Fertilización Invitro</p>
+                                        <p>IA=Inseminación Artificial</p>
+                                        <p>MT=Monta Natural</p>
+                                        <p>IA=Inseminación Artificial</p>
+                                            
+
+                                        </div>
+                                            
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+
                                         </div>
                                     </div>
                                 </div>
@@ -56,9 +67,9 @@
                             @endforeach                           
                         </div>
                     </div>
-                </div>
+                </div>                   
             </div>
         </div>
-    </div>
+    </div>                             
 @endsection
- 
+                                             

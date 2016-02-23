@@ -8,5 +8,7 @@ class Weight extends Model {
 	protected $fillable=['idUser','idAnimal','weight','reason','dateWeight'];
 	protected $guarded = ['id'];
 
+ 
+
 
 }

@@ -14,6 +14,12 @@ class CreateMontaNaturalsTable extends Migration {
 	{
 		Schema::create('monta_naturals', function(Blueprint $table)
 		{
+			$table->increments('id');
+			$table->integer('idAnimal');
+			$table->foreign('idAnimal')->references('id')->on('animals');			
+			$table->string ('madre')->nullable();
+			$table->string ('padre')->nullable();
+			$table->timestamps();
 		
 		});
 	}

@@ -35,7 +35,16 @@ Route::controllers([
 
 
 Route::resource('animal','AnimalController');
+
 Route::post('animal/create/','AnimalController@store');
+
+
+
+Route::get('animal/create/mt','AnimalController@create_mt');
+Route::get('animal/create/fiv','AnimalController@create_fiv');
+Route::get('animal/create/te','AnimalController@create_te');
+Route::get('animal/create/ia','AnimalController@create_ia');
+
 
 Route::get('animal/control_animal/{id}','AnimalController@control_animal');
 Route::get('animal/registro_sanitario/vaccine/{id}','AnimalController@registro_sanitario_vaccine');
@@ -45,6 +54,9 @@ Route::post('animal/registro_sanitario/ejecutar_vacunas','AnimalController@ejecu
 Route::post('animal/peso/ejecutar_peso','AnimalController@ejecutar_peso');
 Route::post('animal/registro_sanitario/ejecutar_injection','AnimalController@ejecutar_injection');
 Route::post('animal/control_alimenticio/ejecutar_alimento','AnimalController@ejecutar_alimento');
+Route::get('animal/peso/{id}','AnimalController@peso');
+Route::get('animal/control_alimenticio/{id}','AnimalController@control_alimenticio');
+Route::get('animal/edit/{id}','AnimalController@edit');
 
 
 Route::get('animal/milk_production/{id}','AnimalController@redirect_milk_production');
@@ -52,35 +64,6 @@ Route::get('animal/milk_production/{id}','AnimalController@redirect_milk_product
 
 
 
-Route::get('/tasks/{task_id?}',function($task_id){
-    $task = Task::find($task_id);
-
-    return Response::json($task);
-});
-
-Route::post('/tasks',function(Request $request){
-    dd($request);
-    $task = Task::create($request->all());
-
-    return Response::json($task);
-});
-
-Route::put('/tasks/{task_id?}',function(Request $request,$task_id){
-    $task = Task::find($task_id);
-
-    $task->task = $request->task;
-    $task->description = $request->description;
-
-    $task->save();
-
-    return Response::json($task);
-});
-
-Route::delete('/tasks/{task_id?}',function($task_id){
-    $task = Task::destroy($task_id);
-
-    return Response::json($task);
-});
 
 
 /*
@@ -89,8 +72,7 @@ Route::get('animal/milk_production/{id}','AnimalController@milk_production');
 Route::get('animal/milk_production/update_milk_production/{id}','AnimalController@update_milk_production');
 */
 
-Route::get('animal/peso/{id}','AnimalController@peso');
-Route::get('animal/control_alimenticio/{id}','AnimalController@control_alimenticio');
+
 //Reportes
 Route::resource('report','ReportController');
 Route::get('report/create/{id}','ReportController@create');

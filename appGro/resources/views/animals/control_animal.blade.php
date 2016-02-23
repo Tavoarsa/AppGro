@@ -46,19 +46,17 @@
                               <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
                                     <a href="{{url('animal/peso',$animal->id) }}">
-                                        <img src="/img/alimentos.jpeg" alt="Control Alimenticio">
+                                        <img src="/img/peso.jpeg" alt="Control Alimenticio">
                                     </a> 
                                      <H4>Peso</H4>                
                                 </div>
                             </div>
 
                             @if($animal->genero==="hembra")
-
-
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
                                    <a  href="{{url('animal/milk_production',$animal->id) }}">
-                                        <img src="/img/alimentos.jpeg" alt="Control Alimenticio">
+                                        <img src="/img/produccion.jpeg" alt="Control Alimenticio">
                                     </a> 
                                      <H4>Produción</H4>                
                                 </div>
@@ -67,6 +65,14 @@
                             
                             
                             @endforeach
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <a href="{{url('animal/edit',$animal->id) }}">
+                                        <img src="/img/edit.jpg" alt="Control Alimenticio">
+                                    </a> 
+                                     <H4>Editar</H4>                
+                                </div>
+                            </div>
                                                    
                         </div>
 				               

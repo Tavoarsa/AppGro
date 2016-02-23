@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AnimalForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Collection ;
 use Auth;
 use Input;
 use Session;
@@ -23,6 +24,11 @@ use App\VaccinationControl;
 use App\InjecctionControl;
 use App\Weight;
 use App\MilkProduction;
+use App\FertilizacionInvitro;
+use App\InseminacionArtificial;
+use App\MontaNatural;
+use App\TrasferenciaEmbriones;
+
 use Response;
 
 
@@ -42,35 +48,43 @@ class AnimalController extends Controller {
 	{		
 		
 			$animals= Animal::where('idUser',Auth::id())->get();
-			//dd($animals);
+					
 			return view('animals.index',compact('animals'));
 	}
 
-	public function create()
-	{		
-			//$numeroAnimal= \DB::table('animals')->orderBy('id','desc')->first();//return last row 
-		$madre= \DB::table('animals')
-	                    ->where('genero','hembra')
-	                    ->Where('idUser',Auth::id())
-	                    ->lists('nombre','id');//dd($madre);
-		$padre= \DB::table('animals')
-	                    ->where('genero','macho')
-	                    ->Where('idUser',Auth::id())
-	                    ->lists('nombre','id');
-		$selected=array();
+	public function create_fiv()	{
+
+		
 
 		return view("animals.create_fiv");
 	}
+	public function create_mt()	{		
+		
+
+		return view("animals.create_mt");
+	}
+	public function create_te()	{		
+		
+
+		return view("animals.create_te");
+	}
+	public function create_ia()	{		
+		
+
+		return view("animals.create_ia");
+	}
+
+
 
 	public function store(Request $request)
-	{	
+	{
+		
 		//Validaciones
 		$rules =array(				
 						'nombre'  					=> 'required',		
 						'raza'						=> 'required',
 						'genero'					=> 'required',
-						'fechaNacimiento'			=> 'required',
-						'pesoNacimiento'			=> 'required|integer',
+						'fechaNacimiento'			=> 'required',						
 						'caracteristicas'			=> 'required',	
 					  );
 		$farm=\DB::table('farms')                    
@@ -85,6 +99,7 @@ class AnimalController extends Controller {
 
 		$animal = new Animal();
 		$animal->idUser = $id_users;
+		$idFarm=Session::get('key');
 		if($idFarm==null)
 		{		
 			$animal->idFarm=1;
@@ -113,11 +128,46 @@ class AnimalController extends Controller {
 	     {
 	     	//Si no hay imagen, se guarda una por defecto
 	      	$image='animal';  
-	      	$default = Defoult::where('name', $image) -> pluck('image');
+	      	$default = 'animal.jpg';
 	      	$animal->image = $default;	        	
 	      	//$animal->save();
 	     }
+
 	     $animal->save();
+
+	     if($request->fiv=="fiv"){
+
+	     	$fertilizacion_invitro= new FertilizacionInvitro();
+	     	$fertilizacion_invitro->padre=$request->padre;
+	     	$fertilizacion_invitro->madre_donadora=$request->madre_donadora;
+		 	$fertilizacion_invitro->madre_receptora=$request->madre_receptora;
+		 	$animal->procedencia()->save($fertilizacion_invitro);
+	     }
+
+	     if($request->ia=='ia'){
+	     	$inseminacion_artificial= new InseminacionArtificial();
+	     	$inseminacion_artificial->padre=$request->padre;
+	     	$inseminacion_artificial->madre=$request->madre;
+	     	$animal->procedencia()->save($inseminacion_artificial);
+	     }
+	     if($request->mt=='mt'){
+	     	$monta_natural= new MontaNatural();
+	     	$monta_natural->padre=$request->padre;
+	     	$monta_natural->madre=$request->madre;
+	     	$animal->procedencia()->save($monta_natural);
+	     }
+	     if($request->te=='te'){
+
+	     	$trasferencia_embriones= new TrasferenciaEmbriones();
+	     	$trasferencia_embriones->padre=$request->padre;
+	     	$trasferencia_embriones->madre_donadora=$request->madre_donadora;
+		 	$trasferencia_embriones->madre_receptora=$request->madre_receptora;
+	     	$animal->procedencia()->save($trasferencia_embriones);
+	     }
+	 	
+	     
+
+	     
 
 	      	return redirect() -> route('animal.index');
 
@@ -571,7 +621,10 @@ class AnimalController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$animal = Animal::findOrFail($id);
+		//dd($vaccine);
+		
+		return view('animals.edit', compact('animal'));
 	}
 
 	/**
@@ -580,9 +633,45 @@ class AnimalController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, Request $request)
 	{
-		//
+		$animal = Animal::findOrFail($id);
+		//Validaciones
+		$rules =array(				
+						'nombre'  					=> 'required',																					
+						
+					  );
+		$this->validate($request,$rules);
+		
+		$animal->nombre= $request->nombre;			
+		$animal->raza = $request->raza;		
+		$animal->fechaMuerte= $request->fechaMuerte;					
+		$animal->caracteristicas= $request->caracteristicas;
+			//Validacion de imagen 
+		if (Input::hasFile('image')) 
+		{	
+			$file = Input::file('image');//Creamos una instancia de la libreria instalada
+			$image = \Image::make(\Input::file('image'));//Ruta donde queremos guardar las imagenes
+			$path = 'img/animal/';			
+			// Cambiar de tamaño
+			$image -> resize(450, 450);
+			$image -> save($path . $file -> getClientOriginalName());	
+			$animal->image = $file -> getClientOriginalName();
+		  	//$animal->save(); 
+	      	//return redirect() -> route('animal.index');
+	     }else
+	     {
+	     	//Si no hay imagen, se guarda una por defecto
+	      	$image='animal';  
+	      	$default = 'animal.jpg';
+	      	$animal->image = $default;	        	
+	      	//$animal->save();
+	     }
+
+	     $animal->save();
+	     return redirect() -> route('animal.index');
+
+
 	}
 
 	/**

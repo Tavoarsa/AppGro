@@ -19,7 +19,7 @@ class CreateAnimalsTable extends Migration {
 			$table->foreign('idUser')->references('id')->on('users');
 			$table->integer('idFarm');
             $table->foreign('idFarm')->references('id')->on('farms');			
-			$table->string('numeroAnimal')->unique();
+			$table->string('numeroAnimal');
 			$table->string('nombre');								
 			$table->string('raza');
 			$table->string('genero');

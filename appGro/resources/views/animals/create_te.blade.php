@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
 	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+		
 			<div class="panel panel-default">
-				<div class="panel-heading">Ingresar Nuevo Animal</div>
+				<div class="panel-heading">Ingresar Nuevo Animal- Trasferencia de Embriones</div>
  
                 @include('partials.messages')
 
@@ -13,22 +13,30 @@
  
 				<div class="panel-body">
 					{!! Form::open(['route' => 'animal.store','class' =>'form','novalidate' =>'novalidate','files' => true]) !!}
- 							
+ 							<div hidden class="form-group">
+       						  {!!Form::text('te',"te") !!}
+       						 	
+       						 </div>
 
 							<div class="form-group">
 								{!!Form::label('nombre', 'Nombre Animal')!!}
 								{!!Form::text('nombre', null, ["class" => "form-control"]) !!}
 							</div>
-							
+
 							<div  id="padre" class="form-group">
-								{!!Form::label('idPadre', 'Padre')!!}
-								{!!Form::select('padre',$padre,$selected,["class" => "form-control"])!!}
+								{!!Form::label('padre', 'Padre')!!}
+								{!!Form::text('padre', null, ["class" => "form-control"]) !!}
 							</div>
 
-							<div class="form-group">
-								{!!Form::label('idMadre', 'Madre')!!}
-								{!!Form::select('madre',$madre,$selected,["class" => "form-control"])!!}
-								
+							
+							<div  id="madre_donadora" class="form-group">
+								{!!Form::label('madre_donadora', 'Madre Donadora')!!}
+								{!!Form::text('madre_donadora', null, ["class" => "form-control"]) !!}
+							</div>
+
+							<div  id="madre_receptora" class="form-group">
+								{!!Form::label('madre_receptora', 'Madre Receptora')!!}
+								{!!Form::text('madre_receptora', null, ["class" => "form-control"]) !!}
 							</div>
 
 							<div class="form-group">
@@ -48,18 +56,11 @@
                        			<!-- <input type='date' name= 'to' class='form-control' readonly>-->
                         
                         		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                   			 </div>		
+                   			 </div>							
 
 							<div class="form-group">
-								{!!Form::label('pesoNacimiento', 'Peso Nacimiento')!!}
-								{!! Form::text('pesoNacimiento', null,array("class" => "form-control", 'placeholder' => 'Peso en Kilogramos')) !!}
-							</div>
-
-							
-
-							<div class="form-group">
-								{!!Form::label('observaciones', 'Observaciones')!!}
-								{!! Form::text('observaciones', null, array("class" => "form-control", 'placeholder' => 'Observaciones')) !!}
+								{!!Form::label('caracteristicas', 'Caracteristicas')!!}
+								{!! Form::text('caracteristicas', null, array("class" => "form-control", 'placeholder' => 'Observaciones')) !!}
 							</div>
 
 							<div class="controls">
@@ -77,7 +78,7 @@
 					{!! Form::close() !!}
 				</div>					
 			</div>
-		</div>
+		
 	</div>
 </div>
 
