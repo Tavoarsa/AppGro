@@ -38,6 +38,13 @@ class HomeController extends Controller {
 		return view ('portal');
 
 	}
+	public function portal_p()
+	{
+		
+						
+		return view ('portal');
+
+	}
 	public function veterinaria()
 	{
 		

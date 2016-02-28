@@ -9,7 +9,12 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">  
-                    <a  class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal">Nuevo Animal</a>
+                    
+                    <div align="right">
+                    <a class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal">Nuevo Animal</a>
+                    <a href="{{ url('/portal/') }}" class="button"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+                     
+                    </div> 
                      <div id="myModal" class="modal fade" role="dialog">
                                 <div class="modal-dialog modal-sm">
                 <!-- Modal content-->
@@ -55,16 +60,14 @@
                                       
                                        <a  href="{{url('animal/control_animal',$animal->id) }}">
                                             <img src="/img/animal/{{$animal->image}}" alt="{{$animal->nombre}}">
-                                        </a> 
-                                 
-                                    <div class="caption">
-                                    
-                                        
+                                        </a>                                  
+                                    <div class="caption">                        
 
                                     </div>
                                 </div>
                             </div>
-                            @endforeach                           
+                            @endforeach
+                                                       
                         </div>
                     </div>
                 </div>                   

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    var url = "/animal/milk_production";
+    var url = "http://localhost:8000/tasks";
 
     //display modal form for task editing
     $('.open-modal').click(function(){
@@ -78,10 +78,12 @@ $(document).ready(function(){
             type: type,
             url: my_url,
             data: formData,
-         
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",             
 
             success: function (data) {
-                console.log(data);
+               
+            
 
                 var task = '<tr id="task' + data.id + '"><td>' + data.id + '</td><td>' + data.task + '</td><td>' + data.description + '</td><td>' + data.created_at + '</td>';
                 task += '<td><button class="btn btn-warning btn-xs btn-detail open-modal" value="' + data.id + '">Edit</button>';

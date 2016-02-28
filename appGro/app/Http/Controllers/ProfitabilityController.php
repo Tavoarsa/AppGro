@@ -14,6 +14,8 @@ use Session;
 use App\Animal;
 use App\Food_Supplement;
 use App\DietaryControl;
+use App\MilkProduction;
+use Khill\Lavacharts\Lavacharts;
 
 class ProfitabilityController extends Controller {
 
@@ -46,78 +48,61 @@ class ProfitabilityController extends Controller {
 		
 	}
 
-	public function profitability_foodSupplement(Request $request)
+	public function milk_production(Request $request)
 	{
-		$food_supplement= DietaryControl::where('dietary_controls.idUser',Auth::id())
-									 ->where('dietary_controls.idAnimal',$request->id)
-						      	     ->join('animals','animals.id','=','dietary_controls.idAnimal')
-						      	     ->join('food__supplements','food__supplements.id','=','dietary_controls.idFood_Supplemet')
-						      	     ->select('food__supplements.nameProduct','animals.nombre','dietary_controls.value')
-						  			 ->get();
 		
-		foreach ($food_supplement as $food_supplements) {
-
-			$nameProduct[] = $food_supplements->nameProduct ;
-			$nombre[]=$food_supplements->nombre;
-			$value[]=$food_supplements->value;
+		$milk_productions= MilkProduction::where('milk_productions.idUser',Auth::id())
+									 ->where('milk_productions.idAnimal',$request->id)
+						      	     ->join('animals','animals.id','=','milk_productions.idAnimal')						      	     
+						      	     ->select('animals.nombre','milk_productions.date','milk_productions.morning_production','milk_productions.later_production','milk_productions.total_production','milk_productions.price_production')
+						  			 ->get();//dd($milk_productions);
 		
-		}
-		dd($value);
-		
-		//$food__supplement= $food__supplement->toJson();
-		//$food__supplement=array_pull($array, 'nameProduct');		  			
-		//dd($food_supplement);
-		/*return view('profitability.food_supplement',compact('food__supplement'));
-		$stocksTable = Lava::DataTable();
-    	$stocksTable->addDateColumn('Day of Month')
-                	->addNumberColumn('Projected')
-                	->addNumberColumn('Official');
+		foreach ($milk_productions as $milk_production) {
 
-    // Random Data For Example
-    for ($a = 1; $a < 30; $a++)
-    {
-        $rowData = [
-          "2014-8-$a", rand(800,1000), rand(800,1000)
-        ];
+			$nombre[] = $milk_production->nombre ;
+			$date[]=$milk_production->date;
+			$morning_production[]=$milk_production->morning_production;
+			$later_production[]=$milk_production->later_production;
+}
 
-        $stocksTable->addRow($rowData);
-    }
+//dd($morning_production);
 
-    Lava::LineChart('Stocks', $stocksTable, ['title' => 'Stock Market Trends']);*/
 
-	// See note below for Laravel
+$finances = Lava::DataTable();
 
-	$temps = Lava::DataTable();
+$finances->addDateColumn('dd')
+         ->addNumberColumn('Mañana')
+         ->addNumberColumn('Tarde')         
+         ->setDateTimeFormat('d')
+         ->addRow([$da0=str_limit($date0 = array_pull($date, '0'), 2,$end = ''), $mor0=array_pull($morning_production,'0'),$la0=array_pull($later_production,'0')])
+         ->addRow([$da1=str_limit($date0 = array_pull($date, '1'), 2,$end = ''), $mor0=array_pull($morning_production,'1'),$la0=array_pull($later_production,'1')])
+         ->addRow([$da2=str_limit($date0 = array_pull($date, '2'), 2,$end = ''), $mor0=array_pull($morning_production,'2'),$la0=array_pull($later_production,'2')])
+         ->addRow([$da3=str_limit($date0 = array_pull($date, '3'), 2,$end = ''), $mor0=array_pull($morning_production,'3'),$la0=array_pull($later_production,'3')]);
+         
 
-	$temps->addStringColumn('Type')
-	      ->addNumberColumn('Value')
-	      ->addRow(['Producto', rand(0,100)])
-	      ->addRow(['Animal', rand(0,100)])
-	      ->addRow(['Graphics', rand(0,100)]);
-
-	Lava::GaugeChart('Temps', $temps, [
-	    'width'      => 400,
-	    'greenFrom'  => 0,
-	    'greenTo'    => 69,
-	    'yellowFrom' => 70,
-	    'yellowTo'   => 89,
-	    'redFrom'    => 90,
-	    'redTo'      => 100
-	   
-	]);
+Lava::ColumnChart('MilkProduction', $finances, [
+    'title' => 'Producción Lechera',
+    'titleTextStyle' => [
+        'color'    => '#eb6b2c',
+        'fontSize' => 14
+    ]
+]);
 
 
 
 
 
-    return view('profitability.food_supplement');
+
+
+
+
+
+
+    return view('profitability.milk_production');
 
 	}
 
-	public function milk_productions(){
-
-		
-	}
+	
 
 	/**
 	 * Show the form for creating a new resource.

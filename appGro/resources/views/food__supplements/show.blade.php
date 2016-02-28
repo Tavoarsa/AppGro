@@ -11,7 +11,13 @@
 
 
                 <div class="panel-heading">
-               <a href="{{ url('/food__supplement') }}" class="btn btn-info" role="button">Alimento</a>
+               
+                <div align="right">
+                    <a href="{{ url('/food__supplement/') }}" class="button"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+                </div>
+                
+
+               
        
                      {!!Form::open(['route'=>'food__supplement.show','method'=>'GET', 'class'=>'navbar-form navbar-left pull-right', 'role'=>'search'])!!}
                          <div class="form-group">

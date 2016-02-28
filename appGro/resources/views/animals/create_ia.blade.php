@@ -43,14 +43,15 @@
 								{!! Form::select('genero', array('hembra' => 'Hembra', 'macho' => 'Macho'), 'Hembra',["class" => "form-control"])!!}
 							</div>
 							
-							 {!!Form::label('fechaNacimiento', 'Fecha Nacimiento')!!}
-							 <div class='input-group date' id='fechaNacimiento'>
-
-                       			 {!! Form::input('text', 'fechaNacimiento',null,['class'=>'form-control']) !!}
-                       			<!-- <input type='date' name= 'to' class='form-control' readonly>-->
-                        
-                        		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                   			 </div>							
+							  <div class="form-group">
+                            <label for="fechaNacimiento">Fecha Nacimiento</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control datepicker" name="fechaNacimiento">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                        </div>							
 
 							<div class="form-group">
 								{!!Form::label('caracteristicas', 'Caracteristicas')!!}
@@ -76,13 +77,12 @@
 	</div>
 </div>
 
-
-     <script type="text/javascript">
-
-           
-                $('#fechaNacimiento').datetimepicker({
-                     });
-
-        </script>
+  <script>
+    $('.datepicker').datepicker({
+        format: "yyyy/mm/dd",
+        language: "es",
+        autoclose: true
+    });
+</script>
 
 @endsection

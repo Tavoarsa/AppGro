@@ -8,7 +8,14 @@
         <div class="col-md-10 col-md-offset-1">
               
             <div class="panel panel-default">
-                <a href="{{ url('/food__supplement') }}" class="btn btn-info" role="button">Alimento</a>
+            <div class="panel-heading">
+                <div align="right">
+                    <a href="{{ url('/food__supplement/') }}" class="button"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+                </div>
+                
+
+            </div>
+               
                
                 <div class="panel-body">
 

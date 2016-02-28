@@ -10,7 +10,8 @@
 
                 <div class="panel panel-default">
                   
-                    <div class="panel-heading">   
+                    <div class="panel-heading">
+                      <div>Reporte de Animales</div>   
                                     
                     </div>
                    
@@ -31,12 +32,8 @@
                           <table class="table">
                             <thead>
                               <tr>
-                                <th>Numero</th>                               
-                                <th>Nombre</th>
-                                <th>Genero</th>
-                                <th>Raza</th>
-                                <th></th>
-                                <th></th>
+                                <th>Numero</th>                     
+                               
                                                
                               </tr>
                             </thead>
@@ -44,13 +41,12 @@
                              @foreach($animals as $animal)        
                             <tr>              
                                 <td>{{$animal->numeroAnimal }}</td>                             
-                                <td>{{$animal->nombre }}</td>               
-                                <td>{{$animal->genero }}</td>           
-                                <td>{{$animal->raza }}</td>
-                                <td><a class="btn mini blue-stripe" href="{{ url('report/create', $animal->id) }}" >Generar</a></td>
+                                <td> <a class="btn btn-warning btn-xs btn-detail" href="{{ url('report/veterinario', $animal->id) }}">Veterinario</a></td>               
+                                <td> <a class="btn btn-warning btn-xs btn-detail" href="{{ url('report/alimento', $animal->id) }}">Alimento</a></td>                     
+                                <td> <a class="btn btn-warning btn-xs btn-detail" href="{{ url('report/procedencia', $animal->id) }}">Procendencia</a></td>               
                               
                             </tr> 
-                               @endforeach                
+                               @endforeach               
                             </tbody>
                           </table>
                           </div>

@@ -10,7 +10,7 @@
         <div class="col-md-10 col-md-offset-1">
               
             <div class="panel panel-default">
-        <script>
+         <script type="text/javascript">
          
 
           function genPDF() {
@@ -26,58 +26,32 @@
 
     
           </script>
+          <script type="text/javascript" src="../js/jspdf.min.js"></script>
 
 
 
 
                 <div class="panel-heading">
-                 <button onclick="genPDF()">Generar Reporte</button>              
+                <!-- <button onclick="genPDF()">Generar Reporte</button> -->
                 </div>
-
-
+                <div id="pdf">
                 <div class="panel-body">
 
                     <div class="row">
-                      <div>
+                      <div align="center">
                         <div class="table-responsive">
-                         <div >
+                         <div>
                         <h3>Datos Animal</h3>
                         @foreach($animals as $animal)  
-                         <div class="col-sm-6 col-md-4" >
-                                <div class="thumbnail">
+                         <div  class="col-sm-6 col-md-4" >
+                                <div align="center" class="thumbnail">
                                   <img src="/img/animal/{{$animal->image}}" alt="{{$animal->nombre}}">
                                    <h3>{{$animal->nombre}}</h3>                            
                                 </div>
                             </div>
                             @endforeach 
-                        </div> 
-                                              
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th>Numero</th>                               
-                                <th>Nombre</th>
-                                <th>Genero</th>
-                                <th>Raza</th>
-                                <th>Peso</th>
-                                <th>Fecha Nacimiento</th>                                              
-                              </tr>
-                            </thead>
-                            <tbody> 
-                             @foreach($animals as $animal)        
-                            <tr>              
-                                <td>{{$animal->numeroAnimal }}</td>                             
-                                <td>{{$animal->nombre }}</td>               
-                                <td>{{$animal->genero }}</td>           
-                                <td>{{$animal->raza }}</td>
-                                <td>{{$animal->pesoNacimiento }}kg</td>
-                                <td>{{$animal->fechaNacimiento }}</td>
-                                
-                            </tr> 
-                               @endforeach                
-                            </tbody>
-                          </table>
-                          </div>  
+                        </div>                                               
+                      </div>  
                       </div>
                       <div>
                           <div class="table-responsive"> 
@@ -104,7 +78,9 @@
                             </tr> 
                                @endforeach                
                             </tbody>
+
                           </table>
+                           <div align="center"><h5>Total Consumido  de Vacunas:¢ {{$totalVaccine}} </h5></div>
                           </div>
                       </div>
                        <div>
@@ -133,10 +109,12 @@
                                @endforeach                
                             </tbody>
                           </table>
+                          <div align="center"><h5>Total Consumido de Inyecciones:¢ {{$totalInjecction}} </h5></div>
                           </div>
                       </div> 
 
                     </div>
+                </div>
                 </div>
         </div>
     </div>

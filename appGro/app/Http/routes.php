@@ -19,6 +19,7 @@ use App\Task;
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
 Route::get('portal/{id}', 'HomeController@portal');
+Route::get('portal/', 'HomeController@portal_p');
 Route::get('veterinaria', 'HomeController@veterinaria');
 Route::get('alimentacion', 'HomeController@alimentacion');
 
@@ -60,9 +61,43 @@ Route::get('animal/edit/{id}','AnimalController@edit');
 
 
 Route::get('animal/milk_production/{id}','AnimalController@redirect_milk_production');
+/*
+Route::get('/', function () {
+    $tasks = Task::all();
 
+    return View::make('welcome')->with('tasks',$tasks);
+});
 
+Route::get('/tasks/{task_id?}',function($task_id){
+    $task = Task::find($task_id);
 
+    return Response::json($task);
+});
+
+Route::post('/',function(Request $request){
+
+    $task = Task::create($request->all());
+
+    return Response::json($task);
+});
+
+Route::put('/tasks/{task_id?}',function(Request $request,$task_id){
+    $task = Task::find($task_id);
+
+    $task->task = $request->task;
+    $task->description = $request->description;
+
+    $task->save();
+
+    return Response::json($task);
+});
+
+Route::delete('/tasks/{task_id?}',function($task_id){
+    $task = Task::destroy($task_id);
+
+    return Response::json($task);
+});
+*/
 
 
 
@@ -75,7 +110,9 @@ Route::get('animal/milk_production/update_milk_production/{id}','AnimalControlle
 
 //Reportes
 Route::resource('report','ReportController');
-Route::get('report/create/{id}','ReportController@create');
+
+Route::get('report/veterinario/{id}','ReportController@create_veterinario');
+Route::get('report/alimento/{id}','ReportController@create_alimento');    
 
 
 
@@ -92,8 +129,9 @@ Route::get('provider/edit/{id}','ProviderController@edit');
 //Farm
 Route::resource('farm','FarmController');
 Route::get('farm/edit/{id}','FarmController@edit');
-Route::get('farm/show/{id}','FarmController@show');
-      
+//Route::get('farm/show/{id}','FarmController@show');
+Route::get('farm/show','FarmController@show');
+
 
 //Injection
 
@@ -115,7 +153,7 @@ Route::get('food__supplements/show1/{id}','food__supplementsController@show1');
 
 //Profitability
 Route::resource('profitability','ProfitabilityController');
-Route::get('profitability/foodSupplement/{id}','ProfitabilityController@profitability_foodSupplement');
+Route::get('profitability/milk_production/{id}','ProfitabilityController@milk_production');
 
 
 

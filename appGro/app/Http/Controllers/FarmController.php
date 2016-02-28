@@ -89,11 +89,9 @@ class FarmController extends Controller {
       	$farm->save(); 
 
       	return redirect() -> route('farm.index');
-      	}
-      	$patent='patent';	     
+      	}      	     
 
-      	$default = Defoult::where('name', $patent) -> pluck('image');
-
+      	$default ='farm.jpg';
       	$farm->patent = $default;
       	//dd($farm->patent);
       	
@@ -107,12 +105,9 @@ class FarmController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show()
 	{
-	
-	
-
-		$farms = Farm::where('id', $id) -> get();		
+		$farms = Farm::where('idUser',Auth::id())-> get();
 		return view('farms.show', compact('farms'));
 	}
 
@@ -167,20 +162,11 @@ class FarmController extends Controller {
 		$farm->address=$request->address;
       	$farm->save(); 
 
-      	return redirect() -> route('farm.index');
+      	return redirect() -> route('farm.show');
       	}
+      	return redirect() -> route('farm.show');
+       
 
-      	$patent='farm';	     
-
-      	$default = Defoult::where('name', $patent) -> pluck('image');
-
-      	$farm->patent = $default;
-      	$farm->name= $request->name;
-		$farm->agent=$request->agent;
-		$farm->operationCertificate=$request->operationCertificate;
-		$farm->address=$request->address;      	
-      	$farm->save();
-      	return redirect() -> route('farm.index');
 	}
 
 	/**

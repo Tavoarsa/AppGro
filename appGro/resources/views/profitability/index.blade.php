@@ -21,7 +21,7 @@
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
                                 <h3>{{$animal->nombre}}</h3>                                      
-                                       <a href="{{url('profitability/foodSupplement',$animal->id) }}">
+                                       <a href="{{url('profitability/milk_production',$animal->id) }}">
                                             <img src="/img/animal/{{$animal->image}}" alt="{{$animal->nombre}}">                                    </a> 
                                  
                                     <div class="caption">

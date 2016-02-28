@@ -8,7 +8,8 @@
         <div class="col-md-10 col-md-offset-1">
               
             <div class="panel panel-default">
-                <a href="{{ url('/vaccine') }}" class="btn btn-info" role="button">Fincas</a>
+            <div class="panel-heading">Listado de Fincas</div>
+                
                
                 <div class="panel-body">
 
@@ -16,16 +17,13 @@
                             @foreach($farms as $farm)
 
                             <div class="col-sm-6 col-md-4">
-                                <div class="thumbnail">
-                                    <img src="/img/patent/{{$farm->patent}}" alt="{{$farm->name}}"> 
-                                
-                                    <div class="caption">
-                                        <h3 >{{$farm->name}}</h3>
-                                        <h3>{{$farm->exploitation}}</h3>
-                                        <p><a class="btn btn-small btn-info" href="{{url('farm/edit', $farm->id) }}">Editar</a> </p>
-
-                                    </div>
-                                </div>
+                            <div align="center" class="caption">
+                                <h3 >{{$farm->name}}</h3>
+                            </div>
+                            <div class="thumbnail">
+                            <img src="/img/patent/{{$farm->patent}}" alt="{{$farm->name}}">                     
+                            </div>
+                            <p align="center"><a class="btn btn-small btn-info" href="{{url('farm/edit', $farm->id) }}">Editar</a> </p>                              
                             </div>
                             @endforeach                           
                         </div>

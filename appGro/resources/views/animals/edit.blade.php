@@ -2,16 +2,23 @@
 
 @section('content')
 
+
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">                
+            <div class="panel panel-default">               
                 
                     <div class="panel-heading">
-                <a href="{{ url('/animal') }}" class="btn btn-info" role="button">Catalogo Animal</a>       
-                @include('partials.messages')                      
+                    <div align="right">
+                    <a href="{{ url('/animal/') }}" class="button"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+                     
+                    </div>
+                
+                </div>      
+                       
 
                     
-                    </div>
+                    
+                    @include('partials.messages')  
                     <div class="panel-body">
                         <!--@include('partials.messages')--> 
                         {!! Form::model($animal, ['route' => ['animal.update',$animal->id], 'method' => 'PUT', 'files' => 'true']) !!}
@@ -26,19 +33,26 @@
                                 {!!Form::label('raza', 'Raza')!!}
                                 {!! Form::select('raza', array('holsten' => 'Holsten', 'yersey' => 'Yersey','guir' => 'Guir'), 'Holtein',["class" => "form-control"])!!}
                             </div>
-                            <div class="form-group">
-                                {!!Form::label('fechaMuerte', 'Fecha Muerte')!!}
-                                {!!Form::text('fechaMuerte', null, ["class" => "form-control"]) !!}
+
+                             <div class="form-group">
+                            <label for="fechaMuerte">Fecha Muerte</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control datepicker" name="fechaMuerte">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
                             </div>
+                        </div>
+                            
                             <div class="form-group">
                                 {!!Form::label('caracteristicas', 'Caracteristicas')!!}
                                 {!! Form::text('caracteristicas', null, array("class" => "form-control", 'placeholder' => 'Observaciones')) !!}
                             </div>
 
-                            <div class="controls">
+                                <div class="controls">
                                 {!!Form::label('image', 'Foto')!!}
                                 
-                                <input type="file" name="image" required> 
+                                <input type="file" name="image"> 
                                                             
                              </div>
 
@@ -50,8 +64,16 @@
 
                     </div>
 
-                </div>
+                
+            </div>
             </div>
         </div>
     </div>
+       <script>
+    $('.datepicker').datepicker({
+        format: "yyyy/mm/dd",
+        language: "es",
+        autoclose: true
+    });
+</script>
 @endsection

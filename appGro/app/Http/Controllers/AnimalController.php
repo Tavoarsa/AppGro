@@ -47,7 +47,17 @@ class AnimalController extends Controller {
 	public function index()
 	{		
 		
-			$animals= Animal::where('idUser',Auth::id())->get();
+			$idFarm=Session::get('key');
+		if($idFarm==null)
+		{			
+			$idFarm=1;
+		}else
+		{
+			$idFarm=$idFarm;	
+		}
+		$animals= Animal::where('idUser',Auth::id())
+						  ->where('idFarm',$idFarm)	
+						  ->get();
 					
 			return view('animals.index',compact('animals'));
 	}
@@ -93,7 +103,7 @@ class AnimalController extends Controller {
 
 		$this->validate($request,$rules);
 		$carbon = new \Carbon\Carbon();//Obtener Fecha
-		$date = $carbon->now();			
+		$date = $carbon->now();	
 		$date = $date->format('Y');//Obtenemos Año			
 		$id_users= Auth::id();
 
@@ -242,7 +252,7 @@ class AnimalController extends Controller {
 			$vc->idUser=Auth::id();
 			$vc->animalName=$request->animalName;
 		
-			$vc->diseaseName=$request->animalName;
+			$vc->diseaseName=$request->diseaseName;
 			$vc->vaccineName=$request->vaccineName;
 			$vc->dateApplication=$request->dateApplication;
 			
@@ -427,7 +437,11 @@ class AnimalController extends Controller {
 
 			$animals= Animal::where('id',$id)
 						->where('idUser',Auth::id())
-						->lists('nombre','id'); 
+						->lists('nombre','id'); //dd($animals);
+		
+		
+
+		
 
 			return view('animals.peso',compact('animals'));
 
@@ -560,7 +574,7 @@ class AnimalController extends Controller {
 				
 			}
 			
-			return view('animals.milk_production',compact('milk_productions'));
+			return view('welcome',compact('milk_productions'));
 						  			 
 
 		

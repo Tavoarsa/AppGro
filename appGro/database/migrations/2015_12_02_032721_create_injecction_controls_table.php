@@ -20,8 +20,8 @@ class CreateInjecctionControlsTable extends Migration {
 			$table->integer('idFarm');
 		    $table->foreign('idFarm')->references('id')->on('farms');	
 			$table->string('animalName');			
-			$table->string('diseaseName');	
-			$table->string('injectionName');					
+			$table->integer('diseaseName');	
+			$table->integer('injectionName');					
 			$table->string('dateApplication');		
 			$table->string('dose');
 			$table->double('value')->nullable();

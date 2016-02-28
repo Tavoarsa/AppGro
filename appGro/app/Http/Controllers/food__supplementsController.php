@@ -27,18 +27,10 @@ class food__supplementsController extends Controller {
 	 * @return Response
 	 */
 	public function index()
-	{
-		$request=2;
-		$food__supplement= DietaryControl::where('dietary_controls.idUser',Auth::id())
-									 ->where('dietary_controls.idAnimal',$request)
-						      	     ->join('animals','animals.id','=','dietary_controls.idAnimal')
-						      	     ->join('food__supplements','food__supplements.id','=','dietary_controls.idFood_Supplemet')
-						      	     ->select('food__supplements.nameProduct','animals.nombre','dietary_controls.value')
-						  			 ->get();
-
-						  			 dd($food__supplement);
-		/*$food__supplements = Food_Supplement::where('idUser',Auth::id())-> get();
-		return view('food__supplements.index', compact('food__supplements'));*/
+	{		
+		
+		$food__supplements = Food_Supplement::where('idUser',Auth::id())-> get();
+		return view('food__supplements.index', compact('food__supplements'));
 	}
 
 	/**
@@ -59,8 +51,6 @@ class food__supplementsController extends Controller {
 	 */
 	public function store(Request $request)
 	{
-		dd($request);
-
 		$rules =array(
 
 				'typeProduct'  				=> 'required',		
@@ -92,7 +82,7 @@ class food__supplementsController extends Controller {
 			
 			$food__supplement -> save();
 
-			return redirect() -> route('food__supplement.index');		
+			return view('food__supplements.index');	
 
 	}
 

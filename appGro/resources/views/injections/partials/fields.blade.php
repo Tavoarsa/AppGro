@@ -39,12 +39,15 @@
     {!! form::label('prices','Precio')!!}
     {!! form::text('prices',null,array("class" => "form-control", 'placeholder' => 'Precio en colones')) !!}
 </div>
-
-{!!Form::label('due_date', 'Fecha Vencimiento')!!}
-  <div class='input-group date' id='due_date'>
- {!! Form::input('text', 'due_date',null,['class'=>'form-control']) !!}
- <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
- </div
+ <div class="form-group">
+                            <label for="fechaVencimiento">Fecha Vencimiento</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control datepicker" name="fechaVencimiento">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                        </div>
  <div class="form-group">
     {!! form::label('image','Imagen')!!}   
     {!! form::file('image',null,['class' => 'form-control']) !!}
