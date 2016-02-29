@@ -282,9 +282,7 @@ class InjecctionController extends Controller {
 		$injection -> effects = Input::get('effects');
 		$injection -> size=Input::get('sizes');
 		$injection -> price=Input::get('prices');
-		if($request->sizes==null){
-			dd("fff");
-		}
+		
 		$price_ml = $request->prices/$request->sizes;
 		$injection -> price_ml=$price_ml;
 		$injection -> due_date=Input::get('due_date');	

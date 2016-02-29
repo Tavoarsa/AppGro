@@ -52,91 +52,85 @@ class ProfitabilityController extends Controller {
 
 	public function milk_production(Request $request)
 	{
-		
-		
-		
-		
-
-		
-		
-
-
-		
-
-
-
-	
-		
+		$animals= Animal::where('idUser',Auth::id())
+						  ->where('id',$request->id)	
+						  ->lists('nombre');
+		$animals=array_pull($animals,0);
 		
 		$milk_productions= MilkProduction::where('milk_productions.idUser',Auth::id())
 									 ->where('milk_productions.idAnimal',$request->id)									 
 						      	     ->join('animals','animals.id','=','milk_productions.idAnimal')						      	     
 						      	     ->select('animals.nombre','milk_productions.date','milk_productions.morning_production','milk_productions.later_production','milk_productions.total_production','milk_productions.price_production')
 						  			 ->get();//dd($milk_productions);
-		
-		foreach ($milk_productions as $milk_production) {
+
+		$dietary_controls= DietaryControl::where('dietary_controls.idUser',Auth::id())
+									 ->where('dietary_controls.idAnimal',$request->id)									 
+						      	     ->join('animals','animals.id','=','dietary_controls.idAnimal')						      	     
+						      	     ->select('animals.nombre','dietary_controls.value')
+						  			 ->get();//dd($dietary_controls);
+		if(count($milk_productions)==0 || count($dietary_controls)==0){
+
+
+
+			return redirect('profitability')->with('status', 'Noy hay ningún registro que mostrar');
+		}
+
+		foreach ($milk_productions as $milk_production) 
+		{
 
 			$nombre[] = $milk_production->nombre ;
 			$date[]=$milk_production->date;
 			$morning_production[]=$milk_production->morning_production;
 			$later_production[]=$milk_production->later_production;
-}
+			$total_production[]=$milk_production->total_production;
+			$price_production[]=$milk_production->price_production;
 
-/*$fechaNacimiento=$request->fechaNacimiento;
-$fechaNacimiento=str_limit($fechaNacimiento,2,$end='');
-$da0=str_limit($date0 = array_pull($date, '0'), 2,$end = '');
-//dd($date);
-foreach ($date as $da) {
+		}
+			foreach ($dietary_controls as $dietary_control) 
+		{
+			
+			$value[]=$dietary_control->value;
 
-	$d=$da[0];dd($d);
+		}
+
+$total_production=array_sum($total_production);//Total en kilos de leche
+//$promedio_dia=count($price_production);
+$promedio_dia=($total_production)/(count($price_production)); //dd($promedio_dia);//kilos por dia.
+$ganancia_produccion=array_sum($price_production);//ganancia total
+$ganacia_dia= $ganancia_produccion/count($price_production);
+
+$total_gastos= array_sum($value);//gatos total.
+$gatos_dia=$total_gastos/count($value);
+
+$balance_total=$ganancia_produccion-$total_gastos;
+$balance_diario=$ganacia_dia-$gatos_dia;//dd($balance_total);
+if($balance_total<0){
+	$estado="Animal No Rentable.";
 }
+$estado="Animal Rentable";	
+		
+$reasons = Lava::DataTable();
+
+$reasons->addStringColumn('Reasons')
+        ->addNumberColumn('Percent')
+        ->addRow(['Ingresos', $ganancia_produccion])        
+        ->addRow(['Gastos', $total_gastos]);
+
+Lava::PieChart('IMDB', $reasons, [
+    'title'  => 'Rentabilida Animal ',
+    'is3D'   => true,
+    'slices' => [
+        ['offset' => 0.2],
+        ['offset' => 0.25],
+        ['offset' => 0.3]
+    ]
+]);
+         
+
 
 
 	
-	//dd($da0);
-
-
-	foreach ($date as $dat) {
-		//dd($dat);
-
-		//$date0[]=array_pull($dat,'0');dd($date0);
-		
-	}
-*/
-
-	//dd($request->fechaNacimiento);
-
-	if(count($milk_productions)==0){
-		
-		return redirect()->back()->withInput();
-
-	}else{
-		if(count($date)<=3){
-			return redirect()->back()->withInput();
-
-		}
-		$finances = Lava::DataTable();
-
-$finances->addDateColumn('dd')
-         ->addNumberColumn('Mañana')
-         ->addNumberColumn('Tarde')         
-         ->setDateTimeFormat('d')
-         ->addRow([$da0=str_limit($date0 = array_pull($date, '0'), 2,$end = ''), $mor0=array_pull($morning_production,'0'),$la0=array_pull($later_production,'0')])
-         ->addRow([$da1=str_limit($date0 = array_pull($date, '1'), 2,$end = ''), $mor0=array_pull($morning_production,'1'),$la0=array_pull($later_production,'1')])
-         ->addRow([$da2=str_limit($date0 = array_pull($date, '2'), 2,$end = ''), $mor0=array_pull($morning_production,'2'),$la0=array_pull($later_production,'2')])
-         ->addRow([$da3=str_limit($date0 = array_pull($date, '3'), 2,$end = ''), $mor0=array_pull($morning_production,'3'),$la0=array_pull($later_production,'3')]);
-         
-
-Lava::ColumnChart('MilkProduction', $finances, [
-    'title' => 'Producción Lechera',
-    'titleTextStyle' => [
-        'color'    => '#eb6b2c',
-        'fontSize' => 14
-    ]
-]);
-
-	}
-    return view('profitability.milk_production');
+    return view('profitability.milk_production',compact('animals','estado','gatos_dia','total_gastos','ganacia_dia','ganancia_produccion','promedio_dia','total_production'));
     
 	}
 

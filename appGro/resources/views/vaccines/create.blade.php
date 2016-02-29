@@ -27,8 +27,12 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-    $('#due_date').datetimepicker({});
- </script> 
+  <script>
+    $('.datepicker').datepicker({
+        format: "yyyy/mm/dd",
+        language: "es",
+        autoclose: true
+    });
+</script>
 
 @endsection

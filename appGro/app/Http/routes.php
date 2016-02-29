@@ -154,7 +154,12 @@ Route::get('food__supplements/show1/{id}','food__supplementsController@show1');
 
 //Profitability
 Route::resource('profitability','ProfitabilityController');
-Route::get('profitability/milk_production/{id}','ProfitabilityController@milk_production');
+Route::get('profitability/milk_production/{id}','ProfitabilityController@milk_production',function(){
+   
+
+
+
+});
 Route::post('profitability/milk_production','ProfitabilityController@milk_production') ;
 
 

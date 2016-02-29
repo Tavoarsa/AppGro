@@ -27,6 +27,13 @@
             </div>
         </div>
     </div>
+      <script>
+    $('.datepicker').datepicker({
+        format: "yyyy/mm/dd",
+        language: "es",
+        autoclose: true
+    });
+</script>
 @endsection
 
 
