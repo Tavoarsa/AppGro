@@ -1,1 +1,1 @@
-Click here to reset your password: {{ url('password/reset/'.$token) }}
+Presione aqui para restaurar su contraseña: {{ url('password/reset/'.$token) }}

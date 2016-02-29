@@ -8,7 +8,13 @@
         <div class="col-md-10 col-md-offset-1">
               
             <div class="panel panel-default">
-            <div class="panel-heading">Listado de Fincas</div>
+            <div class="panel-heading">Listado de Fincas
+            <div align="right">
+                    <a href="{{ url('/portal/') }}" class="button"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+                     
+                    </div>
+
+            </div>
                 
                
                 <div class="panel-body">

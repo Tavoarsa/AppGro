@@ -2,44 +2,39 @@
 
 @section('content')
  
-    <div class="container">
-      
+    <div class="container-fluid">  
 
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div  class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">  
+                    <div class="panel-heading"> 
                     
-                    <div align="right">
-                    <a class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal">Nuevo Animal</a>
-                    <a href="{{ url('/portal/') }}" class="button"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
-                     
-                    </div> 
-                     <div id="myModal" class="modal fade" role="dialog">
-                                <div class="modal-dialog modal-sm">
+                        <div>
+
+                            <a class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal">Nuevo Animal</a>
+                            <a href="{{ url('/portal/') }}" class="button"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+                             
+                        </div> 
+                         <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog modal-sm">
                 <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Procedencia Genetica</h4>
-                                        </div>
-                                        <div align="center" class="modal-body">
-                                          
-                                <a  class="btn btn-info" href="{{ url('/animal/create/fiv')  }}">FIV</a>
-                                <a  class="btn btn-info" href="{{ url('/animal/create/ia')}}" >IA</a>
-                                <a  class="btn btn-info" href="{{ url('/animal/create/mt')}}">MT</a>
-                                <a  class="btn btn-info" href="{{ url('/animal/create/te')}}" >TE</a>
-                               
-                                
-                            
-                                        </div>
-                                        <div class="modal-footer">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Procedencia Genetica</h4>
+                                    </div>
+                                    <div align="center" class="modal-body">                                          
+                                        <a  class="btn btn-info" href="{{ url('/animal/create/fiv')  }}">FIV</a>
+                                        <a  class="btn btn-info" href="{{ url('/animal/create/ia')}}" >IA</a>
+                                        <a  class="btn btn-info" href="{{ url('/animal/create/mt')}}">MT</a>
+                                        <a  class="btn btn-info" href="{{ url('/animal/create/te')}}" >TE</a>                   
+                                    </div>
+                                    <div class="modal-footer">
                                         <div align="left">
-                                        <p>FIV=Fertilización Invitro</p>
-                                        <p>IA=Inseminación Artificial</p>
-                                        <p>MT=Monta Natural</p>
-                                        <p>IA=Inseminación Artificial</p>
-                                            
+                                            <p>FIV=Fertilización Invitro</p>
+                                            <p>IA=Inseminación Artificial</p>
+                                            <p>MT=Monta Natural</p>
+                                            <p>IA=Inseminación Artificial</p>                                    
 
                                         </div>
                                             

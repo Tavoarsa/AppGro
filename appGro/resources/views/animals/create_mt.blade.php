@@ -43,7 +43,7 @@
 								{!! Form::select('genero', array('hembra' => 'Hembra', 'macho' => 'Macho'), 'Hembra',["class" => "form-control"])!!}
 							</div>
 							
-							 <div class="form-group">
+						 <div class="form-group">
                             <label for="fechaNacimiento">Fecha Nacimiento</label>
                             <div class="input-group">
                                 <input type="text" class="form-control datepicker" name="fechaNacimiento">
@@ -51,7 +51,7 @@
                                     <span class="glyphicon glyphicon-th"></span>
                                 </div>
                             </div>
-                        </div>						
+                        </div>							
 
 							<div class="form-group">
 								{!!Form::label('caracteristicas', 'Caracteristicas')!!}
@@ -80,7 +80,7 @@
 
       <script>
     $('.datepicker').datepicker({
-        format: "dd/mm/yyyy",
+        format: "yyyy/mm/dd",
         language: "es",
         autoclose: true
     });

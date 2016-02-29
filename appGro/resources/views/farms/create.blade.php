@@ -65,7 +65,7 @@
  
 							
 							<div class="form-group">
-								{!! Form::submit('Send', ["class" => "btn btn-success btn-block"]) !!}
+								{!! Form::submit('Guardar', ["class" => "btn btn-success btn-block"]) !!}
 							</div>
 							 
  

@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Illuminate\Cookie;
 
 use Auth;
 use Lava;
@@ -48,11 +49,27 @@ class ProfitabilityController extends Controller {
 		
 	}
 
+
 	public function milk_production(Request $request)
 	{
 		
+		
+		
+		
+
+		
+		
+
+
+		
+
+
+
+	
+		
+		
 		$milk_productions= MilkProduction::where('milk_productions.idUser',Auth::id())
-									 ->where('milk_productions.idAnimal',$request->id)
+									 ->where('milk_productions.idAnimal',$request->id)									 
 						      	     ->join('animals','animals.id','=','milk_productions.idAnimal')						      	     
 						      	     ->select('animals.nombre','milk_productions.date','milk_productions.morning_production','milk_productions.later_production','milk_productions.total_production','milk_productions.price_production')
 						  			 ->get();//dd($milk_productions);
@@ -65,10 +82,40 @@ class ProfitabilityController extends Controller {
 			$later_production[]=$milk_production->later_production;
 }
 
-//dd($morning_production);
+/*$fechaNacimiento=$request->fechaNacimiento;
+$fechaNacimiento=str_limit($fechaNacimiento,2,$end='');
+$da0=str_limit($date0 = array_pull($date, '0'), 2,$end = '');
+//dd($date);
+foreach ($date as $da) {
+
+	$d=$da[0];dd($d);
+}
 
 
-$finances = Lava::DataTable();
+	
+	//dd($da0);
+
+
+	foreach ($date as $dat) {
+		//dd($dat);
+
+		//$date0[]=array_pull($dat,'0');dd($date0);
+		
+	}
+*/
+
+	//dd($request->fechaNacimiento);
+
+	if(count($milk_productions)==0){
+		
+		return redirect()->back()->withInput();
+
+	}else{
+		if(count($date)<=3){
+			return redirect()->back()->withInput();
+
+		}
+		$finances = Lava::DataTable();
 
 $finances->addDateColumn('dd')
          ->addNumberColumn('Mañana')
@@ -88,18 +135,9 @@ Lava::ColumnChart('MilkProduction', $finances, [
     ]
 ]);
 
-
-
-
-
-
-
-
-
-
-
+	}
     return view('profitability.milk_production');
-
+    
 	}
 
 	

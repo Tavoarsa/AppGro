@@ -61,6 +61,7 @@ Route::get('animal/edit/{id}','AnimalController@edit');
 
 
 Route::get('animal/milk_production/{id}','AnimalController@redirect_milk_production');
+
 /*
 Route::get('/', function () {
     $tasks = Task::all();
@@ -154,6 +155,11 @@ Route::get('food__supplements/show1/{id}','food__supplementsController@show1');
 //Profitability
 Route::resource('profitability','ProfitabilityController');
 Route::get('profitability/milk_production/{id}','ProfitabilityController@milk_production');
+Route::post('profitability/milk_production','ProfitabilityController@milk_production') ;
+
+
+
+
 
 
 

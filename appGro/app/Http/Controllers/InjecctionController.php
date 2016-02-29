@@ -109,7 +109,7 @@ class InjecctionController extends Controller {
 		}
 
 
-		$default = Defoult::where('name', 'injection') -> pluck('image');
+		$default = 'injection.jpg';
 
 		//GET ID FARM
 			
@@ -224,7 +224,7 @@ class InjecctionController extends Controller {
 				'application'				=> 'required',
 				'precautions'				=> 'required',
 				'effects'					=> 'required',
-				'sizes'						=> 'required',
+				'sizes'						=> 'required|integer',
 				'prices'					=> 'required|integer',
 				
 				);
@@ -270,7 +270,7 @@ class InjecctionController extends Controller {
 
 		}
 
-		$file = Injection::where('id', $id) -> pluck('image');
+		$file = 'injection.jpg';
 
 	
 		$injection -> name = Input::get('name');
@@ -282,6 +282,9 @@ class InjecctionController extends Controller {
 		$injection -> effects = Input::get('effects');
 		$injection -> size=Input::get('sizes');
 		$injection -> price=Input::get('prices');
+		if($request->sizes==null){
+			dd("fff");
+		}
 		$price_ml = $request->prices/$request->sizes;
 		$injection -> price_ml=$price_ml;
 		$injection -> due_date=Input::get('due_date');	

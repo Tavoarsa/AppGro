@@ -41,7 +41,7 @@
 
 							<div class="form-group">
 								{!!Form::label('raza', 'Raza')!!}
-								{!! Form::select('raza', array('holsten' => 'Holsten', 'yersey' => 'Yersey','guir' => 'Guir'), 'Holtein',["class" => "form-control"])!!}
+								{!! Form::select('raza', array('holsten' => 'Holsten', 'yersey' => 'Yersey','guir' => 'Guir','braman' => 'Braman','pardo' => 'Pardo','lenor' => 'Lenor','guense' => 'Guense'), 'Holstein',["class" => "form-control"])!!}
 							</div>
 
 							<div class="form-group">

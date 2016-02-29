@@ -131,11 +131,11 @@
      </div>
 <div role="navigation" id="foo" class="nav-collapse">
       <ul>
-        <li><a href="{{ url('/home') }}">Home</a></li>
+        <li><a href="{{ url('/farm') }}">Mi Finca</a></li> 
         <li><a href="#">Normas</a></li>
         <li><a href="{{ asset('files/ley-8495.pdf') }}">Ley SENASA</a></li>
         <li><a href="#">Manejo Agropecuario</a></li>
-        <li><a href="{{ url('/farm') }}">Mi Finca</a></li>        
+               
       </ul>
       <div>
         <a href="{{ url('/auth/logout') }}">Logout</a>

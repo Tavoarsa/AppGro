@@ -33,7 +33,7 @@
 </div>
 <div class="form-group">
     {!! form::label('sizes','Tamaño')!!}
-    {!! form::text('sizes',null,array("class" => "form-control", 'placeholder' => 'Tamaño en mililitros')) !!}
+    <input type="number" step="any"   name="sizes">
 </div>
 <div class="form-group">
     {!! form::label('prices','Precio')!!}
@@ -42,7 +42,7 @@
  <div class="form-group">
                             <label for="fechaVencimiento">Fecha Vencimiento</label>
                             <div class="input-group">
-                                <input type="text" class="form-control datepicker" name="fechaVencimiento">
+                              <input type="text" class="form-control datepicker" name="fechaVencimiento">
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-th"></span>
                                 </div>
