@@ -35,7 +35,7 @@
 </div>
 <div class="form-group">
     {!! form::label('size','Tamaño')!!}
-   <input type="number" step="any"   name="sizes">
+   <input type="number" step="any"   name="size">
 </div>
 <div class="form-group">
     {!! form::label('price','Precio')!!}

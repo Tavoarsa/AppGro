@@ -31,7 +31,7 @@
                             <tr>              
                                 <td>{{$provider->name }}</td>                                
                                 <td>{{$provider->service }}</td>
-                                <td><a class="btn mini red-stripe" href="{{ url('provider/edit', $provider->id) }}" >Editar</a></td>                                 
+                                <td><a class="btn btn-info" href="{{ url('provider/edit', $provider->id) }}" >Editar</a></td>                                 
                             </tr> 
                                @endforeach                
                             </tbody>

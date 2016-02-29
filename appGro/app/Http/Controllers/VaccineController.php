@@ -43,7 +43,7 @@ class VaccineController extends Controller {
 		$providers= Provider::all()->lists('name','id');
 		if(count($providers)==0)
 		{
-			return view('providers.store');
+			return redirect('providers')->with('status', 'Atención!!! Ingrese Un proveedor');
 		}
 		return view('vaccines.create',compact('providers'));
 	}
@@ -114,7 +114,7 @@ class VaccineController extends Controller {
 		}
 
 
-			$default = Defoult::where('name', 'vaccine') -> pluck('image');
+			$default = 'vaccine.jpg';
 
 			$vaccine = new Vaccine();
 			if($idFarm==null){			
@@ -143,6 +143,8 @@ class VaccineController extends Controller {
 
 			$vaccine -> image = $default;
 			$vaccine -> save();
+
+
 
 			return redirect() -> route('vaccine.index');
 
@@ -226,6 +228,19 @@ class VaccineController extends Controller {
 	public function update($id, Request $request) {
 
 		$vaccine = Vaccine::findOrFail($id);
+
+		$rules =array(
+
+				'nameV'  					=> 'required',		
+				'application'				=> 'required',
+				'precautions'				=> 'required',
+				'effects'					=> 'required',
+				'size'						=> 'required',
+				'price'					=> 'required|integer',
+				
+				);
+				//dd($request->idFarm);
+		$this->validate($request,$rules);
 		if (Input::hasFile('image')) {
 
 			$file = Input::file('image');
@@ -267,7 +282,9 @@ class VaccineController extends Controller {
 
 		}
 
-		$file = Vaccine::where('id', $id) -> pluck('image');
+		$file ='vaccine.jpg';
+		
+
 		
 
 		$vaccine -> nameV = Input::get('nameV');

@@ -134,7 +134,8 @@
         <li><a href="{{ url('/farm') }}">Mi Finca</a></li> 
         <li><a href="#">Normas</a></li>
         <li><a href="{{ asset('files/ley-8495.pdf') }}">Ley SENASA</a></li>
-        <li><a href="#">Manejo Agropecuario</a></li>
+        <li><a href="{{asset('files/Libro de labores. Ganadería..pdf')}}">Labores Ganaderas</a></li>
+        <li><a href="{{asset('files/Libro de registro. Ganadería.pdf')}}">Registros Ganaderas</a></li>
                
       </ul>
       <div>
@@ -151,6 +152,8 @@
     <script src="{{asset('datePicker/js/bootstrap-datepicker.js')}}"></script>
     <!-- Languaje -->
     <script src="{{asset('datePicker/locales/bootstrap-datepicker.es.min.js')}}"></script>
+
+    <!--Calendar-->
 
 
     <div role="main" class="main">

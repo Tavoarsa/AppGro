@@ -31,23 +31,28 @@
 								{!!Form::select('injectionName',$injection,["class" => "form-control"])!!}
 								
 							</div>
+							 <div class="form-group">
+                            <label for="dateApplication">Fecha de Aplicación</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control datepicker" name="dateApplication">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="boosterInjection">Proxima Aplicación</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control datepicker" name="boosterInjection">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                        </div>
 
-                			<div class="form-group">
-                				{!!Form::label('dateApplication', 'Fecha de aplicación')!!}
-                    			<div class='input-group date' id='dateApplication'>
-                       			<!-- <input type='text' name= 'from' class='form-control' readonly/>-->
 
-                       			{!! Form::input('text', 'dateApplication',null,['class'=>'form-control']) !!}
-                       			 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar "></span>
-                    			</div>
-               				 </div>
-
-               				 {!!Form::label('boosterInjection', 'Fecha Proxima aplicación')!!}              				 	
-                    			<div class='input-group date' id='boosterInjection'>
-                       			<!-- <input type='text' name= 'from' class='form-control' readonly/>-->
-                       			{!! Form::input('text', 'boosterInjection',null,['class'=>'form-control']) !!}
-                       			 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar "></span>
-                    			</div>             				
+                			
+            				
             				
 
 							<div class="form-group">
@@ -77,16 +82,13 @@
 			</div>
 		</div>
 	</div>
- <script type="text/javascript">
-
-           
-                $('#boosterInjection').datetimepicker({
-                     });
-
-        </script>
-
-    
-
-
 </div>
+  <script>
+    $('.datepicker').datepicker({
+        format: "yyyy/mm/dd",
+        language: "es",
+        autoclose: true
+    });
+</script>
+    
 @endsection

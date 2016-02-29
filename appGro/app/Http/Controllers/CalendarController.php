@@ -23,6 +23,7 @@ class CalendarController extends Controller {
 	 */
 	public function index()
 	{
+		dd("ho");
 		return view('calendar.calendar');
 	}
 

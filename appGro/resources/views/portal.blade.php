@@ -6,14 +6,17 @@
 	
 		
 			
-				<div class="panel-heading"></div>     
+				<div class="panel-heading">
+   
+
+                    
+                </div>     
 
 				
  
 				<div class="panel-body" >
 
-
-				
+		
                             
 
                             <div class="col-sm-6 col-md-4">
@@ -88,10 +91,10 @@
 
                              <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                    <a href="{{url('animal/milk_production') }}">
-                                        <img src="/img/portal/NOTICIAS.jpeg" alt="Control Alimenticio">
+                                    <a href="{{url('provider/') }}">
+                                        <img src="/img/portal/PROVEEDOR.jpg" alt="Control Alimenticio">
                                     </a> 
-                                     <H4>Noticias</H4>                
+                                     <H4>Proveedor</H4>                
                                 </div>
                             </div>
                             

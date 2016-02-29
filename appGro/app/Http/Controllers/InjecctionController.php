@@ -43,7 +43,7 @@ class InjecctionController extends Controller {
 		$providers= Provider::all()->lists('name','id');
 		if(count($providers)==0)
 		{
-			return view('providers.store');
+			return redirect('providers')->with('status', 'Atención!!! Ingrese Un proveedor');
 		}
 		return view('injections.create',compact('providers'));
 	}
@@ -139,6 +139,8 @@ class InjecctionController extends Controller {
 			$injection-> due_date=Input::get('due_date');
 			$injection -> image = $default;
 			$injection -> save();
+
+			
 
 			return redirect() -> route('injection.index');
 

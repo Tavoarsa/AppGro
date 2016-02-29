@@ -33,7 +33,7 @@ Route::controllers([
 ]);
 
 //Animal
-
+Route::resource('calendar','CalendarController');
 
 Route::resource('animal','AnimalController');
 
@@ -55,58 +55,15 @@ Route::post('animal/registro_sanitario/ejecutar_vacunas','AnimalController@ejecu
 Route::post('animal/peso/ejecutar_peso','AnimalController@ejecutar_peso');
 Route::post('animal/registro_sanitario/ejecutar_injection','AnimalController@ejecutar_injection');
 Route::post('animal/control_alimenticio/ejecutar_alimento','AnimalController@ejecutar_alimento');
+
 Route::get('animal/peso/{id}','AnimalController@peso');
 Route::get('animal/control_alimenticio/{id}','AnimalController@control_alimenticio');
 Route::get('animal/edit/{id}','AnimalController@edit');
 
 
 Route::get('animal/milk_production/{id}','AnimalController@redirect_milk_production');
+Route::post('animal/milk_production/update_milk_production','AnimalController@update_milk_production');
 
-/*
-Route::get('/', function () {
-    $tasks = Task::all();
-
-    return View::make('welcome')->with('tasks',$tasks);
-});
-
-Route::get('/tasks/{task_id?}',function($task_id){
-    $task = Task::find($task_id);
-
-    return Response::json($task);
-});
-
-Route::post('/',function(Request $request){
-
-    $task = Task::create($request->all());
-
-    return Response::json($task);
-});
-
-Route::put('/tasks/{task_id?}',function(Request $request,$task_id){
-    $task = Task::find($task_id);
-
-    $task->task = $request->task;
-    $task->description = $request->description;
-
-    $task->save();
-
-    return Response::json($task);
-});
-
-Route::delete('/tasks/{task_id?}',function($task_id){
-    $task = Task::destroy($task_id);
-
-    return Response::json($task);
-});
-*/
-
-
-
-/*
-Route::get('animal/milk_production/ejecutar_milk_production/{id}','Milk_production@edit');
-Route::get('animal/milk_production/{id}','AnimalController@milk_production');
-Route::get('animal/milk_production/update_milk_production/{id}','AnimalController@update_milk_production');
-*/
 
 
 //Reportes
@@ -154,12 +111,12 @@ Route::get('food__supplements/show1/{id}','food__supplementsController@show1');
 
 //Profitability
 Route::resource('profitability','ProfitabilityController');
-Route::get('profitability/milk_production/{id}','ProfitabilityController@milk_production',function(){
-   
+Route::get('profitability/milk_production/{id}','ProfitabilityController@milk_production');
 
 
 
-});
+
+
 Route::post('profitability/milk_production','ProfitabilityController@milk_production') ;
 
 
@@ -167,34 +124,9 @@ Route::post('profitability/milk_production','ProfitabilityController@milk_produc
 
 
 
-
-
-
-
-
-
-//Mail
-Route::get('sendemail', function () {
-
-    $data = array(
-        'name' => "Learning Laravel",
-    );
-
-    Mail::send('emails.test', $data, function ($message) {
-
-        $message->from('tavo.cr23@gmail.com', 'Learning Laravel');
-
-        $message->to('tavo.cr23@gmail.com')->subject('Learning Laravel test email');
-
-    });
-
-    return "Your email has been sent successfully";
-
-});
-
 //Calendar
 
-Route::resource('calendar','CalendarController');
+
 
 
 

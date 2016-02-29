@@ -41,6 +41,10 @@ class food__supplementsController extends Controller {
 	public function create()
 	{
 		$providers= Provider::all()->lists('name','id');
+		if(count($providers)==0)
+		{
+			return view('providers.store');
+		}
 		return view('food__supplements.create',compact('providers'));
 	}
 
@@ -56,7 +60,7 @@ class food__supplementsController extends Controller {
 				'typeProduct'  				=> 'required',		
 				'nameProduct'				=> 'required',
 				'weight'					=> 'required',				
-				'price'						=> 'required',
+				'price'						=> 'required|integer',
 				
 				
 				);
@@ -143,6 +147,17 @@ class food__supplementsController extends Controller {
 	public function update($id, Request $request) {
 
 		$food__supplement = Food_Supplement::findOrFail($id);
+		$rules =array(
+
+				'typeProduct'  				=> 'required',		
+				'nameProduct'				=> 'required',
+				'weight'					=> 'required',				
+				'price'						=> 'required|integer',
+				
+				
+				);
+				//dd($request->idFarm);
+		$this->validate($request,$rules);
 
 		
 			

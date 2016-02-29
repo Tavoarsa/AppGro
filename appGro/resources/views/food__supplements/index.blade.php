@@ -2,9 +2,8 @@
 
 @section('content')
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+<div  class="container-fluid">
+    
             <div class="panel panel-default">
                 <div class="panel-heading">    
                     <a href="{{ url('/food__supplement/create') }}" class="btn btn-info" role="button">Nuevo Alimento</a>      
@@ -39,7 +38,7 @@
                                 <td>{{$food__supplement->due_date}}</td>
                                 <td>
                                     <a href="{{url('food__supplements/edit',$food__supplement->id)}}" class="btn btn-warning btn-xs btn-detail ">Editar</a>
-                                    <a href="" class="btn btn-danger btn-xs btn-delete">Eliminar</a>
+                                    
                                 </td>
                             </tr>
                                 @endforeach                
@@ -48,8 +47,7 @@
                     </div>      
                     </div>          
             </div>
-        </div>
-    </div>
+      
 </div>
 
 @endsection

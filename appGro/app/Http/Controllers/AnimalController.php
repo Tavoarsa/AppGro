@@ -28,6 +28,7 @@ use App\FertilizacionInvitro;
 use App\InseminacionArtificial;
 use App\MontaNatural;
 use App\TrasferenciaEmbriones;
+use Illuminate\Support\Facades\Mail;
 
 use Response;
 
@@ -211,12 +212,19 @@ class AnimalController extends Controller {
 			$disease= Disease::all()->lists('name','id');
 
 			$vaccine= Vaccine::all()->lists('nameV','id');
+
+		if(count($animals)==0 || count($disease)==0 || count($vaccine)==0){
+			
+
+			return redirect('veterinaria')->with('status', 'Atención!!! Ingrese registros en Veterinaria');
+		}	
 		
 			return view('animals.registro_sanitario_vaccine',compact('animals','disease','vaccine'));
 	}
 
 		public function ejecutar_vacunas(Request $request)
 	{
+		
 		$rules =array(
 
 			
@@ -280,6 +288,36 @@ class AnimalController extends Controller {
 			$event ->end = $boosterInjection;			
 
 			$event->save();
+
+			$animal= Animal::where('id',$request->animalName)->lists('nombre');
+			$vaccine= Vaccine::where('id',$request->vaccineName)->lists('nameV');
+			$disease= Disease::where('id',$request->diseaseName)->lists('name');			
+			$animal=array_pull($animal,0);
+			$vaccine=array_pull($vaccine,0);
+			$disease=array_pull($disease,0);
+
+			$data = array(
+
+        'name' => $animal,
+        'vaccine'=>$vaccine,
+        'disease'=>$disease,
+        'boosterInjection'=>$request->boosterInjection,
+
+    );
+			
+		
+
+    Mail::send('emails.vaccine', $data, function ($message) {
+
+    	$email=Auth::user();
+		$correo= array_pull($email,'email');//dd($correo);
+
+        $message->from('appgrocr@gmail.com', 'Evento de Vacunación');
+
+        $message->to($correo)->cc('appgrocr@gmail.com')->subject('Notificaciones Appgro.com');
+
+
+    });
 				
 			return redirect() -> route('animal.index');
 
@@ -293,6 +331,12 @@ class AnimalController extends Controller {
 			$disease= Disease::all()->lists('name','id');
 
 			$injection= Injection::all()->lists('name','id');
+			if(count($animals)==0 || count($disease)==0 || count($injection)==0){
+			
+
+			return redirect('veterinaria')->with('status', 'Atención!!! Ingrese registros en Veterinaria');
+		}	
+		
 		
 			return view('animals.registro_sanitario_injection',compact('animals','disease','injection'));
 	}
@@ -352,10 +396,40 @@ class AnimalController extends Controller {
 			$event ->url = 'http://localhost:8000/vaccinationControl';
 			$event ->class = 'Preventivo';
 			$event ->start = $dateApplication;
-			$event ->end = $boosterInjection;
-			
+			$event ->end = $boosterInjection;	
 
 			$event->save();
+
+			$animal= Animal::where('id',$requestI->animalName)->lists('nombre');
+			$injection= Injection::where('id',$requestI->injectionName)->lists('name');
+			$disease= Disease::where('id',$requestI->diseaseName)->lists('name');			
+			$animal=array_pull($animal,0);
+			$injection=array_pull($vaccine,0);
+			$disease=array_pull($disease,0);
+
+			$data = array(
+
+        'name' => $animal,
+        'injection'=>$injection,
+        'disease'=>$disease,
+        'boosterInjection'=>$requestI->boosterInjection,
+
+    );
+			
+		
+
+    Mail::send('emails.injection', $data, function ($message) {
+
+    	$email=Auth::user();
+		$correo= array_pull($email,'email');//dd($correo);
+
+        $message->from('appgrocr@gmail.com', 'Evento de Inyectado');
+
+        $message->to($correo)->cc('appgrocr@gmail.com')->subject('Notificaciones Appgro.com');
+
+
+    });
+		
 			return redirect() -> route('animal.index');
 
 
@@ -437,13 +511,17 @@ class AnimalController extends Controller {
 
 			$animals= Animal::where('id',$id)
 						->where('idUser',Auth::id())
-						->lists('nombre','id'); //dd($animals);
+						->lists('nombre','id');
+			$animalName= Animal::where('id',$id)
+						->where('idUser',Auth::id())
+						->lists('nombre');  			
+			$animalName=array_pull($animalName,0);
 		
 		
 
 		
 
-			return view('animals.peso',compact('animals'));
+			return view('animals.peso',compact('animals','animalName'));
 
 
 	}
@@ -451,8 +529,7 @@ class AnimalController extends Controller {
 	public function ejecutar_peso(Request $request){
 
 			$rules =array(
-
-	
+			'price'				=> 'required|integer',
 			'weight'				=> 'required|integer',
 			'dateweight'			=> 'required',					
 
@@ -473,6 +550,7 @@ class AnimalController extends Controller {
 			$weight->idUser= Auth::id();
 			$weight->idAnimal=$request->animalName;
 			$weight->weight=$request->weight;
+			$weight->value=$request->price*$request->weight;
 			$weight->dateWeight=$request->dateweight;
 			$weight->save();
 
@@ -502,33 +580,14 @@ class AnimalController extends Controller {
 	public function redirect_milk_production($idAnimal){
 
 		$milk_production = Animal::findOrFail($idAnimal);
+
+		$animals= Animal::where('id',$idAnimal)->lists('nombre','id');
+
 		$carbon = new \Carbon\Carbon();
 		$today = $carbon->now();
 		$today = $today->format('m/d/Y');
 
-		//dd($today);
-
-		/*$carbon = new \Carbon\Carbon();
-			$date = $carbon->now();
-			
-			$date = $date->format('m/d/Y');
-			dd($date);
-		$providers= Provider::all()->lists('name','id');
-		return view('vaccines.edit', compact('vaccine','providers'));
-
-			$mp= new MilkProduction();
-			$idFarm=Session::get('key');
-			if($idFarm==null){			
-				$mp->idFarm=1;
-			}else
-			{
-				$mp->idFarm=$idFarm;	
-			}
-
-			$mp->idUser= Auth::id();
-			$mp->idAnimal=$id;
-			
-			$mp->save();*/
+		
 
 			$milk_productions= MilkProduction::where('milk_productions.idUser',Auth::id())
 									 ->where('milk_productions.idAnimal',$idAnimal)
@@ -541,6 +600,7 @@ class AnimalController extends Controller {
 				$date[] = $milk_production->date ;
 				
 			}
+				//dd($milk_productions);
 
 			//dd($date);
 			if(empty($date))
@@ -554,27 +614,18 @@ class AnimalController extends Controller {
 				$mp->idFarm=$idFarm;	
 			}
 
+
 			$mp->idUser= Auth::id();
 			$mp->idAnimal=$idAnimal;
 			
 			$mp->date=$today;
 			$mp->save();
 
-			}else
-			{
-				for ($i=0; $i < sizeof($date) ; $i++) {
-
-					if($today==$date[$i]){
-						return view('animals.milk_production',compact('milk_productions'));
-					}
-					break;
-
-					
-				}
-				
 			}
 			
-			return view('welcome',compact('milk_productions'));
+		
+		
+			return view('animals.milk_production',compact('milk_productions','animals'));
 						  			 
 
 		
@@ -591,12 +642,12 @@ class AnimalController extends Controller {
 			$mp->later_production= $request->later_production;
 			$mp->morning_production=$request->morning_production;
 			$mp->total_production=$request->morning_production +$request->later_production;
-			$mp->price_production=$request->morning_production +$request->later_production * 310;
+			$mp->price_production=$request->morning_production +$request->later_production * $request->price;
 			 
 			$mp->save();
 			
 
-			return view('animals.list_milk_production');
+			return view('animals.milk_production');
 		
 
 
